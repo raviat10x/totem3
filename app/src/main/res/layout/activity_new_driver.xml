@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:theme="@style/NewDriverPageTheme"
+    tools:context="com.move10x.totem.NewDriverActivity">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/newDriverContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Personal Details"
+                android:textSize="30dp" />
+
+            <!-- Authority -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:text="Authority" />
+
+            <Spinner
+                android:id="@+id/inputAurhority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/authority_list"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp" />
+
+            <!-- Region -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:text="Region" />
+
+            <Spinner
+                android:id="@+id/inputRegion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp" />
+
+            <!--  First Name -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Last Name -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Last Name"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Mobile Number -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputMobileNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Personal Mobile Number"
+                    android:inputType="text|number" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Email Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Address (optional)"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Personal Address -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputPersonalAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Personal Address"
+                    android:inputType="textMultiLine" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Base Station -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputBaseStation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Base Station (Naka)"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Driver Remarks -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputDriverRemarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Driver Remarks (Optional)"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--Text Vehicle Details-->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Vehicle Details"
+                android:textSize="30dp" />
+
+            <!--Tempo Category Mini Max Mega-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:text="Vehicle Category" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/inputTempoCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/inputCategoryMini"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="true"
+                    android:text="MINI" />
+
+                <RadioButton
+                    android:id="@+id/inputCategoryMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="false"
+                    android:text="MAX" />
+
+                <RadioButton
+                    android:id="@+id/inputCategoryMaxPlus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="false"
+                    android:text="MAX+" />
+
+
+                <RadioButton
+                    android:id="@+id/inputCategoryMega"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="false"
+                    android:text="MEGA" />
+
+            </RadioGroup>
+
+            <!--Vehicle Length-->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputVehicleLength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vehicle Legth In Feet"
+                    android:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Vehicle Make -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputVehicleMake"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vehicle Make (Vehicle Brand)"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Tempo Model -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputVehicleModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vehicle Model"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Regestration Number -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputVehicleRegestrationNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vehicle Regestration Plate Number"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Regestration Number -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp">
+
+                <EditText
+                    android:id="@+id/inputVehicleVinNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="VIN NO / CHASIS NO"
+                    android:inputType="textCapWords" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- Joining Date -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtJoiningDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Joining Date" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnJoiningDate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="Select Joining Date" />
+            </LinearLayout>
+
+            <!-- Scheme Freelance/SemiFixed/Fixed-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:text="Model" />
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/inputPlan"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/inputFreelancer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="true"
+                    android:text="FREELANCE" />
+
+                <RadioButton
+                    android:id="@+id/inputSemiFixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="false"
+                    android:text="SEMI-FIXED" />
+
+                <RadioButton
+                    android:id="@+id/inputFixed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:checked="false"
+                    android:text="FIXED" />
+            </RadioGroup>
+
+            <!--Text upload documents-->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center_horizontal"
+                android:text="Upload Documents"
+                android:textSize="30dp" />
+
+            <!--Text document upload error message-->
+            <TextView
+                android:id="@+id/txtUploadDocumentsError"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/red"
+                android:gravity="center_horizontal"
+                android:text="Please upload all the documents"
+                android:visibility="gone"/>
+
+
+            <!--Driver Photo, Driving License & Vehicle Insurence-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <!--Driver Photo-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="Driver Photo"
+                        android:textSize="10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnUploadDriverPhoto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_add" />
+
+                    <RelativeLayout
+                        android:id="@+id/pnlDriverPhoto"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgDriverPhoto"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/icon_close" />
+
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <!--Driver License-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="Driving License"
+                        android:textSize="10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnUploadDrivingLicense"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_add" />
+
+                    <RelativeLayout
+                        android:id="@+id/pnlDrivingLicense"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgDrivingLicense"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/icon_close" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!--Vehicle Insurence-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="Vehicle Insurence"
+                        android:textSize="10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnUploadVehicleInsurence"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_add" />
+
+                    <RelativeLayout
+                        android:id="@+id/pnlVehicleInsurence"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgVehicleInsurence"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/icon_close" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Vehicle Images -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!-- Front Vehicle Image -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="Vehicle Front"
+                        android:textSize="10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnUploadVehicleFrontImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_add" />
+
+                    <RelativeLayout
+                        android:id="@+id/pnlVehicleFrontImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgVehicleFrontImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/icon_close" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!-- Vehicle Side Image -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="Vehicle Side"
+                        android:textSize="10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnUploadVehicleSideImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_add" />
+
+                    <RelativeLayout
+                        android:id="@+id/pnlVehicleSideImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgVehicleSideImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/icon_close" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <!-- Vehicle Back Image -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:text="Vehicle Back"
+                        android:textSize="10dp" />
+
+                    <ImageButton
+                        android:id="@+id/btnUploadVehicleBackImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/icon_add" />
+
+                    <RelativeLayout
+                        android:id="@+id/pnlVehicleBackImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/imgVehicleBackImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_centerInParent="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/icon_close" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Signup Button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnSignup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorAccent"
+                android:padding="12dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="Create Driver"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/newDriverProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.move10x.totem.DriverDetailsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/icon_call"
+        app:backgroundTint="@color/green" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp">
+
+        <LinearLayout
+            android:id="@+id/driverDetailsContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+
+            <!--Driver Image-->
+            <ImageView
+                android:id="@+id/imgDriverImage"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/txtDriverName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="25dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:textAlignment="center">
+
+                <!--Duty Status-->
+                <TextView
+                    android:id="@+id/txtDutyStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/rounded_corners_green"
+                    android:padding="5dp"
+                    android:text="Available"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff" />
+
+                <!--Plan-->
+                <TextView
+                    android:id="@+id/txtPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rounded_corners_blue"
+                    android:padding="5dp"
+                    android:text="Plan"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff" />
+
+                <!--Vehicle Category-->
+                <TextView
+                    android:id="@+id/txtVehicleCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rounded_corners_blue"
+                    android:padding="5dp"
+                    android:text="MAX"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff" />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <!--Authority-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Authority" />
+
+                    <TextView
+                        android:id="@+id/txtAuthority"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <!--Mobile No-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Mobile Number" />
+
+                    <TextView
+                        android:id="@+id/txtMobileNumber"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <!--Region-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Region" />
+
+                    <TextView
+                        android:id="@+id/txtRegion"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <!--Base Station-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Base Station" />
+
+                    <TextView
+                        android:id="@+id/txtBaseStation"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1" />
+                </TableRow>
+
+                <!--Vehicle Brand-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Vehicle Brand" />
+
+                    <TextView
+                        android:id="@+id/txtVehicleBrand"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1"
+                        android:text="" />
+                </TableRow>
+
+                <!--Vehicle Regestration No-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Vehicle Reestration No." />
+
+                    <TextView
+                        android:id="@+id/txtVehicleRegNo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1"
+                        android:text="" />
+                </TableRow>
+
+                <!--Device-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Device" />
+
+                    <TextView
+                        android:id="@+id/txtDevice"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1"
+                        android:text="" />
+                </TableRow>
+
+                <!--App Version-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <TextView
+                        style="@style/DriverDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="App Version" />
+
+                    <TextView
+                        android:id="@+id/txtAppVersion"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_column="1"
+                        android:text="" />
+                </TableRow>
+
+                <!--Remarks-->
+                <TableRow style="@style/DriverDetailsTableRow">
+
+                    <LinearLayout android:orientation="vertical">
+
+                        <TextView
+                            style="@style/DriverDetailsLabel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:text="Driver Remarks" />
+
+                        <TextView
+                            android:id="@+id/txtRemarksDate"
+                            style="@style/DriverDetailsLabel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:textSize="13dp"
+                            android:textColor="@color/darkGray" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/txtRemarks"
+                        android:layout_width="fill_parent"
+                        android:layout_column="1"
+                        android:inputType="textMultiLine"
+                        android:text="" />
+                </TableRow>
+
+            </TableLayout>
+
+            <!-- Update Remarks Button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnUpdateRemarks"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorAccent"
+                android:padding="12dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="Update Remarks"
+                android:textColor="#ffffff" />
+
+            <!-- Booking History Button -->
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btnViewBookings"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@color/colorAccent"
+                android:padding="12dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:text="View Booking History"
+                android:textColor="#ffffff" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/driverDetailsProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+
+</android.support.design.widget.CoordinatorLayout>
+
