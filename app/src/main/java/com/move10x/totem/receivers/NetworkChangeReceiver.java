@@ -1,4 +1,4 @@
-package com.move10x.totem.services;
+package com.move10x.totem.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,7 +14,7 @@ import com.move10x.totem.design.NoInternetActivity;
 /**
  * Created by Ravi on 11/3/2015.
  */
-public class NetworkChangeReceiverService extends BroadcastReceiver {
+public class NetworkChangeReceiver extends BroadcastReceiver {
 
     private String logTag = "networkChangeReceiver";
 

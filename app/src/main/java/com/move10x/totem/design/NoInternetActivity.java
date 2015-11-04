@@ -3,14 +3,13 @@ package com.move10x.totem.design;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.move10x.totem.R;
-import com.move10x.totem.services.NetworkChangeReceiverService;
+import com.move10x.totem.receivers.NetworkChangeReceiver;
 
 public class NoInternetActivity extends AppCompatActivity {
 
@@ -32,7 +31,7 @@ public class NoInternetActivity extends AppCompatActivity {
     }
 
     private void checkInternetConnection() {
-        NetworkChangeReceiverService service = new NetworkChangeReceiverService();
+        NetworkChangeReceiver service = new NetworkChangeReceiver();
         int status = service.getConnectivityStatusString(getApplicationContext());
         if (status == service.NETWORK_STATUS_NOT_CONNECTED) {
             //Get to NoInternet Activity.

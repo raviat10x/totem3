@@ -33,7 +33,6 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-
             <!--Reference-->
             <TextView
                 style="@style/BookingDetailsLabel"
