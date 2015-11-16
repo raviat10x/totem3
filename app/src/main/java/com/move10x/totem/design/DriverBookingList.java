@@ -17,10 +17,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.Booking;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 

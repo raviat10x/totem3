@@ -25,11 +25,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
 import com.move10x.totem.models.Driver;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.CurrentProfileService;
@@ -212,6 +212,7 @@ public class DriverOnMapFragment extends Fragment {
                                     Intent intent = new Intent(context, DriverDetailsActivity.class);
                                     Driver driver = driverMarkers.get(marker);
                                     intent.putExtra("driverUid", driver.getuId());
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     Log.d("driverOnMap", "Driver UID: " + driver.getuId());
                                     startActivity(intent);
                                 }

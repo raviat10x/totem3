@@ -18,14 +18,15 @@ import android.widget.TextView;
 
 import android.support.v7.app.AppCompatActivity;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.models.User;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.CurrentProfileService;
+import com.move10x.totem.services.MiscService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +45,9 @@ public class LoginActivity extends Move10xActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Set context for later use in entire application.
+        MiscService.context = this.getApplicationContext();
+
         txtUserId= (EditText) findViewById(R.id.UserId);
         txtPassword = (EditText) findViewById(R.id.password);
 
@@ -60,6 +64,7 @@ public class LoginActivity extends Move10xActivity {
             Log.d("login", "User has already Registered.");
             Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             finish();
         }
 
@@ -150,6 +155,7 @@ public class LoginActivity extends Move10xActivity {
                             new CurrentProfileService(getApplicationContext()).CreateProfile(profile);
                             //Redirect to main activity.
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
                         } else if (response.getString("success") != null && response.getString("success").equals("1")

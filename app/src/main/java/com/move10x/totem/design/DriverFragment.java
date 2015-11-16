@@ -22,11 +22,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
 import com.move10x.totem.models.Driver;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.AsyncImageLoaderService;
@@ -191,6 +191,7 @@ public class DriverFragment extends Fragment {
     public void onDriverAddClick() {
         Log.d("driverFragment", "on Add driver click.");
         Intent intent = new Intent(getActivity().getApplicationContext(), NewDriverActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }
 
@@ -226,6 +227,20 @@ public class DriverFragment extends Fragment {
                 showProgress(false);
             }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+            }
         });
     }
 
@@ -320,6 +335,7 @@ public class DriverFragment extends Fragment {
                     Log.d("driverFragment", "On Driver container click.");
                     Intent intent = new Intent(getActivity().getApplicationContext(), DriverDetailsActivity.class);
                     intent.putExtra("driverUid", currentDriver.getuId());
+                    intent. addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Log.d("driverOnMap", "Driver UID: " + currentDriver.getuId());
                     startActivity(intent);
                 }

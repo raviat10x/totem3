@@ -2,6 +2,7 @@ package com.move10x.totem.services;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Log;
 
 import java.io.File;
@@ -21,7 +22,7 @@ public class IOService {
             File file = new File(android.os.Environment.getExternalStorageDirectory(), fileName);
             Log.d(logTag, "fileWritePath:" + file.getAbsolutePath());
             out = new FileOutputStream(file);
-            image.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+            image.compress(Bitmap.CompressFormat.JPEG, 40, out); // bmp is your Bitmap instance
             out.flush();
         } catch (Exception e) {
             Log.e(logTag, e.getMessage());
@@ -47,7 +48,7 @@ public class IOService {
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         String filePath = android.os.Environment.getExternalStorageDirectory() + "/" + fileName;
         Log.d(logTag, "Reading file: " + filePath);
-        return BitmapFactory.decodeFile( filePath, options);
+        return BitmapFactory.decodeFile(filePath, options);
     }
 
     public void removeFile(String fileName){
@@ -56,4 +57,20 @@ public class IOService {
             file.delete();
         }
     }
+
+    public static Bitmap getResizedBitmap(Bitmap image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float scaleWidth = ((float) 100) / width;
+        float scaleHeight = ((float) 100) / height;
+        // create a matrix for the manipulation
+        Matrix matrix = new Matrix();
+        // resize the bit map
+        matrix.postScale(scaleWidth, scaleHeight);
+        // recreate the new Bitmap
+        Bitmap resizedBitmap = Bitmap.createBitmap(image, 0, 0, width, height,
+                matrix, false);
+        return resizedBitmap;
+    }
+
 }

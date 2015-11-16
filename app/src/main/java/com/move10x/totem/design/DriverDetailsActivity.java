@@ -2,29 +2,32 @@ package com.move10x.totem.design;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.Driver;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.AsyncImageLoaderService;
@@ -34,7 +37,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
@@ -48,9 +50,9 @@ public class DriverDetailsActivity extends Move10xActivity {
     ImageView imgDriverImage;
     TextView txtDriverName, txtAuthority, txtMobileNumber, txtRegion, txtBaseStation;
     TextView txtVehicleBrand, txtRegestrationNo, txtDevice, txtAppVersion;
-    TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate;
-    EditText inputRemarks;
-    AppCompatButton btnViewBookings, btnUpdateDriverRemarks;
+    TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate, txtRemarks;
+    ImageButton btnUpdateDriverRemarks;
+    AppCompatButton btnViewBookings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +68,7 @@ public class DriverDetailsActivity extends Move10xActivity {
         driverDetailsContainer = (LinearLayout) findViewById(R.id.driverDetailsContainer);
         progressBar = (ProgressBar) findViewById(R.id.driverDetailsProgress);
         btnViewBookings = (AppCompatButton) findViewById(R.id.btnViewBookings);
-        btnUpdateDriverRemarks = (AppCompatButton) findViewById(R.id.btnUpdateRemarks);
+        btnUpdateDriverRemarks = (ImageButton) findViewById(R.id.btnUpdateRemarks);
         imgDriverImage = (ImageView) findViewById(R.id.imgDriverImage);
         txtDriverName = (TextView) findViewById(R.id.txtDriverName);
         txtAuthority = (TextView) findViewById(R.id.txtAuthority);
@@ -80,7 +82,7 @@ public class DriverDetailsActivity extends Move10xActivity {
         txtAppVersion = (TextView) findViewById(R.id.txtAppVersion);
         txtPlan = (TextView) findViewById(R.id.txtPlan);
         txtDutyStatus = (TextView) findViewById(R.id.txtDutyStatus);
-        inputRemarks = (EditText) findViewById(R.id.txtRemarks);
+        txtRemarks = (TextView) findViewById(R.id.txtRemarks);
         txtRemarksDate = (TextView) findViewById(R.id.txtRemarksDate);
 
         //Read driver details and set driver details in view.
@@ -94,7 +96,7 @@ public class DriverDetailsActivity extends Move10xActivity {
             @Override
             public void onClick(View view) {
                 String number = "tel:" + driverDetails.getMobileNo();
-                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(number));
                 startActivity(callIntent);
             }
         });
@@ -106,6 +108,7 @@ public class DriverDetailsActivity extends Move10xActivity {
                 Log.d("driverDetails", "On Driver container click.");
                 Intent intent = new Intent(getApplicationContext(), DriverBookingList.class);
                 intent.putExtra("driverUid", driverDetails.getuId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Log.d("driverDetails", "Driver UID: " + driverDetails.getuId());
                 startActivity(intent);
             }
@@ -115,7 +118,7 @@ public class DriverDetailsActivity extends Move10xActivity {
         btnUpdateDriverRemarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updteDriverRemarks();
+                onUpdteDriverRemarksClick();
             }
         });
 
@@ -168,11 +171,12 @@ public class DriverDetailsActivity extends Move10xActivity {
                         txtAppVersion.setText(driverDetails.getAppVersion());
 
                         if (!driverDetails.getRemarks().toString().trim().equals("")) {
-                            inputRemarks.setText(driverDetails.getRemarks());
-                            txtRemarksDate.setText(driverDetails.getRemarksTimeStamp());
-                            /*Date commentDate = (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).parse(driverDetails.getRemarksTimeStamp());
-                            Calendar cal = Calendar.getInstance();
-                            txtRemarksDate.setText("(" + commentDate.getDate() + "/" + commentDate.getMonth() + "/" + commentDate.getYear() + " " + commentDate.getHours() + ":" + commentDate.getMinutes() +")");*/
+                            txtRemarks.setText(driverDetails.getRemarks());
+                            Date commentDate = (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).parse(driverDetails.getRemarksTimeStamp());
+                            txtRemarksDate.setText((new SimpleDateFormat("dd-MM-yyyy hh:mm")).format(commentDate));
+                        }else{
+                            txtRemarks.setText("None");
+                            txtRemarksDate.setVisibility(View.GONE);
                         }
 
                         //Set image circular
@@ -197,7 +201,9 @@ public class DriverDetailsActivity extends Move10xActivity {
                     Log.e(logTag, "Failed to parse response. Exception:" + ex.getMessage());
                 }/* catch (ParseException ex) {
                     Log.e(logTag, "Failed to parse response. Exception:" + ex.getMessage());
-                }*/
+                }*/ catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 showProgress(false);
             }
 
@@ -213,34 +219,57 @@ public class DriverDetailsActivity extends Move10xActivity {
         });
     }
 
-    private void updteDriverRemarks() {
+    private void onUpdteDriverRemarksClick() {
 
-        Log.d(logTag, "On Update Driver remarks click.");
-        showProgress(true);
-        RequestParams requestParams = new RequestParams();
-        requestParams.put("driverUid", driverDetails.getuId());
-        requestParams.put("remarks", inputRemarks.getText().toString().trim());
+        //Show dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Title");
 
-        //Async Driverlist fetch.
-        String url = Url.apiBaseUrl + "?tag=vrm_updte_driver_remarks";
-        AsyncHttpService.post(url, requestParams, new JsonHttpResponseHandler() {
+        final EditText input = new EditText(this);
+        input.setSingleLine(false);
+        input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+        input.setSelectAllOnFocus(true);
+        input.setText(txtRemarks.getText());
+        builder.setView(input);
 
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // If the response is JSONObject instead of expected JSONArray.
-                Log.d(logTag, "Parsing getDriveDetails() response. ");
-                try {
-                    Log.d(logTag, "updteDriverRemarks() response:  " + response.toString());
-                    if (response.getString("success") != null && response.getString("success").equals("1")) {
-                        Toast.makeText(getApplicationContext(), "Remarks Updated.", Toast.LENGTH_LONG);
-                        getDriverDetails(driverDetails.getuId());
-                    }
-                } catch (JSONException ex) {
-                    Log.e(logTag, "Failed to parse json of getDriveDetails() response.");
-                }
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(logTag, "Response: " + input.getText().toString());
+                showProgress(true);
+                RequestParams requestParams = new RequestParams();
+                requestParams.put("driverUid", driverDetails.getuId());
+                requestParams.put("remarks", input.getText().toString().trim());
 
+                //Async Driverlist fetch.
+                String url = Url.apiBaseUrl + "?tag=vrm_updte_driver_remarks";
+                AsyncHttpService.post(url, requestParams, new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        // If the response is JSONObject instead of expected JSONArray.
+                        Log.d(logTag, "updteDriverRemarks() response:  " + response.toString());
+                        try {
+                            if (response.getString("success") != null && response.getString("success").equals("1")) {
+                                Toast.makeText(getApplicationContext(), "Remarks Updated.", Toast.LENGTH_LONG);
+                                getDriverDetails(driverDetails.getuId());
+                            }
+                        } catch (JSONException ex) {
+                            Log.e(logTag, "Failed to parse json of getDriveDetails() response.");
+                        }
+                    }
+
+                });
             }
         });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     public void showProgress(final boolean show) {

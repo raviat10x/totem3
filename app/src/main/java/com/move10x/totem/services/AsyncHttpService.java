@@ -11,7 +11,6 @@ import com.loopj.android.http.RequestParams;
  * Created by Ravi on 10/17/2015.
  */
 public class AsyncHttpService {
-    private Context context;
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

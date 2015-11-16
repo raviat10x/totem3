@@ -3,20 +3,17 @@ package com.move10x.totem.design;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.backup.FileBackupHelper;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Looper;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,55 +23,43 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import android.app.DatePickerDialog;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.SyncHttpClient;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
 import com.move10x.totem.models.Driver;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.CurrentProfileService;
 import com.move10x.totem.services.IOService;
 
+import org.apache.commons.net.ftp.FTPClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.entity.ContentType;
-import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder;
-import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
-import cz.msebera.android.httpclient.util.EntityUtils;
-
 
 public class NewDriverActivity extends Move10xActivity {
 
@@ -103,8 +88,6 @@ public class NewDriverActivity extends Move10xActivity {
     private ScrollView newDriverContainer;
     private Button btnJoiningDate;
     private Date joiningDate = null;
-    // private Bitmap bitmapDriverPhoto = null, bitmapDrivingLicense = null, bitmapVehicleInsurance = null;
-    //  private Bitmap bitmapVehicleFrontPhoto = null, bitmapVehicleSidePhoto = null, bitmapVehicleBackPhoto = null;
     private AppCompatButton btnCreateDriver;
     private EditText inputFirstName, inputLastName, inputMobileNo, inputEmail, inputPersonalAddress, inputDriverRemarks;
     private EditText inputVehicleLenth, inputVehicleMake, inputVehicleModel, inputVehicleRegNo, inputVINNo, inputBaseSatation;
@@ -124,6 +107,7 @@ public class NewDriverActivity extends Move10xActivity {
     private ProgressBar progressBar;
     private String[] regions;
     private String driverUniqueId;
+    private String ftpServer, ftpUserName, ftpPassword, ftpDirectory;
 
     private AppCompatActivity currentActivity = null;
 
@@ -194,7 +178,7 @@ public class NewDriverActivity extends Move10xActivity {
             //Retrieve Bitmap image.
             Bundle extras = data.getExtras();
             Bitmap bitmapDriverPhoto = getResizedBitmap((Bitmap) extras.get("data"));
-            (new IOService()).writeImageToFile(File_Driver_Photo, bitmapDriverPhoto);
+            (new IOService()).writeImageToFile(File_Driver_Photo, (Bitmap) extras.get("data"));
 
             //Set image to vitmap view.
             imgDriverPhoto.setImageBitmap(bitmapDriverPhoto);
@@ -213,8 +197,9 @@ public class NewDriverActivity extends Move10xActivity {
             Log.d(logTag, "URI: " + selectedImagePath.getPath());
             try {
                 //Retrieve Bitmap image.
+                Bitmap originalDriverPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath);
                 Bitmap bitmapDriverPhoto = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath));
-                (new IOService()).writeImageToFile(File_Driver_Photo, bitmapDriverPhoto);
+                (new IOService()).writeImageToFile(File_Driver_Photo, originalDriverPhoto);
 
                 //Set bitmap to imageview.
                 imgDriverPhoto.setImageBitmap(bitmapDriverPhoto);
@@ -239,7 +224,7 @@ public class NewDriverActivity extends Move10xActivity {
             //Retrieve Bitmap image.
             Bundle extras = data.getExtras();
             Bitmap bitmapDrivingLicense = getResizedBitmap((Bitmap) extras.get("data"));
-            (new IOService()).writeImageToFile(File_Driving_License, bitmapDrivingLicense);
+            (new IOService()).writeImageToFile(File_Driving_License, (Bitmap) extras.get("data"));
 
             //Set image to vitmap view.
             imgDrivingLicense.setImageBitmap(bitmapDrivingLicense);
@@ -257,8 +242,9 @@ public class NewDriverActivity extends Move10xActivity {
             Log.d(logTag, "URI: " + selectedImagePath.getPath());
             try {
                 //Retrieve Bitmap image.
+                Bitmap originalDrivingLicense = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath);
                 Bitmap bitmapDrivingLicense = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath));
-                (new IOService()).writeImageToFile(File_Driving_License, bitmapDrivingLicense);
+                (new IOService()).writeImageToFile(File_Driving_License, originalDrivingLicense);
 
                 //Set image to bitmap view.
                 imgDrivingLicense.setImageBitmap(bitmapDrivingLicense);
@@ -283,7 +269,7 @@ public class NewDriverActivity extends Move10xActivity {
             //Retrieve Bitmap image.
             Bundle extras = data.getExtras();
             Bitmap bitmapVehicleInsurance = getResizedBitmap((Bitmap) extras.get("data"));
-            (new IOService()).writeImageToFile(File_Vehicle_Insurance, bitmapVehicleInsurance);
+            (new IOService()).writeImageToFile(File_Vehicle_Insurance, (Bitmap) extras.get("data"));
 
             //Set image to vitmap view.
             imgVehicleInsurence.setImageBitmap(bitmapVehicleInsurance);
@@ -301,8 +287,9 @@ public class NewDriverActivity extends Move10xActivity {
             Log.d(logTag, "URI: " + selectedImagePath.getPath());
             try {
                 //Retrieve Bitmap image.
+                Bitmap orignalBitmapVehicleInsurance = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath);
                 Bitmap bitmapVehicleInsurance = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath));
-                (new IOService()).writeImageToFile(File_Vehicle_Insurance, bitmapVehicleInsurance);
+                (new IOService()).writeImageToFile(File_Vehicle_Insurance, orignalBitmapVehicleInsurance);
 
                 //Set image to vitmap view.
                 imgVehicleInsurence.setImageBitmap(bitmapVehicleInsurance);
@@ -327,7 +314,7 @@ public class NewDriverActivity extends Move10xActivity {
             //Retrieve Bitmap image.
             Bundle extras = data.getExtras();
             Bitmap bitmapVehicleFrontPhoto = getResizedBitmap((Bitmap) extras.get("data"));
-            (new IOService()).writeImageToFile(File_Vehicle_Front, bitmapVehicleFrontPhoto);
+            (new IOService()).writeImageToFile(File_Vehicle_Front, (Bitmap) extras.get("data"));
 
             //Set image to vitmap view.
             imgVehicleFrontImage.setImageBitmap(bitmapVehicleFrontPhoto);
@@ -345,8 +332,9 @@ public class NewDriverActivity extends Move10xActivity {
             Log.d(logTag, "URI: " + selectedImagePath.getPath());
             try {
                 //Retrieve Bitmap image.
+                Bitmap originalBitmapVehicleFrontPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath);
                 Bitmap bitmapVehicleFrontPhoto = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath));
-                (new IOService()).writeImageToFile(File_Vehicle_Front, bitmapVehicleFrontPhoto);
+                (new IOService()).writeImageToFile(File_Vehicle_Front, originalBitmapVehicleFrontPhoto);
 
                 //Set bitmap to imageview.
                 imgVehicleFrontImage.setImageBitmap(bitmapVehicleFrontPhoto);
@@ -371,7 +359,7 @@ public class NewDriverActivity extends Move10xActivity {
             //Retrieve Bitmap image.
             Bundle extras = data.getExtras();
             Bitmap bitmapVehicleSidePhoto = getResizedBitmap((Bitmap) extras.get("data"));
-            (new IOService()).writeImageToFile(File_Vehicle_Side, bitmapVehicleSidePhoto);
+            (new IOService()).writeImageToFile(File_Vehicle_Side, (Bitmap) extras.get("data"));
 
             //Set image to vitmap view.
             imgVehicleSideImage.setImageBitmap(bitmapVehicleSidePhoto);
@@ -389,8 +377,9 @@ public class NewDriverActivity extends Move10xActivity {
             Log.d(logTag, "URI: " + selectedImagePath.getPath());
             try {
                 //Retrieve Bitmap image.
+                Bitmap originalBitmapVehicleSidePhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath);
                 Bitmap bitmapVehicleSidePhoto = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath));
-                (new IOService()).writeImageToFile(File_Vehicle_Side, bitmapVehicleSidePhoto);
+                (new IOService()).writeImageToFile(File_Vehicle_Side, originalBitmapVehicleSidePhoto);
 
                 //Set bitmap to imageview.
                 imgVehicleSideImage.setImageBitmap(bitmapVehicleSidePhoto);
@@ -415,7 +404,7 @@ public class NewDriverActivity extends Move10xActivity {
             //Retrieve Bitmap image.
             Bundle extras = data.getExtras();
             Bitmap bitmapVehicleBackPhoto = getResizedBitmap((Bitmap) extras.get("data"));
-            (new IOService()).writeImageToFile(File_Vehicle_Back, bitmapVehicleBackPhoto);
+            (new IOService()).writeImageToFile(File_Vehicle_Back, (Bitmap) extras.get("data"));
 
             //Set image to vitmap view.
             imgVehicleBackImage.setImageBitmap(bitmapVehicleBackPhoto);
@@ -433,8 +422,9 @@ public class NewDriverActivity extends Move10xActivity {
             Log.d(logTag, "URI: " + selectedImagePath.getPath());
             try {
                 //Retrieve Bitmap image.
+                Bitmap originalBitmapVehicleBackPhoto = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath);
                 Bitmap bitmapVehicleBackPhoto = getResizedBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImagePath));
-                (new IOService()).writeImageToFile(File_Vehicle_Back, bitmapVehicleBackPhoto);
+                (new IOService()).writeImageToFile(File_Vehicle_Back, originalBitmapVehicleBackPhoto);
 
                 //Set bitmap to imageview.
                 imgVehicleBackImage.setImageBitmap(bitmapVehicleBackPhoto);
@@ -486,6 +476,8 @@ public class NewDriverActivity extends Move10xActivity {
 
     private void OnCreateDriverClick() {
         Log.d(logTag, "OnDriverClick");
+
+        imageIndex = 0;
 
         Boolean result = validateDriverFields();
         if (result) {
@@ -565,6 +557,7 @@ public class NewDriverActivity extends Move10xActivity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
                     Toast.makeText(getBaseContext(), "Failed to reach server. Status: " + statusCode + ", json: " + errorResponse, Toast.LENGTH_LONG);
                     Log.d(logTag, "Failed to create driver. Status: " + statusCode + ", Server Response: " + errorResponse);
                 }
@@ -863,8 +856,8 @@ public class NewDriverActivity extends Move10xActivity {
             return false;
         }
 
-        //Check if all documenst are uploaded.
-       /* pnlDriverPhoto.setVisibility(View.VISIBLE);
+        //Check if all documents are uploaded.
+        pnlDriverPhoto.setVisibility(View.VISIBLE);
         btnUploadDriverPhoto.setVisibility(View.GONE);
         if (btnUploadDriverPhoto.getVisibility() == View.VISIBLE || btnUploadDrivingLicense.getVisibility() == View.VISIBLE ||
                 btnUploadVehicleInsurence.getVisibility() == View.VISIBLE || btnUploadVehicleFrontImage.getVisibility() == View.VISIBLE ||
@@ -872,7 +865,7 @@ public class NewDriverActivity extends Move10xActivity {
             //show error message
             txtUploadDocumentsError.setVisibility(View.VISIBLE);
             return false;
-        }*/
+        }
 
         Log.d(logTag, "Validation complete all fields are valid.");
         return true;
@@ -938,11 +931,17 @@ public class NewDriverActivity extends Move10xActivity {
                         for (int i = 0; i < rawJsonArray.length(); i++) {
                             regions[i] = rawJsonArray.getString(i);
                         }
-
                         //Set adapter with regions.
                         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, regions);
                         spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
                         inputRegion.setAdapter(spinnerAdapter);
+
+
+                        //Get ftp details.
+                        ftpServer = response.getString("ftpServer");
+                        ftpUserName = response.getString("userName");
+                        ftpPassword = response.getString("password");
+                        ftpDirectory = response.getString("cwd");
                     }
 
                 } catch (JSONException ex) {
@@ -1176,6 +1175,7 @@ public class NewDriverActivity extends Move10xActivity {
         //Close activity and return to previous page.
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("loadFragment", "drivers");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
@@ -1197,8 +1197,6 @@ public class NewDriverActivity extends Move10xActivity {
 
     public void uploadDriverDocuments() {
 
-        imageIndex = 0;
-
         Log.d(logTag, "uplaoding driver documents.");
 
         //Upload Driver Photo
@@ -1206,6 +1204,7 @@ public class NewDriverActivity extends Move10xActivity {
         driverDocumentUploadService1.serverFileName = driverUniqueId;
         driverDocumentUploadService1.storageFilePath = File_Driver_Photo;
         driverDocumentUploadService1.execute(null, null, null);
+
 
         //Upload driving license
         DriverDocumentUploadService driverDocumentUploadService2 = new DriverDocumentUploadService();
@@ -1236,79 +1235,76 @@ public class NewDriverActivity extends Move10xActivity {
         driverDocumentUploadService6.storageFilePath = File_Vehicle_Back;
         driverDocumentUploadService6.serverFileName = driverUniqueId + "_vback";
         driverDocumentUploadService6.execute(null, null, null);
+
     }
 
-    class DriverDocumentUploadService {
+    class DriverDocumentUploadService extends AsyncTask<Bitmap, Void, String> {
 
         public String serverFileName;
         public String storageFilePath;
 
-
-        protected String execute(String params, String params1, String params2) {
+        @Override
+        protected String doInBackground(Bitmap... params) {
             try {
 
-                Bitmap imageBitmap = new IOService().readImageFromFile(storageFilePath);
+                FTPClient ftpClient = new FTPClient();
+                ftpClient.connect(ftpServer);
+                ftpClient.login(ftpUserName, ftpPassword);
+                Log.d(logTag, ftpClient.getReplyString());
+                Log.d(logTag, "current directory: " + ftpClient.printWorkingDirectory());
+                ftpClient.changeWorkingDirectory(ftpDirectory);
+                Log.d(logTag, ftpClient.getReplyString());
+                Log.d(logTag, "Uploading file: " + storageFilePath + " to " + serverFileName);
 
-                //Encode bitmap
-                ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 40, stream1);
-                byte[] byte_arr = stream1.toByteArray();
-                String encodedString = Base64.encodeToString(byte_arr, 0);
+                String ftpReply = ftpClient.getReplyString();
+                if (ftpReply.contains("250")) {
+                    ftpClient.setFileType(org.apache.commons.net.ftp.FTP.BINARY_FILE_TYPE);
 
-                AsyncHttpClient client = new AsyncHttpClient();
-                RequestParams requestParams = new RequestParams();
+                    //Preapare input stream.
+                    serverFileName += ".jpg";
+                    BufferedInputStream buffIn = null;
+                    File file = new File(android.os.Environment.getExternalStorageDirectory(), storageFilePath);
+                    buffIn = new BufferedInputStream(new FileInputStream(file));
+                    ftpClient.enterLocalPassiveMode();
 
-                requestParams.put("image", encodedString);
-                requestParams.put("filename", serverFileName + ".jpg");
-                Log.d(logTag, "Uploading file: " + serverFileName + ", index: " + imageIndex);
-                if (Looper.myLooper() == null) {
-                    Looper.prepare();
+
+                    boolean result = ftpClient.storeFile(serverFileName, buffIn);
+                    buffIn.close();
+                    ftpClient.logout();
+                    ftpClient.disconnect();
+
+                    return "success";
+                } else {
+                    Log.d(logTag, "Invalid server response: " + ftpReply);
+                    throw new IOException("Invalid ftp server response: " + ftpReply);
                 }
 
-
-                SyncHttpClient client1 = new SyncHttpClient();
-
-
-                client.post(Url.driverDocumentsUrl, requestParams, new AsyncHttpResponseHandler() {
-
-                    @Override
-                    public void onStart() {
-                        // called before request is started
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-                        imageIndex++;
-                        Log.d(logTag, "File Upload Complete: " + serverFileName + ", index: " + imageIndex);
-                        if (imageIndex == 6) {
-                            onDriverCreationSuccess();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-
-                        if (statusCode == 404) {
-                            Toast.makeText(getBaseContext(), "Requested resource not found", Toast.LENGTH_LONG).show();
-                            Log.e(logTag, "Requested resource not found");
-                        }
-                        // When Http response code is '500'
-                        else if (statusCode == 500) {
-                            Toast.makeText(getBaseContext(), "Something went wrong at server end", Toast.LENGTH_LONG).show();
-                            Log.e(logTag, "Something went wrong at server end");
-                        }
-                        // When Http response code other than 404, 500
-                        else {
-                            Toast.makeText(getBaseContext(), "Device not connected to Internet\nHTTP Status code : "
-                                    + statusCode, Toast.LENGTH_LONG).show();
-                            Log.e(logTag, "Device not connected to Internet\n" + "HTTP Status code : \"\n" + statusCode);
-                        }
-                    }
-                });
+            } catch (SocketException e) {
+                Log.e(logTag, e.getStackTrace().toString());
+                e.printStackTrace();
+            } catch (UnknownHostException e) {
+                Log.e(logTag, e.getStackTrace().toString());
+                e.printStackTrace();
+            } catch (IOException ex) {
+                Log.e(logTag, "IO exception: " + ex.getMessage());
+                ex.printStackTrace();
             } catch (Exception e) {
+                Log.e(logTag, e.getStackTrace().toString());
                 e.printStackTrace();
             }
-            return null;
+            return "error";
+        }
+
+        @Override
+        protected void onPostExecute(String msg) {
+            super.onPostExecute(msg);
+            if (msg.equals("success")) {
+                imageIndex++;
+                Log.d(logTag, "File Upload Complete: " + serverFileName + ", index: " + imageIndex);
+                if (imageIndex == 6) {
+                    onDriverCreationSuccess();
+                }
+            }
         }
     }
 }

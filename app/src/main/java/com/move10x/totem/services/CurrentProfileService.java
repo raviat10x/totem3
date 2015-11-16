@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.move10x.totem.models.AppError;
 import com.move10x.totem.models.CurrentProfile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,12 +18,13 @@ import java.util.Map;
 public class CurrentProfileService {
 
     private Context _context = null;
+    private String logTag = "currentProfileService";
 
     public CurrentProfileService(Context context) {
         this._context = context;
     }
 
-   public void addAttribute(String key, String value) {
+    public void addAttribute(String key, String value) {
 
     }
 
@@ -42,7 +45,7 @@ public class CurrentProfileService {
             try {
                 do {
                     rawProfile.put(cursor.getString(0), cursor.getString(1));
-                    Log.d("login", cursor.getString(0) + "," + cursor.getString(1));
+                    Log.d(logTag, cursor.getString(0) + "," + cursor.getString(1));
                 } while (cursor.moveToNext());
 
             } finally {
@@ -87,14 +90,14 @@ public class CurrentProfileService {
             Log.d("login", "Profile Created successfully.");
         } catch (Exception ex) {
             //Dont commit transaction
-            Log.e("login", "Failed to Create Profile. " + ex.getMessage());
-          //  throw ex;
+            Log.e(logTag, "Failed to Create Profile. " + ex.getMessage());
+            //  throw ex;
         } finally {
             dbInstance.endTransaction();
         }
     }
 
-    public void ClearProfile(){
+    public void ClearProfile() {
         Map<String, String> rawProfile = new HashMap<String, String>();
         SQLiteDatabase dbInstance = new SQLLiteService(_context).getDBInstance();
 
@@ -110,6 +113,56 @@ public class CurrentProfileService {
         } finally {
             dbInstance.endTransaction();
         }
+    }
+
+    public void logError(AppError error) {
+        //Check if table is created.
+        Map<String, String> rawProfile = new HashMap<String, String>();
+        SQLiteDatabase dbInstance = new SQLLiteService(_context).getDBInstance();
+
+        dbInstance.beginTransaction();
+        try {
+
+            Log.d(logTag, "Logging app error: " + error.toString());
+
+            // CREATE TABLE AppError( message TEXT , activity TEXT, errorDetails TEXT, additionalInfo TEXT)";
+            String query = "Insert into TABLE_AppError (message, activity, errorDetails, additionalInfo) Values ("
+                    + "'" + error.getMessage() + "', "
+                    + "'" + error.getActivity() + "', "
+                    + "'" + error.getErrorDetails() + "', "
+                    + "'" + error.getAdditionalInfo() + "'); ";
+            Log.d(logTag, "Error Query: " + query);
+            dbInstance.execSQL(query);
+            dbInstance.setTransactionSuccessful();
+            Log.d(logTag, "Error logged successfully.");
+        } catch (Exception ex) {
+            //Dont commit transaction
+            Log.e(logTag, "Failed to log in sqllite. " + ex.getMessage());
+        } finally {
+            dbInstance.endTransaction();
+        }
+    }
+
+    public ArrayList<AppError> getErrors() {
+        ArrayList<AppError> errorList = new ArrayList<AppError>();
+
+        SQLiteDatabase dbInstance = new SQLLiteService(_context).getDBInstance();
+        Cursor cursor = dbInstance.rawQuery("select * from TABLE_AppError", null, null);
+        // CREATE TABLE AppError( message TEXT , activity TEXT, errorDetails TEXT, additionalInfo TEXT)";
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    AppError appError = new AppError();
+                    appError.setMessage(cursor.getString(0));
+                    appError.setErrorDetails(cursor.getString(1));
+                    appError.setAdditionalInfo(cursor.getString(2));
+                    appError.setActivity(cursor.getString(3));
+                    errorList.add(appError);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return errorList;
     }
 }
 

@@ -1,9 +1,13 @@
 package com.move10x.totem.design;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -11,59 +15,40 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
+import com.move10x.totem.models.Driver;
+import com.move10x.totem.models.JsonHttpResponseHandler;
+import com.move10x.totem.models.Url;
+import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.CurrentProfileService;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
-
     View view;
+    private static String logTag = "homeFragment";
     Context context;
     FloatingActionButton floatingActionButton;
-    TextView txtUserName;
-    TextView txtUserType;
-
+    TextView txtUserName, txtUserType;
+    TextView txtTotalDrivers, txTerminatedDrivers, txtDriverOnTrip, txtDriversAvailable, txtDriversOffduty;
+    TableLayout tblDriverInfo;
+    ProgressBar progressBar;
     private DriverFragment.OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,25 +57,40 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
         txtUserName = (TextView) view.findViewById(R.id.txtUserName);
         txtUserType = (TextView) view.findViewById(R.id.txtUserType);
+        tblDriverInfo = (TableLayout) view.findViewById(R.id.tblDriverInfo);
+        progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);
+        txtTotalDrivers = (TextView) view.findViewById(R.id.txtTotalDrivers);
+        txtDriverOnTrip = (TextView) view.findViewById(R.id.txtDriverOnTrip);
+        txtDriversAvailable = (TextView) view.findViewById(R.id.txtDriversAvailable);
+        txtDriversOffduty = (TextView) view.findViewById(R.id.txtDriversOffduty);
+        txTerminatedDrivers = (TextView) view.findViewById(R.id.txTerminatedDrivers);
+
         getActivity().setTitle("Home");
-        Log.d("homeFragement", "Fetching Profile Details");
+        Log.d(logTag, "Fetching Current Profile Details");
         Context context = getActivity().getApplicationContext();
         CurrentProfile profile = new CurrentProfileService(context).getCurrentProfile();
         txtUserName.setText(profile.getUserName());
         txtUserType.setText(profile.getUserType().toUpperCase());
-        Log.d("homeFragement", "Finished fetching Profile Details." + profile.toString());
+        Log.d(logTag, "Finished current fetching Profile Details." + profile.toString());
+
+
+        txtTotalDrivers.setText("sd");
+        txTerminatedDrivers.setText("sd");
+        txtDriverOnTrip.setText("sd");
+        txtDriversAvailable.setText("sd");
+        txtDriversOffduty.setText("sd");
+
+        //Fetch profile driver details.
+        fetchDriverInfo();
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -104,47 +104,132 @@ public class HomeFragment extends Fragment {
     }
 
     public void onDriverAddClick() {
-        Log.d("driverFragment", "on Add driver click.");
+        Log.d(logTag, "on Add driver click.");
         Intent intent = new Intent(getActivity().getApplicationContext(), NewDriverActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
     }
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+
+    private void fetchDriverInfo() {
+
+        showProgress(true);
+
+        //Request Parameters.
+        final CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
+        Log.d(logTag, "Fetch drivers for user: " + currentProfile.toString());
+        String uid = currentProfile.getUserId();
+        Log.d(logTag, "Fetch drivers for userId: " + uid);
+        RequestParams loginParameters = new RequestParams();
+        loginParameters.put("uid", uid);
+        loginParameters.put("tag", "vrm_get_drivers");
+
+        //Async driver list fetch.
+        AsyncHttpService.get(Url.apiBaseUrl, loginParameters, new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        // If the response is JSONObject instead of expected JSONArray.
+                        Log.d(logTag, "Parsing getDriverList() response: " + response);
+                        try {
+                            if (response.getString("success") != null && response.getString("success").equals("1")) {
+                                JSONArray jsonDriverList = response.getJSONArray("drivers");
+                                List<Driver> drivers = new ArrayList<Driver>();
+
+                                int totalDrivers = 0, terminatedDrivers = 0, onTripDrivers = 0, availableDrivers = 0, offdutyDrivers = 0;
+                                for (int i = 0; i < jsonDriverList.length(); i++) {
+
+                                    //Read driver
+                                    Driver currentDriver = Driver.decodeJsonForList(jsonDriverList.getJSONObject(i));
+                                    drivers.add(currentDriver);
+
+                                    //Calculate category wise count.
+                                    totalDrivers++;
+                                    if (currentDriver.getWorkStatus().equals(Driver.WorkStatus_Terminated)) {
+
+                                        //If driver not active, set color red for work and hide duty status.
+                                        terminatedDrivers++;
+
+                                    } else if (currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
+
+                                        //If work status is active, check for duty status.
+                                        if (currentDriver.getDutyStatus().equals(Driver.DutyStatus_Available))
+                                            availableDrivers++;
+                                        else if (currentDriver.getDutyStatus().equals(Driver.DutyStatus_Offduty))
+                                            offdutyDrivers++;
+                                        else
+                                            onTripDrivers++;
+                                    }
+                                }
+
+                                Log.d(logTag, "Json Parsed.");
+                                txtTotalDrivers.setText(Integer.toString(totalDrivers));
+                                txTerminatedDrivers.setText(Integer.toString(terminatedDrivers));
+                                txtDriverOnTrip.setText(Integer.toString(onTripDrivers));
+                                txtDriversAvailable.setText(Integer.toString(availableDrivers));
+                                txtDriversOffduty.setText(Integer.toString(offdutyDrivers));
+
+                            }
+                        } catch (JSONException ex) {
+                            Log.e(logTag, "json parsing error: " + ex.getMessage());
+                            ex.printStackTrace();
+                        }
+
+                        showProgress(false);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable
+                            throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable
+                            throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String
+                            responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                    }
+                }
+
+        );
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public void showProgress(final boolean show) {
+        Log.d(logTag, "Toggle progress bar. Set visiblity to: " + show);
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            tblDriverInfo.setVisibility(show ? View.GONE : View.VISIBLE);
+            tblDriverInfo.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    tblDriverInfo.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressBar.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+            tblDriverInfo.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-       /* try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

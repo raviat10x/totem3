@@ -35,8 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends Move10xActivity
-        implements HomeFragment.OnFragmentInteractionListener,
-        DriverFragment.OnFragmentInteractionListener {
+        implements DriverFragment.OnFragmentInteractionListener {
 
     FrameLayout fragementHolder;
     Spinner driverFilterSpinner;
@@ -229,6 +228,7 @@ public class MainActivity extends Move10xActivity
                             Log.d("mainActivity", "Finished Changing Fragement to Drivers On Map Fragement.");*/
                             Log.d("mainActivity", "on Activity Button Click.");
                             Intent intent = new Intent(v.getContext(), DriversOnMapActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             v.getContext().startActivity(intent);
                         /*} else if (selectedItem.getItemName().toLowerCase().equals("activity")) {   //Activity
                             Log.d("mainActivity", "on Activity Button Click.");
@@ -240,6 +240,7 @@ public class MainActivity extends Move10xActivity
                             new CurrentProfileService(getApplicationContext()).ClearProfile();
                             //Redirect to login button.
                             Intent intent = new Intent(v.getContext(), LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             v.getContext().startActivity(intent);
                             ((MainActivity) v.getContext()).finish();
                         }

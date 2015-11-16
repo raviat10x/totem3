@@ -22,9 +22,10 @@ public class Driver{
     public static String WorkStatus_Test = "TEST";
     public static String WorkStatus_Terminated = "TERMINATED";
     public static String WorkStatus_Active = "ACTIVE";
+    public static String DutyStatus_Pending_Verify = "PENDING_VERIFY";
     public static String WorkStatus_Notice = "NOTICE";
-    public static String WorkStatus_Training = "TRAINING";
-    public static String WorkStatus_Outside = "OUTSIDE";
+    public static String DutyStatus_Training = "TRAINING";
+    public static String DutyStatus_Outside = "OUTSIDE";
 
 
     private String firstName;

@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,11 +27,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.android.gms.maps.model.Marker;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
 import com.move10x.totem.models.Driver;
+import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.CurrentProfileService;
@@ -43,8 +42,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class
-        DriversOnMapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private HashMap<Marker, Driver> driverMarkers = new HashMap<Marker, Driver>();
@@ -223,6 +221,7 @@ public class
                                     Intent intent = new Intent(getApplicationContext(), DriverDetailsActivity.class);
                                     Driver driver = driverMarkers.get(marker);
                                     intent.putExtra("driverUid", driver.getuId());
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     Log.d("driverOnMap", "Driver UID: " + driver.getuId());
                                     startActivity(intent);
                                 }

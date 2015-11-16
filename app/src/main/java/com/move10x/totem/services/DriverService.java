@@ -20,7 +20,7 @@ public class DriverService {
 
     private List<Driver> driverList = null;
 
-    public List<Driver> getDriverList() {
+   /* public List<Driver> getDriverList() {
 
       if (driverList == null) {
             driverList = new ArrayList<Driver>();
@@ -29,9 +29,9 @@ public class DriverService {
             driverList.add(new Driver("2","Balu", "Munde", "9938244573", Driver.DutyStatus_TOWARDS_LOADING,
                     Driver.WorkStatus_Active, 18.985519, 72.819958, "freelance", "Tata", "Ace", "max"));
             driverList.add(new Driver("3","Ramesh", "Pujari", "9938244573", Driver.DutyStatus_COMPLETE,
-                    Driver.WorkStatus_Training, 18.955974, 72.831287, "freelance", "Tata", "Ace", "max"));
+                    Driver.DutyStatus_Training, 18.955974, 72.831287, "freelance", "Tata", "Ace", "max"));
             driverList.add(new Driver("4","Sanjay", "Rajmane", "9938244573", Driver.DutyStatus_Offduty,
-                    Driver.WorkStatus_Outside, 18.984870, 72.847767, "freelance", "Tata", "Ace", "max"));
+                    Driver.DutyStatus_Outside, 18.984870, 72.847767, "freelance", "Tata", "Ace", "max"));
             driverList.add(new Driver("5","Vijay", "Pal", "9938244573", Driver.DutyStatus_UNLOADING,
                     Driver.WorkStatus_Active, 18.932918, 72.826481, "freelance", "Tata", "Ace", "max"));
             driverList.add(new Driver("6","Devidas", "Vasant", "9938244573", Driver.DutyStatus_Available,
@@ -55,7 +55,7 @@ public class DriverService {
             }
         }
         return null;
-    }
+    }*/
 
 
 }
