@@ -125,7 +125,8 @@ public class DriverOnMapFragment extends Fragment {
         Log.d("driverFragment", "Fetch drivers for userId: " + uid);
         RequestParams loginParameters = new RequestParams();
         loginParameters.put("uid", uid);
-        loginParameters.put("tag", "vrm_get_drivers");
+        loginParameters.put("role", currentProfile.getUserType());
+        loginParameters.put("tag", "vrm_get_drivers_1");
 
         //Async Driverlist fetch.
         AsyncHttpService.get(Url.apiBaseUrl, loginParameters, new JsonHttpResponseHandler() {
@@ -133,7 +134,7 @@ public class DriverOnMapFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray.
-                Log.d("driverFragment", "Parsing getDriverList() response. ");
+                Log.d("driverFragment", "Parsing getDriverList() response: " + response);
                 try {
 
                     if (response.getString("success") != null && response.getString("success").equals("1")) {

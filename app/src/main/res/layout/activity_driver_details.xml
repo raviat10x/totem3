@@ -23,14 +23,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/icon_call"
-        app:backgroundTint="@color/green" />
+    <!--<android.support.design.widget.FloatingActionButton-->
+    <!--android:id="@+id/btnCall"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|end"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:src="@drawable/icon_call"-->
+    <!--app:backgroundTint="@color/green" />-->
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -116,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+
                 android:background="#ffffff"
                 android:orientation="vertical">
 
@@ -126,6 +127,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/layout1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
@@ -149,21 +151,40 @@
                             android:textSize="13dp" />
                     </LinearLayout>
 
-
-                    <ImageButton
-                        android:id="@+id/btnUpdateRemarks"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@null"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/icon_edit" />
+                        android:layout_marginTop="5dp">
+
+                        <ImageButton
+                            android:id="@+id/btnUpdateRemarks"
+                            android:layout_width="40dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:elevation="3dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/icon_edit" />
 
 
+                        <ImageButton
+                            android:id="@+id/btnCall"
+                            android:layout_width="40dp"
+                            android:layout_height="35dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_toRightOf="@+id/btnUpdateRemarks"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:backgroundTint="@color/green"
+                            android:elevation="3dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/icon_call" />
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <View
@@ -277,7 +298,7 @@
                         style="@style/DriverDetailsLabel"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="Vehicle Reestration No." />
+                        android:text="Vehicle Registration No." />
 
                     <TextView
                         android:id="@+id/txtVehicleRegNo"
@@ -350,8 +371,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:visibility="gone" />
 

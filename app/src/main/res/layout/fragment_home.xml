@@ -10,7 +10,9 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#eeeeee"
         android:orientation="vertical">
 
         <ImageView
@@ -25,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="User Name"
             android:textColor="#000000"
             android:textSize="20dp" />
@@ -35,192 +37,256 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:text="VRM"
             android:textSize="20dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.7dp"
-            android:layout_margin="20dp"
-            android:background="#d3d3d3"></View>
-
         <!--Driver Information-->
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
 
             <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/tblDriverInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:visibility="gone"
-                android:stretchColumns="1">
+                android:stretchColumns="1"
+                android:visibility="gone">
 
-                <TableRow
-                    android:layout_width="match_parent"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:elevation="3dp"
+                    card_view:cardCornerRadius="4dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:orientation="vertical"
-                        android:padding="10dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
                         <TextView
-                            style="@style/HomeDriverInfoLabel"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Total Drivers"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/txtTotalDrivers"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="3" />
+                            android:text="Driver Details"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
 
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="33"
+                                android:orientation="vertical"
+                                android:padding="6dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Total"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/txtTotalDrivers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingTop="5dp"
+                                    android:text="3" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="33"
+                                android:orientation="vertical"
+                                android:padding="6dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pending"
+                                    android:textColor="#FFC40C"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/txtPendingDrivers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:textColor="#FCC910"
+                                    android:paddingTop="5dp"
+                                    android:text="3" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="33"
+                                android:orientation="vertical"
+                                android:padding="6dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="Terminated"
+                                    android:textColor="#b30000"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/txTerminatedDrivers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingTop="5dp"
+                                    android:text="3"
+                                    android:textColor="#ff4d4d" />
+
+                            </LinearLayout>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.7dp"
+                                android:layout_margin="3dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp"
+                                android:background="#d3d3d3"></View>
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="33"
+                                android:orientation="vertical"
+                                android:padding="6dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="OnTrip"
+                                    android:textColor="#0000ff"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/txtDriverOnTrip"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingTop="5dp"
+                                    android:text="3"
+                                    android:textColor="#9999ff" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="33"
+                                android:orientation="vertical"
+                                android:padding="8dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="AVAILABLE"
+                                    android:textColor="#008000"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/txtDriversAvailable"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingTop="5dp"
+                                    android:text="3"
+                                    android:textColor="#66b266" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="33"
+                                android:orientation="vertical"
+                                android:padding="8dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="OFFDUTY"
+                                    android:textColor="#b30000"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/txtDriversOffduty"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingTop="5dp"
+                                    android:text="3"
+                                    android:textColor="#ff4d4d" />
+
+                            </LinearLayout>
+
+                        </TableRow>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="50"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            style="@style/HomeDriverInfoLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="Terminated Drivers"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/txTerminatedDrivers"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="3" />
-
-                    </LinearLayout>
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="33"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            style="@style/HomeDriverInfoLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="OnTrip"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/txtDriverOnTrip"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="3" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="33"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            style="@style/HomeDriverInfoLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="AVAILABLE"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/txtDriversAvailable"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="3" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="33"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <TextView
-                            style="@style/HomeDriverInfoLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="OFFDUTY"
-                            android:textSize="15dp" />
-
-                        <TextView
-                            android:id="@+id/txtDriversOffduty"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="3" />
-
-                    </LinearLayout>
-
-                </TableRow>
-
+                </android.support.v7.widget.CardView>
             </TableLayout>
 
             <ProgressBar
                 android:id="@+id/driversProgress"
-                android:layout_marginTop="15dp"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center" />
+                android:visibility="gone"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingAddButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/ic_add_white_24dp" />
 
 </FrameLayout>

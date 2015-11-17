@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class HomeFragment extends Fragment {
     Context context;
     FloatingActionButton floatingActionButton;
     TextView txtUserName, txtUserType;
-    TextView txtTotalDrivers, txTerminatedDrivers, txtDriverOnTrip, txtDriversAvailable, txtDriversOffduty;
+    TextView txtTotalDrivers, txTerminatedDrivers, txtDriverOnTrip, txtDriversAvailable, txtDriversOffduty, txtPendingDrivers;
     TableLayout tblDriverInfo;
     ProgressBar progressBar;
     private DriverFragment.OnFragmentInteractionListener mListener;
@@ -73,6 +74,7 @@ public class HomeFragment extends Fragment {
         txtDriversAvailable = (TextView) view.findViewById(R.id.txtDriversAvailable);
         txtDriversOffduty = (TextView) view.findViewById(R.id.txtDriversOffduty);
         txTerminatedDrivers = (TextView) view.findViewById(R.id.txTerminatedDrivers);
+        txtPendingDrivers = (TextView) view.findViewById(R.id.txtPendingDrivers);
 
         getActivity().setTitle("Home");
         Log.d(logTag, "Fetching Current Profile Details");
@@ -83,23 +85,22 @@ public class HomeFragment extends Fragment {
         Log.d(logTag, "Finished current fetching Profile Details." + profile.toString());
 
 
-        txtTotalDrivers.setText("sd");
-        txTerminatedDrivers.setText("sd");
-        txtDriverOnTrip.setText("sd");
-        txtDriversAvailable.setText("sd");
-        txtDriversOffduty.setText("sd");
+        txtTotalDrivers.setText("");
+        txTerminatedDrivers.setText("");
+        txtDriverOnTrip.setText("");
+        txtDriversAvailable.setText("");
+        txtDriversOffduty.setText("");
+        txtPendingDrivers.setText("");
 
         //Fetch profile driver details.
-        fetchDriverInfo();
-
-        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onDriverAddClick();
-            }
-        });
-
+        progressBar.setVisibility(View.VISIBLE);
+        ((CardView) view.findViewById(R.id.card_view)).setVisibility(View.VISIBLE);
+        if (profile.getUserType().equals("VRM"))
+            fetchDriverInfo();
+        else {
+            progressBar.setVisibility(View.GONE);
+            ((CardView) view.findViewById(R.id.card_view)).setVisibility(View.GONE);
+        }
         return view;
     }
 
@@ -121,7 +122,8 @@ public class HomeFragment extends Fragment {
         Log.d(logTag, "Fetch drivers for userId: " + uid);
         RequestParams loginParameters = new RequestParams();
         loginParameters.put("uid", uid);
-        loginParameters.put("tag", "vrm_get_drivers");
+        loginParameters.put("role", currentProfile.getUserType());
+        loginParameters.put("tag", "vrm_get_drivers_1");
 
         //Async driver list fetch.
         AsyncHttpService.get(Url.apiBaseUrl, loginParameters, new JsonHttpResponseHandler() {
@@ -135,7 +137,7 @@ public class HomeFragment extends Fragment {
                                 JSONArray jsonDriverList = response.getJSONArray("drivers");
                                 List<Driver> drivers = new ArrayList<Driver>();
 
-                                int totalDrivers = 0, terminatedDrivers = 0, onTripDrivers = 0, availableDrivers = 0, offdutyDrivers = 0;
+                                int totalDrivers = 0, terminatedDrivers = 0, onTripDrivers = 0, availableDrivers = 0, offdutyDrivers = 0, pendingDrivers = 0;
                                 for (int i = 0; i < jsonDriverList.length(); i++) {
 
                                     //Read driver
@@ -149,6 +151,8 @@ public class HomeFragment extends Fragment {
                                         //If driver not active, set color red for work and hide duty status.
                                         terminatedDrivers++;
 
+                                    } else if (currentDriver.getWorkStatus().contains("PENDING")) {
+                                            pendingDrivers++;
                                     } else if (currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
 
                                         //If work status is active, check for duty status.
@@ -167,6 +171,7 @@ public class HomeFragment extends Fragment {
                                 txtDriverOnTrip.setText(Integer.toString(onTripDrivers));
                                 txtDriversAvailable.setText(Integer.toString(availableDrivers));
                                 txtDriversOffduty.setText(Integer.toString(offdutyDrivers));
+                                txtPendingDrivers.setText(Integer.toString(pendingDrivers));
 
                             }
                         } catch (JSONException ex) {

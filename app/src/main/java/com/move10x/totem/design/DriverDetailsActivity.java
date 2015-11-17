@@ -90,13 +90,13 @@ public class DriverDetailsActivity extends Move10xActivity {
         getDriverDetails(uId);
 
         //Floating call button.
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btnCall);
-        fab.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
+        ImageButton fab = (ImageButton) findViewById(R.id.btnCall);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(logTag, "On call button click.");
                 String number = "tel:" + driverDetails.getMobileNo();
-                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(number));
+                Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
                 startActivity(callIntent);
             }
         });
@@ -174,7 +174,7 @@ public class DriverDetailsActivity extends Move10xActivity {
                             txtRemarks.setText(driverDetails.getRemarks());
                             Date commentDate = (new SimpleDateFormat("yyyy-MM-dd hh:mm:ss")).parse(driverDetails.getRemarksTimeStamp());
                             txtRemarksDate.setText((new SimpleDateFormat("dd-MM-yyyy hh:mm")).format(commentDate));
-                        }else{
+                        } else {
                             txtRemarks.setText("None");
                             txtRemarksDate.setVisibility(View.GONE);
                         }
@@ -223,8 +223,7 @@ public class DriverDetailsActivity extends Move10xActivity {
 
         //Show dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Title");
-
+        builder.setTitle("Change driver remarks");
         final EditText input = new EditText(this);
         input.setSingleLine(false);
         input.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
