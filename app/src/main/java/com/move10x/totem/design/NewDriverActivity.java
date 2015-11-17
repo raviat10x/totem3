@@ -536,18 +536,19 @@ public class NewDriverActivity extends Move10xActivity {
 
 
             //Async Driverlist fetch.
-            AsyncHttpService.post(Url.registerDriverUrl, requestParams, new JsonHttpResponseHandler(){
+            AsyncHttpService.post(Url.registerDriverUrl, requestParams, new JsonHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d(logTag, "At create driver success response: " + response);
+                    Log.d(logTag, "At create driver success response: " + response);
                     try {
-                        JSONObject responseBody = (JSONObject)response.get(0);
+                        JSONObject responseBody = (JSONObject) response.get(0);
                         if (responseBody.has("result") && responseBody.getString("result").equals("fail")) {
                             //Failure
                             Toast.makeText(getBaseContext(), responseBody.getString("error_msg"), Toast.LENGTH_LONG);
                         } else {
                             //Success
+                            Log.d(logTag, "Driver created successfully. Uploading documents now.");
                             uploadDriverDocuments();
                         }
                     } catch (JSONException ex) {
@@ -857,8 +858,7 @@ public class NewDriverActivity extends Move10xActivity {
         }
 
         //Check if all documents are uploaded.
-        pnlDriverPhoto.setVisibility(View.VISIBLE);
-        btnUploadDriverPhoto.setVisibility(View.GONE);
+        txtUploadDocumentsError.setVisibility(View.GONE);
         if (btnUploadDriverPhoto.getVisibility() == View.VISIBLE || btnUploadDrivingLicense.getVisibility() == View.VISIBLE ||
                 btnUploadVehicleInsurence.getVisibility() == View.VISIBLE || btnUploadVehicleFrontImage.getVisibility() == View.VISIBLE ||
                 btnUploadVehicleSideImage.getVisibility() == View.VISIBLE || btnUploadVehicleBackImage.getVisibility() == View.VISIBLE) {
@@ -1205,7 +1205,6 @@ public class NewDriverActivity extends Move10xActivity {
         driverDocumentUploadService1.storageFilePath = File_Driver_Photo;
         driverDocumentUploadService1.execute(null, null, null);
 
-
         //Upload driving license
         DriverDocumentUploadService driverDocumentUploadService2 = new DriverDocumentUploadService();
         driverDocumentUploadService2.storageFilePath = File_Driving_License;
@@ -1246,7 +1245,7 @@ public class NewDriverActivity extends Move10xActivity {
         @Override
         protected String doInBackground(Bitmap... params) {
             try {
-
+                Log.d(logTag, "Building ftp client for uploading image: " + serverFileName);
                 FTPClient ftpClient = new FTPClient();
                 ftpClient.connect(ftpServer);
                 ftpClient.login(ftpUserName, ftpPassword);
@@ -1273,6 +1272,7 @@ public class NewDriverActivity extends Move10xActivity {
                     ftpClient.logout();
                     ftpClient.disconnect();
 
+                    Log.d(logTag, "file uploaded successfully. Reply: " + ftpClient.getReplyString());
                     return "success";
                 } else {
                     Log.d(logTag, "Invalid server response: " + ftpReply);

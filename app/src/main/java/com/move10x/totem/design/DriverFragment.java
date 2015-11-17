@@ -41,15 +41,6 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DriverFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DriverFragment extends Fragment {
 
     LinearLayout driverListContainer;
@@ -59,7 +50,6 @@ public class DriverFragment extends Fragment {
     FloatingActionButton floatingActionButton;
     View view;
     Context context;
-
 
     private OnFragmentInteractionListener mListener;
 
@@ -93,6 +83,7 @@ public class DriverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
         view = inflater.inflate(R.layout.fragment_driver, container, false);
         getActivity().setTitle("Drivers");
         driverListContainer = (LinearLayout) view.findViewById(R.id.driverListContainer);
@@ -101,13 +92,17 @@ public class DriverFragment extends Fragment {
 
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
+        if(currentProfile.getUserType().equals("VRM")) {
+            floatingActionButton.setVisibility(View.VISIBLE);
+        }else{
+            floatingActionButton.setVisibility(View.GONE);
+        }
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onDriverAddClick();
             }
         });
-
 
         //Fetch drivers of customer.
         showProgress(true);
@@ -203,7 +198,8 @@ public class DriverFragment extends Fragment {
         Log.d("driverFragment","Fetch drivers for userId: " + uid);
         RequestParams loginParameters = new RequestParams();
         loginParameters.put("uid", uid);
-        loginParameters.put("tag", "vrm_get_drivers");
+        loginParameters.put("role", currentProfile.getUserType());
+        loginParameters.put("tag", "vrm_get_drivers_1");
 
         //Async Driverlist fetch.
         AsyncHttpService.get(Url.apiBaseUrl, loginParameters, new JsonHttpResponseHandler() {
