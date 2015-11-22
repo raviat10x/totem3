@@ -133,7 +133,7 @@ public class MainActivity extends Move10xActivity
             drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
 
 //            drawerList.add(new DrawerListItem("Leads", R.drawable.icon_person_pin));
-
+            //Final
             drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
             //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
             drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
