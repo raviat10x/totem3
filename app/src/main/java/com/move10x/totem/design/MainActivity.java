@@ -138,8 +138,8 @@ public class MainActivity extends Move10xActivity
             //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
             drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
         }
+        //Crm Profile
         else {
-
         drawerList.add(new DrawerListItem("User", R.drawable.icon_account_circle));
         drawerList.add(new DrawerListItem("Home", R.drawable.icon_home));
         drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
