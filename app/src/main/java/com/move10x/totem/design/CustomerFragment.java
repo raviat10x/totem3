@@ -80,7 +80,7 @@ public class CustomerFragment extends Fragment {
 
         CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
         view = inflater.inflate(R.layout.fragment_customer, container, false);
-        getActivity().setTitle("Customers");
+        getActivity().setTitle("Leads");
         customerListContainer = (LinearLayout) view.findViewById(R.id.customerListContainer);
         customerList = (ListView) view.findViewById(R.id.customerList);
         progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);

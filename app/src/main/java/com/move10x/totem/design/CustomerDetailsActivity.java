@@ -76,7 +76,7 @@ public class CustomerDetailsActivity extends Move10xActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Customer Details");
+        setTitle("Lead Details");
 
 
         //Read xml elements.

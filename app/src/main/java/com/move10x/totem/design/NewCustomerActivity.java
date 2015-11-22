@@ -71,8 +71,8 @@ import cz.msebera.android.httpclient.Header;
 public class NewCustomerActivity extends AppCompatActivity {
 
     private static final String TAG = "NewCustomerActivity";
-//    static final String File_Customer_VCard = "customerPic.jpeg";
-    static final String File_Customer_VCard = "";
+    static final String File_Customer_VCard = "customerPic.jpeg";
+//    static final String File_Customer_VCard = "";
     private static final int INTENT_REQUEST_CAMERA_CUSTOMER_VCARD = 1002;
     private static final int INTENT_REQUEST_GALLERY_CUSTOMER_PHOTO = 1003;
     private EditText txtMobileNumber;
@@ -104,6 +104,7 @@ public class NewCustomerActivity extends AppCompatActivity {
     private String ftpServer, ftpUserName, ftpPassword, ftpDirectory;
     private static String customerPicFilePath = null;
     private EditText companyName;
+    boolean uploadbuttonclicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class NewCustomerActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Add Customer");
+        setTitle("Add Lead");
 
 
         GPSTracker gpsTracker = new GPSTracker(this);
@@ -157,6 +158,8 @@ public class NewCustomerActivity extends AppCompatActivity {
         txtPin = (EditText) findViewById(R.id.txtPin);
         txtLandline = (EditText) findViewById(R.id.txtLandline);
         companyName = (EditText) findViewById(R.id.companyName);
+
+        uploadbuttonclicked = false;
 //        txtCustomerCurrentLocation = (TextView) findViewById(R.id.txtCustomerCurrentLocation);
         RegisterButtonClickEvents();
 
@@ -230,7 +233,7 @@ public class NewCustomerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                uploadbuttonclicked = true;
                 showCustomerPhotoImageSource();
 
             }
@@ -315,6 +318,11 @@ public class NewCustomerActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void OnCreateCustomerClick() {
 //        Log.d(TAG, "OnCustomerClick");
 
@@ -392,7 +400,9 @@ public class NewCustomerActivity extends AppCompatActivity {
 
             try {
 //                Log.d(TAG, "Inside myFiles");
-                requestParams.put("vCardImg", myFile);
+                if(uploadbuttonclicked) {
+                    requestParams.put("vCardImg", myFile);
+                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -436,6 +446,7 @@ public class NewCustomerActivity extends AppCompatActivity {
                             showProgress(false);
                         } else {
                             //Error
+
                             Toast.makeText(getApplicationContext(), response.getString("msg"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException ex) {
@@ -451,6 +462,8 @@ public class NewCustomerActivity extends AppCompatActivity {
                 }
 
             });
+            showProgress(false);
+
         }
 //        else
 //            Log.d(TAG, "In else part");

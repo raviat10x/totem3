@@ -126,7 +126,7 @@ public class MainActivity extends Move10xActivity
         drawerList.add(new DrawerListItem("Home", R.drawable.icon_home));
         drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
 
-        drawerList.add(new DrawerListItem("Customers", R.drawable.icon_person_pin));
+        drawerList.add(new DrawerListItem("Leads", R.drawable.icon_person_pin));
 
         drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
         //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
@@ -222,7 +222,7 @@ public class MainActivity extends Move10xActivity
                             Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
                         }
 
-                        else if (selectedItem.getItemName().toLowerCase().equals("customers")) {    //Drivers
+                        else if (selectedItem.getItemName().toLowerCase().equals("leads")) {    //Drivers
                             Log.d("mainActivity", "Changing Fragement to Customers Fragement");
                             fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
                             Fragment fg = new CustomerFragment();

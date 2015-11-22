@@ -41,7 +41,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
                 Log.d(logTag, "Internet is on.");
                 //Redirect to login button.
                 Intent intent1 = new Intent(context, LoginActivity.class);
-                context.startActivity(intent);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent1);
             }
         }
     }

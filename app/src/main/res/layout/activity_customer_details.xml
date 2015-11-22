@@ -439,7 +439,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginLeft="20dp"
-                        android:text="Billing Preference"
+                        android:text="Bill Name Preference"
                         android:textColor="@color/colorAccent" />
 
                     <TextView
