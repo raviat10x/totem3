@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -105,7 +106,7 @@ public class MainActivity extends Move10xActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
-        Log.d("mainActivity", "On Crate options menu.");
+        Log.d("mainActivity", "On Create options menu.");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return super.onCreateOptionsMenu(menu);
@@ -121,7 +122,24 @@ public class MainActivity extends Move10xActivity
     }
 
     public ArrayList<DrawerListItem> getDrawerListItems() {
+
         ArrayList<DrawerListItem> drawerList = new ArrayList<DrawerListItem>();
+
+        CurrentProfile currentProfile = new CurrentProfileService(this.getApplicationContext()).getCurrentProfile();
+        if (currentProfile.getUserType().equals("VRM"))
+        {
+            drawerList.add(new DrawerListItem("User", R.drawable.icon_account_circle));
+            drawerList.add(new DrawerListItem("Home", R.drawable.icon_home));
+            drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
+
+//            drawerList.add(new DrawerListItem("Leads", R.drawable.icon_person_pin));
+
+            drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
+            //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
+            drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
+        }
+        else {
+
         drawerList.add(new DrawerListItem("User", R.drawable.icon_account_circle));
         drawerList.add(new DrawerListItem("Home", R.drawable.icon_home));
         drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
@@ -131,6 +149,7 @@ public class MainActivity extends Move10xActivity
         drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
         //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
         drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
+        }
         return drawerList;
     }
 
@@ -154,7 +173,7 @@ public class MainActivity extends Move10xActivity
         public View getView(final int position, View convertView, ViewGroup parent) {
             // TODO Auto-generated method stub
 
-            DrawerItemHolder drawerHolder;
+            final DrawerItemHolder drawerHolder;
             View view = convertView;
 
             if (view == null) {
@@ -221,6 +240,7 @@ public class MainActivity extends Move10xActivity
                             fragmentTransaction.commit();
                             Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
                         }
+
 
                         else if (selectedItem.getItemName().toLowerCase().equals("leads")) {    //Drivers
                             Log.d("mainActivity", "Changing Fragement to Customers Fragement");
