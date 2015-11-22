@@ -263,7 +263,7 @@ public class Booking {
         //Set customer.
         Customer cust = new Customer();
         JSONObject rawCustomer = jsonObject.getJSONObject("customerDetails");
-        cust.setId(rawCustomer.getString("uid"));
+        cust.setCustomerUid(rawCustomer.getString("uid"));
         cust.setUid(rawCustomer.getString("unique_id"));
         cust.setFirstName(rawCustomer.getString("firstname"));
         cust.setLastName(rawCustomer.getString("lastname"));

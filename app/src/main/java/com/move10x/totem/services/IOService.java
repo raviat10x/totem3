@@ -38,6 +38,28 @@ public class IOService {
         }
     }
 
+    public void writeLargeImageToFile(String fileName, Bitmap image) {
+        FileOutputStream out = null;
+        try {
+            File file = new File(android.os.Environment.getExternalStorageDirectory(), fileName);
+            Log.d(logTag, "fileWritePath:" + file.getAbsolutePath());
+            out = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, out); // bmp is your Bitmap instance
+            out.flush();
+        } catch (Exception e) {
+            Log.e(logTag, e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public boolean fileExists(String fileName){
         File file = new File(android.os.Environment.getExternalStorageDirectory(), fileName);
         return file.exists();

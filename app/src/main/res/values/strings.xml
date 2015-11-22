@@ -60,7 +60,30 @@
         <item>Driver</item>
         <item>Owner</item>
     </string-array>
+
+    <string-array name="vehicle_list">
+        <item>MAX</item>
+        <item>MINI</item>
+        <item>MAX+</item>
+        <item>MEGA</item>
+    </string-array>
+
+    <string-array name="billing_info">
+        <item>COMPANY</item>
+        <item>CUSTOMER</item>
+    </string-array>
+    <string-array name="city_array">
+        <item>MUMBAI</item>
+        <item>PUNE</item>
+    </string-array>
+
     <string name="title_activity_no_internet">NoInternetActivity</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="title_activity_new_customer">NewCustomerActivity</string>
+    <string name="title_activity_customer_details">CustomerDetailsActivity</string>
+    <string name="title_activity_customer_booking_list">CustomerBookingList</string>
+    <string name="title_activity_customer_booking_details">CustomerBookingDetailsActivity</string>
 
 
 </resources>

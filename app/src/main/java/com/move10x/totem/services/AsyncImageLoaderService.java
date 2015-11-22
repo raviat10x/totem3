@@ -62,6 +62,7 @@ public class AsyncImageLoaderService extends AsyncTask<Integer, Void, Bitmap> {
         if (imageViewReference != null && bitmap != null) {
             final ImageView imageView = imageViewReference.get();
             if (imageView != null) {
+                Log.d("asyncImageLoaderService", "Image View is not null");
                 //RoundImage roundedImage = new RoundImage(bitmap);
                 //imageView.setImageDrawable(roundedImage);
                 imageView.setImageBitmap(bitmap);

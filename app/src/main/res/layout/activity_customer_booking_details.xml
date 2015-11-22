@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true"
+    tools:context="com.move10x.totem.design.CustomerBookingDetailsActivity">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:paddingLeft="10dp">
+
+        <LinearLayout
+            android:id="@+id/customerBookingDetailsContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <!--Reference-->
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Customer Details" />
+
+            <TextView
+                android:id="@+id/txtCustomerDetails"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+            <!--Reference-->
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Reference" />
+
+            <TextView
+                android:id="@+id/txtReferenceId"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!-- Tempo Type -->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Tempo Type" />
+
+            <TextView
+                android:id="@+id/txtTempoType"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!-- Booking Status -->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Status" />
+
+            <TextView
+                android:id="@+id/txtBookingStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!--Pickup Address-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Pickup Address" />
+
+            <TextView
+                android:id="@+id/txtPickupLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!--Drop Address-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Drop Address" />
+
+            <TextView
+                android:id="@+id/txtDropLocation"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!--Booking Time-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Booking Time" />
+
+            <TextView
+                android:id="@+id/txtBookingTime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Journey Time-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Total Journey Time" />
+
+            <TextView
+                android:id="@+id/txtTotalJourneyTime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Waiting Time-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Total Waiting Time" />
+
+            <TextView
+                android:id="@+id/txtTotalWaitingTime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Distance-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Total Distance" />
+
+            <TextView
+                android:id="@+id/txtTotalDistance"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Chargable Distance-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Chargable Distance" />
+
+            <TextView
+                android:id="@+id/txtChargableDistance"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Fare-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Total Fare" />
+
+            <TextView
+                android:id="@+id/txtTotalFare"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Discount-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Discount" />
+
+            <TextView
+                android:id="@+id/txtDiscount"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Driver Fare Share-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Driver Fare Share" />
+
+            <TextView
+                android:id="@+id/txtDriverFareShare"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Paid To Company-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Paid To Company" />
+
+            <TextView
+                android:id="@+id/txtPaidToCompany"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Driver Rating-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Driver Rating" />
+
+            <TextView
+                android:id="@+id/txtDriverRating"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Customer Rating-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Customer Rating" />
+
+            <TextView
+                android:id="@+id/txtCustomerRating"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Booking Created At-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Booking Created At" />
+
+            <TextView
+                android:id="@+id/txtBookingCreatedAt"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/bookingDetailsProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</android.support.design.widget.CoordinatorLayout>

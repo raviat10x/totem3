@@ -125,6 +125,9 @@ public class MainActivity extends Move10xActivity
         drawerList.add(new DrawerListItem("User", R.drawable.icon_account_circle));
         drawerList.add(new DrawerListItem("Home", R.drawable.icon_home));
         drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
+
+        drawerList.add(new DrawerListItem("Customers", R.drawable.icon_person_pin));
+
         drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
         //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
         drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
@@ -217,7 +220,20 @@ public class MainActivity extends Move10xActivity
                             fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
                             fragmentTransaction.commit();
                             Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
-                        } else if (selectedItem.getItemName().toLowerCase().equals("driversonmap")) {       //Drivers on map
+                        }
+
+                        else if (selectedItem.getItemName().toLowerCase().equals("customers")) {    //Drivers
+                            Log.d("mainActivity", "Changing Fragement to Customers Fragement");
+                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
+                            Fragment fg = new CustomerFragment();
+                            android.app.FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
+                            fragmentTransaction.commit();
+                            Log.d("mainActivity", "Finished Changing Fragement to Customers Fragement.");
+                        }
+
+                        else if (selectedItem.getItemName().toLowerCase().equals("driversonmap")) {       //Drivers on map
                            /* Log.d("mainActivity", "Changing Fragement to Drivers Om Fragement");
                             fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
                             Fragment fg = new DriverOnMapFragment();
