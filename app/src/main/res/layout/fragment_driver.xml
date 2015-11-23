@@ -10,13 +10,14 @@
         android:orientation="vertical"
         android:visibility="visible"
         android:layout_marginTop="75dp">
-
         <ListView
             android:id="@+id/driverList"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"></ListView>
 
     </LinearLayout>
+
+
 
     <ProgressBar android:id="@+id/driversProgress" style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
