@@ -27,7 +27,14 @@
     <string name="profile_menu_logout">Logout</string>
     <!--<string name="profile_menu_Activity">Activity</string>-->
 
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="profile_menu_avlbl">Available</string>
+    <string name="profile_menu_temnt">Terminated</string>
+    <string name="profile_menu_onduty">OnDuty</string>
+    <string name="profile_menu_ontrip">OnTrip</string>
+    <string name="profile_menu_offduty">OffDuty</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_driver">DriverActivity</string>

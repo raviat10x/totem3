@@ -13,6 +13,9 @@ import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -90,7 +93,6 @@ public class DriverFragment extends Fragment {
         driverList = (ListView) view.findViewById(R.id.driverList);
         progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);
 
-
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
         if(currentProfile.getUserType().equals("VRM")) {
             floatingActionButton.setVisibility(View.VISIBLE);
@@ -107,6 +109,9 @@ public class DriverFragment extends Fragment {
         //Fetch drivers of customer.
         showProgress(true);
         getDriverList();
+
+//        setHasOptionsMenu(true);
+
         return view;
     }
 
@@ -127,6 +132,25 @@ public class DriverFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+//
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        Log.d("Inside Driver Frgament", "onCreateOptionsMenu");
+//        inflater.inflate(R.menu.menu_sample, menu);
+//        super.onCreateOptionsMenu(menu,inflater);
+//       }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.actionAvailable:
+//
+//            case R.id.actionOnDuty:
+//
+//
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onDetach() {
