@@ -27,7 +27,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class BookingDetailsActivity extends Move10xActivity {
-
+//nn
     LinearLayout bookingDetailsContainer;
     String logTag = "bookingDetailsActivity";
     ProgressBar progressBar;
