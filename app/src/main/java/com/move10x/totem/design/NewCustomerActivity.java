@@ -457,6 +457,7 @@ public class NewCustomerActivity extends AppCompatActivity {
 //        finish();
     }
 
+
     public void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
