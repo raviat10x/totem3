@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.move10x.totem.R;
-import com.move10x.totem.receivers.NetworkChangeReceiver;
+//import com.move10x.totem.receivers.NetworkChangeReceiver;
 
 public class NoInternetActivity extends AppCompatActivity {
 
@@ -24,25 +24,25 @@ public class NoInternetActivity extends AppCompatActivity {
         btnOnCheckInternet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkInternetConnection();
+//                checkInternetConnection();
             }
         });
 
     }
 
-    private void checkInternetConnection() {
-        NetworkChangeReceiver service = new NetworkChangeReceiver();
-        int status = service.getConnectivityStatusString(getApplicationContext());
-        if (status == service.NETWORK_STATUS_NOT_CONNECTED) {
-            //Get to NoInternet Activity.
-            Log.d(logTag, "No internet connection.");
-            Toast.makeText(getBaseContext(), "No internet connection.", Toast.LENGTH_LONG);
-        } else {
-            //Redirect to login activity.
-            Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
-            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getApplicationContext().startActivity(intent1);
-        }
-    }
+//    private void checkInternetConnection() {
+//        NetworkChangeReceiver service = new NetworkChangeReceiver();
+//        int status = service.getConnectivityStatusString(getApplicationContext());
+//        if (status == service.NETWORK_STATUS_NOT_CONNECTED) {
+//            //Get to NoInternet Activity.
+//            Log.d(logTag, "No internet connection.");
+//            Toast.makeText(getBaseContext(), "No internet connection.", Toast.LENGTH_LONG);
+//        } else {
+//            //Redirect to login activity.
+//            Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
+//            intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            getApplicationContext().startActivity(intent1);
+//        }
+//    }
 
 }

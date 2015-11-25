@@ -35,14 +35,14 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <receiver
-            android:name=".receivers.NetworkChangeReceiver"
-            android:label="NetworkChangeReceiver" >
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name=".receivers.NetworkChangeReceiver"-->
+            <!--android:label="NetworkChangeReceiver" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
+                <!--<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <!-- Google MAP API key -->
         <meta-data
@@ -93,12 +93,12 @@
             android:label="@string/title_activity_no_internet"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".design.NewCustomerActivity"
+            android:name=".design.NewLeadActivity"
             android:label="@string/title_activity_new_customer"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
-            android:name=".design.CustomerDetailsActivity"
+            android:name=".design.LeadDetailsActivity"
             android:label="@string/title_activity_customer_details"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>

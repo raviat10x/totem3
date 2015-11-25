@@ -6,7 +6,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.move10x.totem.receivers.NetworkChangeReceiver;
+//import com.move10x.totem.receivers.NetworkChangeReceiver;
 import com.move10x.totem.services.MiscService;
 
 /**
