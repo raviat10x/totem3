@@ -521,14 +521,14 @@ public class NewCustomerActivity extends AppCompatActivity {
                                 txtArea.setError("Not valid region");
                                 return false;
                             }
-//                        } else {
-//                            txtAddress.setError("Not valid address");
-//                            return false;
-//                        }
-                    } else {
-                        txtEmail.setError("Not valid email id");
-                        return false;
-                    }
+                        } else {
+                            txtAddress.setError("Not valid address");
+                            return false;
+                        }
+//                    } else {
+//                        txtEmail.setError("Not valid email id");
+//                        return false;
+//                    }
                 } else {
                     txtMobileNumber.setError("Not valid mobile number");
                     return false;
