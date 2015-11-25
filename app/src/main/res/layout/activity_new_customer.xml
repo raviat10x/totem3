@@ -135,7 +135,7 @@
                         android:id="@+id/txtEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email"
+                        android:hint="Email (Optional)"
                         android:inputType="textEmailAddress" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -243,6 +243,7 @@
                         android:id="@+id/txtLandline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLength="12"
                         android:hint="LandLine Number (Optional)"
                         android:inputType="text|number" />
 
@@ -293,7 +294,7 @@
                         android:layout_marginBottom="24dp"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
-                        android:text="Anniversary" />
+                        android:text="Anniversary (Optional)" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btnAnnivarsary"
@@ -317,7 +318,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
-                        android:text="Upload VCard Image"
+                        android:text="Upload VCard Image (Optional)"
                         android:paddingTop="10dp" />
 
                     <ImageButton
@@ -431,7 +432,7 @@
                 android:padding="12dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:text="Save Customer"
+                android:text="Create Lead"
                 android:textColor="#ffffff" />
 
         </LinearLayout>

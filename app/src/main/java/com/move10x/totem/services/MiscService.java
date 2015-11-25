@@ -60,6 +60,15 @@ public class MiscService {
         return false;
     }
 
+    public static boolean isValidDate(String date) {
+//        if (date != null && date.length() == 6) {
+            if (date != null) {
+
+                return true;
+        }
+        return false;
+    }
+
 
     public static boolean isValidEmail(String email) {
 

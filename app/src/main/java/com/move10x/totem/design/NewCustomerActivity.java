@@ -8,12 +8,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -34,8 +30,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
@@ -48,23 +42,16 @@ import com.move10x.totem.services.CurrentProfileService;
 import com.move10x.totem.services.IOService;
 import com.move10x.totem.services.MiscService;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.regex.Pattern;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -513,15 +500,17 @@ public class NewCustomerActivity extends AppCompatActivity {
         if (MiscService.isValidName(txtFirstName.getText().toString().trim())) {
             if (MiscService.isValidName(txtLastName.getText().toString().trim())) {
                 if (MiscService.isValidMobile(txtMobileNumber.getText().toString().trim())) {
-                    if (MiscService.isValidEmail(txtEmail.getText().toString().trim())) {
+//                    if (MiscService.isValidEmail(txtEmail.getText().toString().trim())) {
                         if (MiscService.isValidName(txtAddress.getText().toString().trim())) {
                             if (MiscService.isValidName(txtArea.getText().toString().trim())) {
                                 if (MiscService.isValidPin(txtPin.getText().toString().trim())) {
-                                    if (MiscService.isValidName(btnDOB.getText().toString().trim()))
+                                    if (MiscService.isValidName(btnDOB.getText().toString().trim()) && !(btnDOB.getText().toString().trim().equalsIgnoreCase("select")))
                                     {
+                                        Log.d(TAG, "Hey its clicked" + btnDOB.getText().toString());
                                         return true;
                                     }
                                     else{
+                                        btnDOB.setError("Please provide DOB");
                                         return false;
                                     }
                                 } else {
@@ -532,10 +521,10 @@ public class NewCustomerActivity extends AppCompatActivity {
                                 txtArea.setError("Not valid region");
                                 return false;
                             }
-                        } else {
-                            txtAddress.setError("Not valid address");
-                            return false;
-                        }
+//                        } else {
+//                            txtAddress.setError("Not valid address");
+//                            return false;
+//                        }
                     } else {
                         txtEmail.setError("Not valid email id");
                         return false;

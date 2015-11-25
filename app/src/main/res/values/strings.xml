@@ -28,10 +28,10 @@
     <!--<string name="profile_menu_Activity">Activity</string>-->
 
     <string name="profile_menu_avlbl">Available</string>
-    <string name="profile_menu_temnt">Terminated</string>
     <string name="profile_menu_onduty">OnDuty</string>
-    <string name="profile_menu_ontrip">OnTrip</string>
     <string name="profile_menu_offduty">OffDuty</string>
+    <string name="profile_menu_allDrivers">All Drivers</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
