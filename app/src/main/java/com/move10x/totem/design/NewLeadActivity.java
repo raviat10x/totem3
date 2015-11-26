@@ -55,7 +55,7 @@ import java.util.Locale;
 
 import cz.msebera.android.httpclient.Header;
 
-public class NewCustomerActivity extends AppCompatActivity {
+public class NewLeadActivity extends AppCompatActivity {
 
     private static final String TAG = "NewCustomerActivity";
     static final String File_Customer_VCard = "customerPic.jpeg";
@@ -507,15 +507,16 @@ public class NewCustomerActivity extends AppCompatActivity {
                         if (MiscService.isValidName(txtAddress.getText().toString().trim())) {
                             if (MiscService.isValidName(txtArea.getText().toString().trim())) {
                                 if (MiscService.isValidPin(txtPin.getText().toString().trim())) {
-                                    if (MiscService.isValidName(btnDOB.getText().toString().trim()) && !(btnDOB.getText().toString().trim().equalsIgnoreCase("select")))
-                                    {
-                                        Log.d(TAG, "Hey its clicked" + btnDOB.getText().toString());
-                                        return true;
-                                    }
-                                    else{
-                                        btnDOB.setError("Please provide DOB");
-                                        return false;
-                                    }
+//                                    if (MiscService.isValidName(btnDOB.getText().toString().trim()) && !(btnDOB.getText().toString().trim().equalsIgnoreCase("select")))
+//                                    {
+//                                        Log.d(TAG, "Hey its clicked" + btnDOB.getText().toString());
+//                                        return true;
+//                                    }
+//                                    else{
+//                                        btnDOB.setError("Please provide DOB");
+//                                        return false;
+//                                    }
+                                    return true;
                                 } else {
                                     txtPin.setError("Not valid pin");
                                     return false;

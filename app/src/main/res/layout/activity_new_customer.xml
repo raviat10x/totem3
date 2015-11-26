@@ -265,7 +265,7 @@
                         android:layout_marginBottom="24dp"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
-                        android:text="DOB" />
+                        android:text="DOB (Optional)" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btnDOB"
