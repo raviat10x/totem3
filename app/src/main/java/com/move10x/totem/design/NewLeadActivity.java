@@ -57,7 +57,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class NewLeadActivity extends AppCompatActivity {
 
-    private static final String TAG = "NewCustomerActivity";
+    private static final String TAG = "NewLeadActivity";
     static final String File_Customer_VCard = "customerPic.jpeg";
 //    static final String File_Customer_VCard = "";
     private static final int INTENT_REQUEST_CAMERA_CUSTOMER_VCARD = 1002;
@@ -92,6 +92,7 @@ public class NewLeadActivity extends AppCompatActivity {
     private static String customerPicFilePath = null;
     private EditText companyName;
     boolean uploadbuttonclicked;
+    private AppCompatButton buttonCustomerLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,20 +104,20 @@ public class NewLeadActivity extends AppCompatActivity {
         setTitle("Add Lead");
 
 
-        GPSTracker gpsTracker = new GPSTracker(this);
-
-        if (gpsTracker.getIsGPSTrackingEnabled()) {
-            String loc = String.valueOf(gpsTracker.getLatitude() + "   " + gpsTracker.getLongitude());
-
-            txtCustomerCurrentLocation = (TextView) findViewById(R.id.txtCustomerCurrentLocation);
-            txtCustomerCurrentLocation.setText(loc);
-            Log.d(TAG, loc);
-        } else {
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
-            gpsTracker.showSettingsAlert();
-        }
+//        GPSTracker gpsTracker = new GPSTracker(this);
+//
+//        if (gpsTracker.getIsGPSTrackingEnabled()) {
+//            String loc = String.valueOf(gpsTracker.getLatitude() + "   " + gpsTracker.getLongitude());
+//
+//            txtCustomerCurrentLocation = (TextView) findViewById(R.id.txtCustomerCurrentLocation);
+//            txtCustomerCurrentLocation.setText(loc);
+//            Log.d(TAG, loc);
+//        } else {
+//            // can't get location
+//            // GPS or Network is not enabled
+//            // Ask user to enable GPS/network in settings
+//            gpsTracker.showSettingsAlert();
+//        }
 
 //        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)‌​;
         txtMobileNumber = (EditText) findViewById(R.id.txtMobileNumber);
@@ -145,6 +146,26 @@ public class NewLeadActivity extends AppCompatActivity {
         txtPin = (EditText) findViewById(R.id.txtPin);
         txtLandline = (EditText) findViewById(R.id.txtLandline);
         companyName = (EditText) findViewById(R.id.companyName);
+//        buttonCustomerLocation = (AppCompatButton)findViewById(R.id.buttonCustomerLocation);
+
+
+//        buttonCustomerLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                GPSTracker gpsTracker = new GPSTracker(getApplicationContext());
+//
+//                if (gpsTracker.getIsGPSTrackingEnabled()) {
+//                    String loc = String.valueOf(gpsTracker.getLatitude() + "   " + gpsTracker.getLongitude());
+//
+//                    txtCustomerCurrentLocation = (TextView) findViewById(R.id.txtCustomerCurrentLocation);
+//                    txtCustomerCurrentLocation.setText(loc);
+//                    Log.d(TAG, loc);
+//                } else {
+//                    gpsTracker.showSettingsAlert();
+//                }
+//            }
+//        });
+
 
         uploadbuttonclicked = false;
 //        txtCustomerCurrentLocation = (TextView) findViewById(R.id.txtCustomerCurrentLocation);
@@ -341,11 +362,16 @@ public class NewLeadActivity extends AppCompatActivity {
             } else {
                 newCustomer.setAnnivarsary(new SimpleDateFormat("dd/MM/yyyy", Locale.UK).format(wedDate.getTime()));
             }
+//            if (txtCustomerCurrentLocation == null) {
+//                newCustomer.setCustomerLocation("");
+//            } else {
+//                newCustomer.setCustomerLocation(txtCustomerCurrentLocation.getText().toString());
+//            }
 
             newCustomer.setBillName(txtBillingInfo.getSelectedItem().toString());
             newCustomer.setFvrtVehicle(txtfvrtVehicle.getSelectedItem().toString());
             newCustomer.setCompanyName(companyName.getText().toString().trim());
-            newCustomer.setCustomerLocation(txtCustomerCurrentLocation.getText().toString().trim());
+//            newCustomer.setCustomerLocation(txtCustomerCurrentLocation.getText().toString().trim());
 
 //            showProgress(false);
             CurrentProfile cp = (new CurrentProfileService(getApplicationContext())).getCurrentProfile();
@@ -366,22 +392,14 @@ public class NewLeadActivity extends AppCompatActivity {
             requestParams.put("city", txtCity.getSelectedItem().toString());
             requestParams.put("area", txtArea.getText().toString().trim());
             requestParams.put("pin", txtPin.getText().toString().trim());
-            requestParams.put("currentLocation", txtCustomerCurrentLocation.getText().toString());
+//            requestParams.put("currentLocation", txtCustomerCurrentLocation.getText().toString());
             requestParams.put("landline", txtLandline.getText().toString().trim());
             requestParams.put("business", companyName.getText().toString().trim());
-
-//            try {
-//                File myFile = new File();
-//                requestParams.put("vCardImg", myFile);
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
 
             CurrentProfile profile = new CurrentProfileService(this).getCurrentProfile();
             requestParams.put("crmId", profile.getUserId());
             requestParams.put("crmFName", profile.getFirstName());
             requestParams.put("crmLName", profile.getLastName());
-
 
             File myFile = new File(android.os.Environment.getExternalStorageDirectory(), File_Customer_VCard);
 
@@ -397,7 +415,6 @@ public class NewLeadActivity extends AppCompatActivity {
             requestParams.put("favVehicle", txtfvrtVehicle.getSelectedItem().toString());
             requestParams.put("billName", txtBillingInfo.getSelectedItem().toString());
 
-
             requestParams.put("appversion", "");
             if (dobDate == null) {
                 requestParams.put("dob", "");
@@ -412,28 +429,18 @@ public class NewLeadActivity extends AppCompatActivity {
             requestParams.put("tag", "createUser");
             Log.d("Adding Customer ", requestParams.toString());
 
-//            Log.d(TAG, "creating c: " + newCustomer.toString());
-
-
-            //Async customerlist fetch.
             AsyncHttpService.post(Url.addCustomerUrl, requestParams, new JsonHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Log.d(TAG, "At create customer success response: " + response);
                     Log.d(TAG, "At create customer success response:header " + headers);
-//                    Log.d(TAG, "At create customer success response: " + response);
                     try {
                         int errorCode = response.getInt("error");
-//                        Log.d(TAG, "Inside try block: " + response);
                         if (errorCode == 0) {
-                            //Success
-//                            Log.d(TAG, "Customer created successfully. Uploading documents now." + response);
                             onCustomerCreationSuccess();
                             showProgress(false);
                         } else {
-                            //Error
-
                             Toast.makeText(getApplicationContext(), response.getString("msg"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException ex) {
@@ -452,9 +459,6 @@ public class NewLeadActivity extends AppCompatActivity {
             showProgress(false);
 
         }
-//        else
-//            Log.d(TAG, "In else part");
-//        finish();
     }
 
 

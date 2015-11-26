@@ -267,7 +267,7 @@ public class Customer extends ArrayList<Customer> {
             customer.city = jsonObject.getString("city");
             customer.pin = jsonObject.getString("pin");
             customer.uniqueId = jsonObject.getString("unique_id");
-            customer.customerLocation = jsonObject.getString("currentLocation");
+//            customer.customerLocation = jsonObject.getString("currentLocation");
             customer.companyName = jsonObject.getString("business");
 
 
@@ -287,7 +287,7 @@ public class Customer extends ArrayList<Customer> {
         try {
 
 
-            Log.i("Before Decoding","-----------------------"+jsonObject);
+            Log.i("Before Decoding", "-----------------------" + jsonObject);
             Customer customer = new Customer();
             customer.uid = jsonObject.getString("uid");
             customer.firstName = jsonObject.getString("firstname");
@@ -304,7 +304,7 @@ public class Customer extends ArrayList<Customer> {
             customer.fvrtVehicle = jsonObject.getString("favVehicle");
             customer.billName = jsonObject.getString("billname");
             customer.uniqueId = jsonObject.getString("unique_id");
-            customer.customerLocation = jsonObject.getString("currentLocation");
+//            customer.customerLocation = jsonObject.getString("currentLocation");
             customer.vCardImage = jsonObject.getString("vCardImg");
             customer.companyName = jsonObject.getString("business");
 

@@ -2,25 +2,20 @@ package com.move10x.totem.design;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
@@ -29,20 +24,13 @@ import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
 import com.move10x.totem.services.AsyncImageLoaderService;
-import com.move10x.totem.services.CustomerService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
 import cz.msebera.android.httpclient.Header;
 
-public class CustomerDetailsActivity extends Move10xActivity {
+public class LeadDetailsActivity extends Move10xActivity {
 
     private static final String TAG = "CustDetailsActivity";
     Customer customerDetails;
@@ -67,12 +55,13 @@ public class CustomerDetailsActivity extends Move10xActivity {
     private TextView txtBillingPref;
     private TextView txtCustomerEmail;
     private TextView txtLandline1;
-    private TextView txtCustomerCurrentLocation;
+//    private TextView txtCustomerCurrentLocation;
+    private AppCompatButton btnViewBookings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_details);
+        setContentView(R.layout.activity_lead_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,11 +71,9 @@ public class CustomerDetailsActivity extends Move10xActivity {
         //Read xml elements.
         customerDetailsContainer = (LinearLayout) findViewById(R.id.customerDetailsContainer);
         progressBar = (ProgressBar) findViewById(R.id.customerDetailsProgress);
-//        btnCustomerViewBookings = (AppCompatButton) findViewById(R.id.btnCustomerViewBookings);
         imgCustomerImage = (ImageView) findViewById(R.id.imgCustomerImage);
         btnCall = (ImageButton) findViewById(R.id.btnCall);
         txtCustomerName = (TextView) findViewById(R.id.txtCustomerName);
-//        txtLandline = (TextView) findViewById(R.id.txtLandline1);
         txtMobileNumber = (TextView) findViewById(R.id.txtMobileNumber1);
         txtCustomerRegion = (TextView) findViewById(R.id.txtCustomerRegion);
         txtCustomerCity = (TextView)findViewById(R.id.txtCustomerCity);
@@ -97,30 +84,41 @@ public class CustomerDetailsActivity extends Move10xActivity {
         txtAppVersion = (TextView) findViewById(R.id.txtAppVersion);
         txtCustomerPin = (TextView)findViewById(R.id.txtCustomerPin);
         txtCustomerCompany = (TextView)findViewById(R.id.txtCustomerCompany);
-//        txtLandlineNumber = (TextView)findViewById(R.id.txtLandlineNumber);
+        btnViewBookings = (AppCompatButton)findViewById(R.id.btnViewBookings);
         txtBillingPref = (TextView)findViewById(R.id.txtBillingPref);
         txtCustomerEmail = (TextView)findViewById(R.id.txtCustomerEmail);
         txtLandline1 = (TextView)findViewById(R.id.txtLandline1);
-        txtCustomerCurrentLocation = (TextView)findViewById(R.id.txtCustomerCurrentLocation);
+//        txtCustomerCurrentLocation = (TextView)findViewById(R.id.txtCustomerCurrentLocation);
 
-//
-//        btnCustomerViewBookings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "On Driver container click.");
-//                Intent intent = new Intent(getApplicationContext(), CustomerBookingListActivity.class);
-//                intent.putExtra("uid", customerDetails.getUid());
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                Log.d("customerDetails", "Customer UID: " + customerDetails.getUid());
-//                startActivity(intent);
-//            }
-//        });
 
+
+        btnViewBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "On Driver container click.");
+                Intent intent = new Intent(getApplicationContext(), CustomerBookingListActivity.class);
+                intent.putExtra("uid", customerDetails.getUniqueId());
+                Log.d(TAG, "This is customer unique Id : " + customerDetails.getUniqueId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("customerDetails", "Customer UID: " + customerDetails.getUniqueId());
+                startActivity(intent);
+            }
+        });
+
+        imgCustomerImage.setAlpha(500);
 
         //Read driver details and set driver details in view.
         final String uId = getIntent().getStringExtra("customerUid");
 //        Log.d(TAG, "UniqueId is : " +uId);
         getCustomerDetails(uId);
+
+        imgCustomerImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside buttonImage");
+                imgCustomerImage.setAlpha(1000);
+            }
+        });
 
         //Floating call button.
         ImageButton fab = (ImageButton) findViewById(R.id.btnCall1);
@@ -196,7 +194,7 @@ public class CustomerDetailsActivity extends Move10xActivity {
                         txtBillingPref.setText(customerDetails.getBillName());
                         txtCustomerEmail.setText(customerDetails.getEmail());
                         txtLandline1.setText(customerDetails.getlandline());
-                        txtCustomerCurrentLocation.setText(customerDetails.getCustomerLocation().toString());
+//                        txtCustomerCurrentLocation.setText(customerDetails.getCustomerLocation().toString());
 
 
 //                        Log.d(TAG, "Customer Details are here : " + jsoncustomerDetails.toString());

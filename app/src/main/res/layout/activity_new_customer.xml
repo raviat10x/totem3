@@ -173,38 +173,38 @@
                 </android.support.design.widget.TextInputLayout>
 
                 <!--<android.support.design.widget.TextInputLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1">-->
 
-                    <!--<EditText-->
-                        <!--android:id="@+id/txtCity"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:hint="City"-->
-                        <!--android:inputType="textCapWords" />-->
+                <!--<EditText-->
+                <!--android:id="@+id/txtCity"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="City"-->
+                <!--android:inputType="textCapWords" />-->
 
                 <!--</android.support.design.widget.TextInputLayout>-->
 
                 <!--<Spinner>-->
-                    <!-- -->
+                <!-- -->
                 <!--</Spinner>-->
 
                 <LinearLayout
-                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="5dp"
+                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:textColor="@color/colorAccent"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
-                        android:text="City" />
+                        android:text="City"
+                        android:textColor="@color/colorAccent" />
 
                     <Spinner
                         android:id="@+id/txtCity"
@@ -243,29 +243,29 @@
                         android:id="@+id/txtLandline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:maxLength="12"
                         android:hint="LandLine Number (Optional)"
-                        android:inputType="text|number" />
+                        android:inputType="text|number"
+                        android:maxLength="12" />
 
                 </android.support.design.widget.TextInputLayout>
 
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
                     android:weightSum="1">
 
                     <TextView
-                        android:textColor="@color/colorAccent"
                         android:id="@+id/txtDOB"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
-                        android:text="DOB (Optional)" />
+                        android:text="DOB (Optional)"
+                        android:textColor="@color/colorAccent" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btnDOB"
@@ -287,14 +287,14 @@
                     android:weightSum="1">
 
                     <TextView
-                        android:textColor="@color/colorAccent"
                         android:id="@+id/txtAnnivarsary"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
-                        android:text="Anniversary (Optional)" />
+                        android:text="Anniversary (Optional)"
+                        android:textColor="@color/colorAccent" />
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/btnAnnivarsary"
@@ -312,14 +312,14 @@
                     android:weightSum="1">
 
                     <TextView
-                        android:textColor="@color/colorAccent"
                         android:id="@+id/txtVCard"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="0.6"
+                        android:paddingTop="10dp"
                         android:text="Upload VCard Image (Optional)"
-                        android:paddingTop="10dp" />
+                        android:textColor="@color/colorAccent" />
 
                     <ImageButton
                         android:id="@+id/btnUploadCustomerVCard"
@@ -327,6 +327,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
                         android:src="@drawable/icon_add" />
+                    <!--<android.support.v7.widget.AppCompatButton-->
+                        <!--android:id="@+id/btnUploadCustomerVCard"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="15dp"-->
+                        <!--android:layout_weight="0.4"-->
+                        <!--android:text="Upload" />-->
 
                 </LinearLayout>
 
@@ -345,12 +352,12 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:textColor="@color/colorAccent"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_weight="0.6"
-                            android:text="Bill Name Preference" />
+                            android:text="Bill Name Preference"
+                            android:textColor="@color/colorAccent" />
 
                         <Spinner
 
@@ -370,12 +377,12 @@
                         android:layout_weight="1">
 
                         <TextView
-                            android:textColor="@color/colorAccent"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_weight="0.6"
-                            android:text="Favourite Vehicle" />
+                            android:text="Favourite Vehicle"
+                            android:textColor="@color/colorAccent" />
 
                         <Spinner
                             android:id="@+id/txtfvrtVehicle"
@@ -386,35 +393,59 @@
                             android:paddingLeft="3dp"
                             android:paddingRight="3dp" />
                     </LinearLayout>
-                    <LinearLayout
-                        android:visibility="gone"
-                        android:layout_marginTop="10dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:orientation="vertical"
-                        android:weightSum="1">
+
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="fill_parent"-->
+                        <!--android:layout_height="fill_parent"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:visibility="visible"-->
+                        <!--android:weightSum="1">-->
+
+                        <!--<LinearLayout-->
+                            <!--android:layout_weight="0.5"-->
+                            <!--android:layout_width="fill_parent"-->
+                            <!--android:layout_height="fill_parent"-->
+                            <!--android:layout_marginTop="10dp"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:visibility="gone"-->
+                            <!--android:weightSum="1">-->
 
 
-                        <TextView
-                            android:textColor="@color/colorAccent"
-                            android:id="@+id/getLocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="0.3"
-                            android:text="Location" />
+                            <!--<TextView-->
+                                <!--android:id="@+id/getLocation"-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginLeft="5dp"-->
+                                <!--android:layout_weight="0.6"-->
+                                <!--android:text="Location"-->
+                                <!--android:textColor="@color/colorAccent" />-->
 
-                        <TextView
-                            android:id="@+id/txtCustomerCurrentLocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginTop="2dp"
-                            android:layout_weight="0.7"
-                            android:textColor="@color/black"
-                            android:inputType="text|number" />
+                            <!--<android.support.v7.widget.AppCompatButton-->
+                                <!--android:id="@+id/buttonCustomerLocation"-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginLeft="15dp"-->
+                                <!--android:layout_weight="0.4"-->
+                                <!--android:text="Select" />-->
 
-                    </LinearLayout>
+
+                        <!--</LinearLayout>-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/txtCustomerCurrentLocation"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_marginLeft="5dp"-->
+                            <!--android:layout_marginTop="2dp"-->
+                            <!--android:inputType="text|number"-->
+                            <!--android:layout_weight="0.5"-->
+                            <!--android:textColor="@color/black" />-->
+
+                        <!--&lt;!&ndash;android:layout_weight="0.7"&ndash;&gt;-->
+
+
+                    <!--</LinearLayout>-->
 
                 </LinearLayout>
 
