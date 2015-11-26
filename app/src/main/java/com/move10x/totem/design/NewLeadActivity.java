@@ -34,7 +34,6 @@ import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
 import com.move10x.totem.models.Customer;
-import com.move10x.totem.models.GPSTracker;
 import com.move10x.totem.models.JsonHttpResponseHandler;
 import com.move10x.totem.models.Url;
 import com.move10x.totem.services.AsyncHttpService;
