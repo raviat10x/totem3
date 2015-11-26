@@ -1,5 +1,7 @@
 package com.move10x.totem.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +33,7 @@ public class Booking {
     private String customerRating;
     private String bookingCreatedAt;
     private Customer customer;
+    private static final String TAG = "Booking Model";
 
     public Booking() {
 
@@ -273,5 +276,26 @@ public class Booking {
         booking.setCustomer(cust);
 
         return booking;
+    }
+
+    public static Booking decodeJsonForCustomerBookingList(JSONObject jsonObject) throws JSONException{
+
+        try {
+        //            booking.id = jsonObject.getString("uid");
+            Log.d(TAG, "decodingCustomerBookingList");
+            Booking booking = new Booking();
+            booking.setDate(jsonObject.getString("pickup_date"));
+            booking.setReference(jsonObject.getString("booking_ref"));
+            booking.setStatus(jsonObject.getString("booking_status"));
+
+            Log.i(TAG,"-----------------------------------------------"+booking.date+" \n "+booking.reference);
+
+            return booking;
+        } catch (JSONException ex) {
+            //throw ex;
+//            Log.e("userModel", "Failed to decode json. " + ex.getMessage());
+            return null;
+        }
+
     }
 }

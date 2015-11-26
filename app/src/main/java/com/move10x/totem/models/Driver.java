@@ -27,6 +27,11 @@ public class Driver{
     public static String DutyStatus_Training = "TRAINING";
     public static String DutyStatus_Outside = "OUTSIDE";
 
+//    public static String booking_total = "Total Bookings";
+//    public static String booking_today = "Today's Bookings";
+//    public static String booking_weekly = "Weekly Bookings";
+//    public static String booking_monthly = "Monthly Bookings";
+
 
     private String firstName;
     private String lastName;
@@ -503,6 +508,7 @@ public class Driver{
             return null;
         }
     }
+
     public static Driver decodeJsonForDetails(JSONObject jsonObject){
         try {
 
@@ -546,6 +552,9 @@ public class Driver{
             return null;
         }
     }
+
+
+
 
     /**
      * Returns a string containing a concise, human-readable description of this
