@@ -38,23 +38,35 @@
                 style="@style/BookingDetailsLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+                android:gravity="center_horizontal"
                 android:text="Customer Details" />
 
             <TextView
-                android:id="@+id/txtCustomerDetails"
+                android:text="Customer Name"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_column="1" />
+            <TextView
+                android:id="@+id/txtCustomerName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
 
             <!--Reference-->
             <TextView
                 style="@style/BookingDetailsLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="Reference" />
+                android:text="PickUp Date" />
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:id="@+id/txtPickUpDate"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
 
             <TextView
-                android:id="@+id/txtReferenceId"
+                android:id="@+id/txtPickUpTime"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_column="1" />
@@ -67,14 +79,23 @@
                 style="@style/BookingDetailsLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="Tempo Type" />
+                android:text="Booking From" />
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:id="@+id/txtBookingFrom"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
 
             <TextView
-                android:id="@+id/txtTempoType"
+                android:text="Booking UpTo"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_column="1" />
-
+            <TextView
+                android:id="@+id/txtBookingUpTo"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
 
             <!-- Booking Status -->
 

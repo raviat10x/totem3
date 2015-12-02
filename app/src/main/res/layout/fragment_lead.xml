@@ -1,24 +1,22 @@
-<FrameLayout
-    android:id="@+id/frameLayoutDriverFragment" xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.move10x.totem.DriverFragment">
-
+    android:layout_height="match_parent" tools:context="com.move10x.totem.design.LeadFragment">
 
     <LinearLayout
-        android:id="@+id/driverListContainer"
+        android:id="@+id/customerListContainer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:visibility="visible"
-        android:layout_marginTop="75dp">
+        android:layout_marginTop="50dp">
+
         <ListView
-            android:id="@+id/driverList"
+            android:layout_marginTop="10dp"
+            android:id="@+id/customerList"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"></ListView>
 
     </LinearLayout>
-
-
 
     <ProgressBar android:id="@+id/driversProgress" style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content" android:layout_height="wrap_content"

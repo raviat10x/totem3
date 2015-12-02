@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,12 +17,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
+import com.move10x.totem.models.Booking;
 import com.move10x.totem.models.CurrentProfile;
 import com.move10x.totem.models.Driver;
 import com.move10x.totem.models.JsonHttpResponseHandler;
@@ -49,7 +52,18 @@ public class HomeFragment extends Fragment {
     TextView txtTotalDrivers, txTerminatedDrivers, txtDriverOnTrip, txtDriversAvailable, txtDriversOffduty, txtPendingDrivers;
     TableLayout tblDriverInfo;
     ProgressBar progressBar;
+
+    TextView driverDetails;
+    TextView txtDailyTrips;
+    TextView txtWeeklyTrips;
+    TextView txtAvailable;
     private DriverFragment.OnFragmentInteractionListener mListener;
+    private TextView txtMonthlyTrips;
+    private LinearLayout layoutPending;
+    private LinearLayout layoutAvailable;
+    private String TAG = "HOME FRAGMENT";
+    private TextView txtMoveMiles;
+    private LinearLayout layoutTotalDrivers;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -76,6 +90,16 @@ public class HomeFragment extends Fragment {
         txTerminatedDrivers = (TextView) view.findViewById(R.id.txTerminatedDrivers);
         txtPendingDrivers = (TextView) view.findViewById(R.id.txtPendingDrivers);
 
+        driverDetails = (TextView) view.findViewById(R.id.driverDetails);
+        txtDailyTrips = (TextView) view.findViewById(R.id.txtDailyTrips);
+        txtWeeklyTrips = (TextView) view.findViewById(R.id.txtWeeklyTrips);
+        txtMonthlyTrips = (TextView) view.findViewById(R.id.txtMonthlyTrips);
+        txtMoveMiles = (TextView) view.findViewById(R.id.txtMoveMiles);
+        layoutAvailable = (LinearLayout) view.findViewById(R.id.layoutAvailable);
+
+        layoutTotalDrivers = (LinearLayout)view.findViewById(R.id.layoutTotalDrivers);
+        layoutPending = (LinearLayout) view.findViewById(R.id.layoutPending);
+
         getActivity().setTitle("Home");
         Log.d(logTag, "Fetching Current Profile Details");
         Context context = getActivity().getApplicationContext();
@@ -94,14 +118,128 @@ public class HomeFragment extends Fragment {
 
         //Fetch profile driver details.
         progressBar.setVisibility(View.VISIBLE);
+
+
+        //Remove it........................
         ((CardView) view.findViewById(R.id.card_view)).setVisibility(View.VISIBLE);
-        if (profile.getUserType().equals("VRM"))
+
+        if (profile.getUserType().equals("VRM")) {
             fetchDriverInfo();
-        else {
-            progressBar.setVisibility(View.GONE);
-            ((CardView) view.findViewById(R.id.card_view)).setVisibility(View.GONE);
+
+        } else if (profile.getUserType().equals("CRM")) {
+
+            driverDetails.setText("Completed Booking");
+            txtDailyTrips.setText("Today");
+            txtDailyTrips.setTextColor(getResources().getColor(R.color.green));
+            txtWeeklyTrips.setText("This Week");
+            txtMonthlyTrips.setText("This Month");
+            txtMonthlyTrips.setTextColor(getResources().getColor(R.color.colorAccent));
+            layoutPending.setVisibility(View.GONE);
+            layoutAvailable.setVisibility(View.GONE);
+            txTerminatedDrivers.setTextColor(getResources().getColor(R.color.green));
+            txtDriversOffduty.setTextColor(getResources().getColor(R.color.colorAccent));
+            txtMoveMiles.setVisibility(View.VISIBLE);
+            fetchCustomerInfo();
         }
+
+        setOnClickListener();
         return view;
+    }
+
+    private void setOnClickListener() {
+        layoutTotalDrivers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fg = new DriverFragment();
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        });
+
+        layoutPending.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside layoutPending");
+                DriverFragment fragment = new DriverFragment();
+                fragment.currentStatus = "Pending";
+                Log.d(TAG, "Outside layoutPending");
+
+            }
+        });
+    }
+
+    TextClicked mCallback;
+
+    public interface TextClicked{
+        public void sendText(String text);
+    }
+
+    private void fetchCustomerInfo() {
+        showProgress(true);
+
+        final CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
+        Log.d(logTag, "Fetch drivers for user: " + currentProfile.toString());
+        String uid = currentProfile.getUserId();
+        Log.d(logTag, "Fetch drivers for userId: " + uid);
+        RequestParams tripParameters = new RequestParams();
+        tripParameters.put("tag", "allBookingCount");
+        tripParameters.put("crmId", uid);
+        Log.d(TAG, "SDJFHDSKFBSD" + uid);
+
+        //Async driver list fetch.
+        AsyncHttpService.get(Url.totemApiUrl, tripParameters, new JsonHttpResponseHandler() {
+                    @Override
+
+
+                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                        // If the response is JSONObject instead of expected JSONArray.
+                        Log.d(TAG, "Parsing getDriverList() response: " + response);
+                        try {
+                            if (response.getString("success") != null && response.getString("success").equals("1")) {
+                                JSONObject jsonTripList = response.getJSONObject("msg");
+                                Log.d(TAG, "Below Parsing List");
+                                int todaysCnt = 0, weeklyCnt = 0, monthlyCnt = 0, totalTrips = 0;
+                                int todayskm = 0, monthlykm = 0, weeklykm = 0;
+
+                                int moveMiles = todayskm + monthlykm + weeklykm;
+
+                                txtTotalDrivers.setText(String.valueOf(todaysCnt));
+                                txTerminatedDrivers.setText(String.valueOf(todaysCnt));
+                                txtDriverOnTrip.setText(String.valueOf(weeklyCnt));
+                                txtDriversOffduty.setText(String.valueOf(monthlyCnt));
+                                txtMoveMiles.setText("Move Miles : " + String.valueOf(moveMiles));
+
+                            }
+                        } catch (JSONException ex) {
+                            Log.e(logTag, "json parsing error: " + ex.getMessage());
+                            ex.printStackTrace();
+                        }
+
+                        showProgress(false);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable
+                            throwable, JSONObject errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, Throwable
+                            throwable, JSONArray errorResponse) {
+                        super.onFailure(statusCode, headers, throwable, errorResponse);
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String
+                            responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                    }
+                }
+
+        );
     }
 
     public void onDriverAddClick() {
@@ -152,7 +290,7 @@ public class HomeFragment extends Fragment {
                                         terminatedDrivers++;
 
                                     } else if (currentDriver.getWorkStatus().contains("PENDING")) {
-                                            pendingDrivers++;
+                                        pendingDrivers++;
                                     } else if (currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
 
                                         //If work status is active, check for duty status.
@@ -235,6 +373,21 @@ public class HomeFragment extends Fragment {
             // and hide the relevant UI components.
             progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
             tblDriverInfo.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mCallback = (TextClicked) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement TextClicked");
         }
     }
 }

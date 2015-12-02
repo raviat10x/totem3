@@ -288,7 +288,6 @@ public class Booking {
             booking.setReference(jsonObject.getString("booking_ref"));
             booking.setStatus(jsonObject.getString("booking_status"));
 
-            Log.i(TAG,"-----------------------------------------------"+booking.date+" \n "+booking.reference);
 
             return booking;
         } catch (JSONException ex) {
@@ -297,5 +296,21 @@ public class Booking {
             return null;
         }
 
+    }
+
+    public static Booking decodeJsonForCustomerBookingDetails(JSONObject jsonObject) {
+        try {
+            Log.d(TAG, "Inside decodeJsonForCustomerBookingDetails");
+            Booking booking = new Booking();
+//            booking.time = jsonObject.getString("booking_time");
+            booking.bookedBy = jsonObject.getString("booking_by");
+
+            Log.i(TAG,"-----------------------------------------------"+booking.bookedBy+" \n ");
+
+            return booking;
+        }
+        catch (JSONException ex) {
+            return null;
+        }
     }
 }

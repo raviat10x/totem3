@@ -84,7 +84,7 @@ public class LeadDetailsActivity extends Move10xActivity {
         txtAppVersion = (TextView) findViewById(R.id.txtAppVersion);
         txtCustomerPin = (TextView)findViewById(R.id.txtCustomerPin);
         txtCustomerCompany = (TextView)findViewById(R.id.txtCustomerCompany);
-//        btnViewBookings = (AppCompatButton)findViewById(R.id.btnViewBookings);
+        btnViewBookings = (AppCompatButton)findViewById(R.id.btnViewBookings);
         txtBillingPref = (TextView)findViewById(R.id.txtBillingPref);
         txtCustomerEmail = (TextView)findViewById(R.id.txtCustomerEmail);
         txtLandline1 = (TextView)findViewById(R.id.txtLandline1);
@@ -92,26 +92,26 @@ public class LeadDetailsActivity extends Move10xActivity {
 
 
 
-//        btnViewBookings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d(TAG, "On Driver container click.");
-//                Intent intent = new Intent(getApplicationContext(), CustomerBookingListActivity.class);
-//                intent.putExtra("uid", customerDetails.getUniqueId());
-//                Log.d(TAG, "This is customer unique Id : " + customerDetails.getUniqueId());
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                Log.d("customerDetails", "Customer UID: " + customerDetails.getUniqueId());
-//                startActivity(intent);
-//            }
-//        });
+        btnViewBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "On Driver container click.");
+                Intent intent = new Intent(getApplicationContext(), CustomerBookingListActivity.class);
+                intent.putExtra("uid", customerDetails.getUniqueId());
+                Log.d(TAG, "This is customer unique Id : " + customerDetails.getUniqueId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Log.d("customerDetails", "Customer UID: " + customerDetails.getUniqueId());
+                startActivity(intent);
+            }
+        });
 
         imgCustomerImage.setAlpha(500);
 
         //Read driver details and set driver details in view.
         final String uId = getIntent().getStringExtra("customerUid");
+
 //        Log.d(TAG, "UniqueId is : " +uId);
         getCustomerDetails(uId);
-
         imgCustomerImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

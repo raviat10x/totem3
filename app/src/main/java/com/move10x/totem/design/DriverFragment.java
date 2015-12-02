@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -38,7 +39,9 @@ import com.move10x.totem.services.CurrentProfileService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +49,18 @@ import cz.msebera.android.httpclient.Header;
 
 public class DriverFragment extends Fragment {
 
+    private static final String TAG = "DriverFragment";
     LinearLayout driverListContainer;
+
+    public String currentStatus = "Pending";
+
+    List<Driver> availableDriverList;
+    List<Driver> offDutyDriverList;
+    List<Driver> onDutyDriverList;
+    List<Driver> allDriverList;
+    List<Driver> pendingDriverList;
+    List<Driver> terminatedDriverList;
+    List<Driver> drivers;
 
     ListView driverList;
     ProgressBar progressBar;
@@ -55,6 +69,7 @@ public class DriverFragment extends Fragment {
     Context context;
 
     private OnFragmentInteractionListener mListener;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -91,12 +106,20 @@ public class DriverFragment extends Fragment {
         getActivity().setTitle("Drivers");
         driverListContainer = (LinearLayout) view.findViewById(R.id.driverListContainer);
         driverList = (ListView) view.findViewById(R.id.driverList);
+//        txtDutyStatus = (TextView)view.findViewById(R.id.txtDutyStatus);
         progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);
 
+        availableDriverList = new ArrayList<Driver>();
+        offDutyDriverList = new ArrayList<Driver>();
+        onDutyDriverList = new ArrayList<Driver>();
+        allDriverList = new ArrayList<Driver>();
+        pendingDriverList = new ArrayList<Driver>();
+        terminatedDriverList = new ArrayList<Driver>();
+
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
-        if(currentProfile.getUserType().equals("VRM")) {
+        if (currentProfile.getUserType().equals("VRM")) {
             floatingActionButton.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             floatingActionButton.setVisibility(View.GONE);
         }
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +129,28 @@ public class DriverFragment extends Fragment {
             }
         });
 
+        Log.d(TAG, "Inside fetchPendingDriverList");
+        Bundle arguments = getArguments();
+        if (arguments  != null && arguments.containsKey("pending")) {
+            String userId = arguments.getString("pending");
+            Log.d(TAG, "Getting data from bundle");
+        }
+        fetchPendingDriverlist(arguments);
+
         //Fetch drivers of customer.
         showProgress(true);
         getDriverList();
 
-//        setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
 
         return view;
+    }
+
+    private void fetchPendingDriverlist(Bundle arguements) {
+        Log.d(TAG, "Inside fetchPendingDriverList");
+        if (currentStatus.toString().equals("Pending")) {
+            driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -132,25 +170,6 @@ public class DriverFragment extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        Log.d("Inside Driver Frgament", "onCreateOptionsMenu");
-//        inflater.inflate(R.menu.menu_sample, menu);
-//        super.onCreateOptionsMenu(menu,inflater);
-//       }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.actionAvailable:
-//
-//            case R.id.actionOnDuty:
-//
-//
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onDetach() {
@@ -191,6 +210,10 @@ public class DriverFragment extends Fragment {
         }
     }
 
+    public void updateText(String text) {
+        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -214,12 +237,52 @@ public class DriverFragment extends Fragment {
         this.startActivity(intent);
     }
 
-    private void getDriverList(){
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d("Inside Driver Fragment", "onCreateOptionsMenu");
+        inflater.inflate(R.menu.menu_sample, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionAvailable:
+                Log.d(TAG, "actionAvailable");
+                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), availableDriverList));
+                break;
+            case R.id.actionOffDuty:
+                Log.d(TAG, "actionOffDuty");
+                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), offDutyDriverList));
+                break;
+            case R.id.actionOnDuty:
+                Log.d(TAG, "actionOnDuty");
+                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), onDutyDriverList));
+                break;
+            case R.id.actionPending:
+                Log.d(TAG, "actionPending");
+                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
+                break;
+            case R.id.actionTerminated:
+                Log.d(TAG, "actionTerminate");
+                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), terminatedDriverList));
+                break;
+//            default:
+            case R.id.actionAllDrivers:
+                Log.d(TAG, "actionAllDrivers");
+                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), allDriverList));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void getDriverList() {
         //Request Parameters.
         CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
-        Log.d("driverFragment","Fetch drivers for user: " + currentProfile.toString());
+        Log.d("driverFragment", "Fetch drivers for user: " + currentProfile.toString());
         String uid = currentProfile.getUserId();
-        Log.d("driverFragment","Fetch drivers for userId: " + uid);
+        Log.d("driverFragment", "Fetch drivers for userId: " + uid);
         RequestParams loginParameters = new RequestParams();
         loginParameters.put("uid", uid);
         loginParameters.put("role", currentProfile.getUserType());
@@ -231,12 +294,40 @@ public class DriverFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray.
-                Log.d("driverFragment", "Parsing getDriverList() response. " );
+                Log.d("driverFragment", "Parsing getDriverList() response. ");
                 try {
                     if (response.getString("success") != null && response.getString("success").equals("1")) {
                         JSONArray jsonDriverList = response.getJSONArray("drivers");
                         List<Driver> drivers = new ArrayList<Driver>();
-                        for(int i =0; i< jsonDriverList.length(); i++){
+                        Log.d(TAG, "Inside ListView");
+                        for (int i = 0; i < jsonDriverList.length(); i++) {
+                            Driver temp = Driver.decodeJsonForList(jsonDriverList.getJSONObject(i));
+                            Log.d(TAG, "Temp");
+
+                            if (temp.getWorkStatus().equals(Driver.WorkStatus_Terminated)) {
+                                Log.d(TAG, "Inside Terminate");
+                                terminatedDriverList.add(temp);
+                            }
+                            else if (temp.getWorkStatus().equals(Driver.DutyStatus_Pending_Verify))
+                            {
+                                Log.d(TAG, "Inside Pending");
+                                pendingDriverList.add(temp);
+                            }
+
+
+                            else if (temp.getWorkStatus().equals(Driver.WorkStatus_Active)) {
+                                if (temp.getDutyStatus().equals(Driver.DutyStatus_Available)) {
+                                    Log.d(TAG, "Inside Available");
+                                    availableDriverList.add(temp);
+                                } else if (temp.getDutyStatus().equals(Driver.DutyStatus_COMPLETE) || temp.getDutyStatus().equals(Driver.DutyStatus_Outside) || temp.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_DROP) || temp.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_LOADING) || temp.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_TOPICKUP) || temp.getDutyStatus().equals(Driver.DutyStatus_Training) || temp.getDutyStatus().equals(Driver.DutyStatus_UNLOADING)) {
+                                    Log.d(TAG, "Inside All");
+                                    onDutyDriverList.add(temp);
+                                } else if (temp.getDutyStatus().equals(Driver.DutyStatus_Offduty)) {
+                                    Log.d(TAG, "Inside OffDuty");
+                                    offDutyDriverList.add(temp);
+                                }
+                            } else Log.d(TAG, "Inside Outside");
+                            allDriverList.add(temp);
                             drivers.add(Driver.decodeJsonForList(jsonDriverList.getJSONObject(i)));
                         }
                         driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), drivers));
@@ -355,7 +446,7 @@ public class DriverFragment extends Fragment {
                     Log.d("driverFragment", "On Driver container click.");
                     Intent intent = new Intent(getActivity().getApplicationContext(), DriverDetailsActivity.class);
                     intent.putExtra("driverUid", currentDriver.getuId());
-                    intent. addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     Log.d("driverOnMap", "Driver UID: " + currentDriver.getuId());
                     startActivity(intent);
                 }

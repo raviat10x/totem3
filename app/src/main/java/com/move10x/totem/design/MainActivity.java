@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -35,9 +33,12 @@ import com.move10x.totem.services.CurrentProfileService;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Move10xActivity
-        implements DriverFragment.OnFragmentInteractionListener {
+import static com.move10x.totem.R.id.frameLayoutDriverFragment;
 
+public class MainActivity extends Move10xActivity
+        implements DriverFragment.OnFragmentInteractionListener, HomeFragment.TextClicked {
+
+    private static final String TAG = "MainActivity";
     FrameLayout fragementHolder;
     Spinner driverFilterSpinner;
     DrawerLayout drarwerLayout;
@@ -83,7 +84,20 @@ public class MainActivity extends Move10xActivity
             fragmentTransaction.replace(R.id.fragementHolder, fg);
             fragmentTransaction.commit();
             Log.d("mainActivity", "Fragement Loaded Successfully.");
-        }else {
+        }
+
+       else if(getIntent().getStringExtra("pending").equals("pending")){
+            //Load default fragment.
+            Log.d(TAG, "Getting Extra");
+            Fragment fg = new DriverFragment();
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragementHolder, fg);
+            fragmentTransaction.commit();
+            Log.d(TAG, "Fragment Loaded Successfully.");
+        }
+
+        else  {
             Log.d("mainActivigty", "Load fragment: " + getIntent().getStringExtra("loadFragment"));
             if (getIntent().getStringExtra("loadFragment").equals("drivers")) {
                 Fragment fg = new DriverFragment();
@@ -91,8 +105,9 @@ public class MainActivity extends Move10xActivity
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.fragementHolder, fg);
                 fragmentTransaction.commit();
-                Log.d("mainActivity", "Fragement Loaded Successfully.");
+                Log.d("mainActivity", "Fragment Loaded Successfully.");
             }
+
         }
     }
 
@@ -135,7 +150,6 @@ public class MainActivity extends Move10xActivity
 //            drawerList.add(new DrawerListItem("Leads", R.drawable.icon_person_pin));
             //Final
             drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
-            //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
             drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
         }
         //Crm Profile
@@ -143,14 +157,18 @@ public class MainActivity extends Move10xActivity
         drawerList.add(new DrawerListItem("User", R.drawable.icon_account_circle));
         drawerList.add(new DrawerListItem("Home", R.drawable.icon_home));
         drawerList.add(new DrawerListItem("Drivers", R.drawable.icon_account_circle));
-
-        drawerList.add(new DrawerListItem("Leads", R.drawable.icon_person_pin));
-
+        drawerList.add(new DrawerListItem("Customers", R.drawable.icon_person_pin));
+        drawerList.add(new DrawerListItem("Leads", R.drawable.icon_lead_pin1));
         drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
-        //drawerList.add(new DrawerListItem("Activity", R.drawable.icon_history));
         drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
         }
         return drawerList;
+    }
+
+    @Override
+    public void sendText(String text) {
+        DriverFragment frag = (DriverFragment)getFragmentManager().findFragmentById(R.id.frameLayoutDriverFragment);
+        frag.updateText(text);
     }
 
     public class DrawerAdapter extends ArrayAdapter<DrawerListItem> {
@@ -241,8 +259,7 @@ public class MainActivity extends Move10xActivity
                             Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
                         }
 
-
-                        else if (selectedItem.getItemName().toLowerCase().equals("leads")) {    //Drivers
+                        else if (selectedItem.getItemName().toLowerCase().equals("customers")) {    //Drivers
                             Log.d("mainActivity", "Changing Fragement to Customers Fragement");
                             fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
                             Fragment fg = new CustomerFragment();
@@ -250,7 +267,18 @@ public class MainActivity extends Move10xActivity
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
                             fragmentTransaction.commit();
-                            Log.d("mainActivity", "Finished Changing Fragement to Customers Fragement.");
+                            Log.d("mainActivity", "Finished Changing Fragment to Lead Fragment.");
+                        }
+
+                        else if (selectedItem.getItemName().toLowerCase().equals("leads")) {    //Drivers
+                            Log.d("mainActivity", "Changing Fragement to leads Fragement");
+                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
+                            Fragment fg = new LeadFragment();
+                            android.app.FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
+                            fragmentTransaction.commit();
+                            Log.d("mainActivity", "Finished Changing Fragment to Customers Fragment.");
                         }
 
                         else if (selectedItem.getItemName().toLowerCase().equals("driversonmap")) {       //Drivers on map

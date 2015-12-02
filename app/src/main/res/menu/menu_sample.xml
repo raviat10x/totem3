@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/actionAllDrivers"
+        android:title="@string/profile_menu_allDrivers"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionAvailable"
+        android:title="@string/profile_menu_avlbl"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionOnDuty"
+        android:title="@string/profile_menu_onduty"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionOffDuty"
+        android:title="@string/profile_menu_offduty"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionPending"
+        android:title="@string/profile_menu_pending"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionTerminated"
+        android:title="@string/profile_menu_terminated"
+        android:orderInCategory="100"  />
+
+</menu>

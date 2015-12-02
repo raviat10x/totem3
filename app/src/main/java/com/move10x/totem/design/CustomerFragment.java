@@ -1,60 +1,52 @@
 package com.move10x.totem.design;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
-import com.move10x.totem.models.CurrentProfile;
-import com.move10x.totem.models.Customer;
-import com.move10x.totem.models.Driver;
-import com.move10x.totem.models.JsonHttpResponseHandler;
-import com.move10x.totem.models.Url;
-import com.move10x.totem.services.AsyncHttpService;
-import com.move10x.totem.services.AsyncImageLoaderService;
-import com.move10x.totem.services.CurrentProfileService;
-import com.move10x.totem.services.CustomerService;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import cz.msebera.android.httpclient.Header;
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link CustomerFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link CustomerFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class CustomerFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
-    private static final String TAG = "CustomerFragment";
-    LinearLayout customerListContainer;
+    private OnFragmentInteractionListener mListener;
 
-    ListView customerList;
-    ProgressBar progressBar;
-    FloatingActionButton floatingActionButton;
-    View view;
-    Context context;
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment CustomerFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static CustomerFragment newInstance(String param1, String param2) {
+        CustomerFragment fragment = new CustomerFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public CustomerFragment() {
         // Required empty public constructor
@@ -63,205 +55,56 @@ public class CustomerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-    }
-
-    // TODO: Rename and change types and number of parameters
-    public static CustomerFragment newInstance(String param1, String param2) {
-        CustomerFragment fragment = new CustomerFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
-        view = inflater.inflate(R.layout.fragment_customer, container, false);
-        getActivity().setTitle("Leads");
-        customerListContainer = (LinearLayout) view.findViewById(R.id.customerListContainer);
-        customerList = (ListView) view.findViewById(R.id.customerList);
-        progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);
-
-        floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCustomerAddClick();
-            }
-        });
-
-
-        showProgress(true);
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_customer, container, false);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-            Log.d(TAG, "Inside showProgress()");
-
-            customerListContainer.setVisibility(show ? View.GONE : View.VISIBLE);
-            customerListContainer.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    customerListContainer.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressBar.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-            customerListContainer.setVisibility(show ? View.GONE : View.VISIBLE);
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
         }
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        Log.d(TAG, "At Resume.");
-        getCustomerList();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnFragmentInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
-    public void onCustomerAddClick() {
-        Log.d(TAG, "on Add driver click.");
-
-        Intent intent = new Intent(getActivity().getApplicationContext(), NewCustomerActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(intent);
-    }
-
-    private void getCustomerList() {
-
-        //Request Parameters.
-        CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
-        Log.d(TAG, "Fetch Customers for user: " + currentProfile.toString());
-        String uid = currentProfile.getUserId();
-        Log.d(TAG, "Fetch Customers for userId: " + uid);
-        RequestParams requestParameters = new RequestParams();
-        requestParameters.put("crmId", currentProfile.getUserId());
-        requestParameters.put("tag", "usersList");
-
-        AsyncHttpService.post(Url.totemApiUrl, requestParameters, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // If the response is JSONObject instead of expected JSONArray.
-                Log.d(TAG, "Parsing getcustomerList() response:  " + response);
-                try {
-                    Log.d(TAG, "Inside try block: " + response);
-                    if (response.getString("success") != null && response.getString("success").equals("1")) {
-                        Log.d(TAG, "Inside Success");
-                        JSONArray jsoncustomerList = response.getJSONArray("msg");
-                        List<Customer> customers = new ArrayList<Customer>();
-                        for (int i = 0; i < jsoncustomerList.length(); i++) {
-                            customers.add(Customer.decodeJsonForList(jsoncustomerList.getJSONObject(i)));
-                        }
-                        customerList.setAdapter(new customerListAdapter(getActivity().getApplicationContext(), customers));
-                    }
-                } catch (JSONException ex) {
-                    Log.d(TAG, "Inside try block");
-                }
-                Log.d(TAG, "After try catch block ProgressBar is going to be Invisible");
-                showProgress(false);
-                customerListContainer.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-            }
-        });
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     /**
-     * Created by Ravi on 10/11/2015.
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
      */
-    public class customerListAdapter extends BaseAdapter {
-
-        private List<Customer> customerList;
-        private LayoutInflater inflater = null;
-
-        public customerListAdapter(Context context, List<Customer> customerList) {
-            // TODO Auto-generated constructor stub
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            this.customerList = customerList;
-        }
-
-        @Override
-        public int getCount() {
-            // TODO Auto-generated method stub
-            return customerList.size();
-        }
-
-        @Override
-        public Customer getItem(int position) {
-            // TODO Auto-generated method stub
-            return customerList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            final Customer currentCustomer = this.customerList.get(position);
-            View rowView = inflater.inflate(R.layout.customerlist, null);
-
-            TextView txtCustomerName = (TextView) rowView.findViewById(R.id.customerName);
-            txtCustomerName.setText(currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-            Log.d(TAG, currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-
-            TextView txtCustomerPhoneNumber = ((TextView) rowView.findViewById(R.id.customerPhoneNumber));
-            txtCustomerPhoneNumber.setText(currentCustomer.getMobile());
-            Log.d(TAG, currentCustomer.getMobile());
-
-            TextView txtCustArea = ((TextView) rowView.findViewById(R.id.txtCustomerArea));
-            txtCustArea.setText(currentCustomer.getArea());
-            Log.d(TAG, currentCustomer.getArea());
-
-            Log.d(TAG, "Comparing Customer Status: " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName() + " " + currentCustomer.getMobile() + " " + currentCustomer.getArea());
-//            ImageView imageView = (ImageView) rowView.findViewById(R.id.imgDriverPhoto);
-
-            rowView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
-
-            LinearLayout customerDetailsContainer = (LinearLayout) rowView.findViewById(R.id.customerDetailsContainer);
-            customerDetailsContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "On Customer container click.");
-                    Intent intent = new Intent(getActivity().getApplicationContext(), CustomerDetailsActivity.class);
-                    intent.putExtra("customerUid", currentCustomer.getUniqueId());
-                    //intent.putExtra("customerUid", currentCustomer.getCustomerUid());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Log.d(TAG, "Customer UID: " + currentCustomer.getUniqueId());
-                    startActivity(intent);
-                }
-            });
-            return rowView;
-        }
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        public void onFragmentInteraction(Uri uri);
     }
+
 }

@@ -67,7 +67,7 @@ public class BookingDetailsActivity extends Move10xActivity {
         txtDriverRating = (TextView) findViewById(R.id.txtDriverRating);
         txtCustomerRating = (TextView) findViewById(R.id.txtCustomerRating);
         txtBookingCreatedAt = (TextView) findViewById(R.id.txtBookingCreatedAt);
-        txtCustomerDetails = (TextView) findViewById(R.id.txtCustomerDetails);
+//        txtCustomerDetails = (TextView) findViewById(R.id.txtCustomerDetails);
 
         //Fetch bookingDetails.
         //Read driver details and set driver details in view.
@@ -159,7 +159,7 @@ public class BookingDetailsActivity extends Move10xActivity {
                         txtCustomerRating.setText(bookingDetails.getCustomerRating());
                         txtBookingCreatedAt.setText(bookingDetails.getBookingCreatedAt());
                         Customer cust = bookingDetails.getCustomer();
-                        txtCustomerDetails.setText(cust.getFirstName() + " " + cust.getLastName() + " (" + cust.getMobile() + ")");
+//                        txtCustomerDetails.setText(cust.getFirstName() + " " + cust.getLastName() + " (" + cust.getMobile() + ")");
                     }
                 } catch (JSONException ex) {
                     Log.e(logTag, "Failed to parse getBookingDetails() response json.");

@@ -41,6 +41,17 @@
             android:text="VRM"
             android:textSize="20dp" />
 
+        <TextView
+            android:id="@+id/txtMoveMiles"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:background="#fff"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
         <!--Driver Information-->
         <LinearLayout
             android:layout_width="fill_parent"
@@ -74,6 +85,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/driverDetails"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
@@ -89,6 +101,7 @@
 
 
                             <LinearLayout
+                                android:id="@+id/layoutTotalDrivers"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="33"
@@ -114,6 +127,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layoutPending"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="33"
@@ -149,6 +163,7 @@
 
                                 <TextView
                                     style="@style/HomeDriverInfoLabel"
+                                    android:id="@+id/txtDailyTrips"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -199,9 +214,10 @@
 
                                 <TextView
                                     style="@style/HomeDriverInfoLabel"
+                                    android:id="@+id/txtWeeklyTrips"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="OnTrip"
+                                    android:text="OnDuty"
                                     android:textColor="#0000ff"
                                     android:textSize="15dp" />
 
@@ -218,6 +234,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layoutAvailable"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="33"
@@ -226,6 +243,7 @@
 
                                 <TextView
                                     style="@style/HomeDriverInfoLabel"
+                                    android:id="@+id/txtAvailable"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="AVAILABLE"
@@ -253,6 +271,7 @@
 
                                 <TextView
                                     style="@style/HomeDriverInfoLabel"
+                                    android:id="@+id/txtMonthlyTrips"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="OFFDUTY"

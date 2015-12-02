@@ -31,6 +31,8 @@
     <string name="profile_menu_onduty">OnDuty</string>
     <string name="profile_menu_offduty">OffDuty</string>
     <string name="profile_menu_allDrivers">All Drivers</string>
+    <string name="profile_menu_pending">Pending</string>
+    <string name="profile_menu_terminated">Terminated</string>
 
 
 
@@ -43,6 +45,11 @@
         <item>Freelancer</item>
         <item>Semi-Fixed</item>
         <item>Fixed</item>
+    </string-array>
+    <string-array name="filter">
+        <item>Available</item>
+        <item>OffDuty</item>
+        <item>OnDuty</item>
     </string-array>
 
 
