@@ -130,12 +130,19 @@ public class DriverFragment extends Fragment {
         });
 
         Log.d(TAG, "Inside fetchPendingDriverList");
-        Bundle arguments = getArguments();
-        if (arguments  != null && arguments.containsKey("pending")) {
-            String userId = arguments.getString("pending");
-            Log.d(TAG, "Getting data from bundle");
+//        Bundle arguments = getArguments();
+//        if (arguments  != null && arguments.containsKey("pending")) {
+//            String userId = arguments.getString("pending");
+//            Log.d(TAG, "Getting data from bundle");
+//        }
+//        fetchPendingDriverlist(arguments);
+
+        if (currentStatus.contains("Pending"))
+        {
+            Log.d(TAG, "Inside onCreateView()");
+
+            fetchPendingDriverlist();
         }
-        fetchPendingDriverlist(arguments);
 
         //Fetch drivers of customer.
         showProgress(true);
@@ -146,9 +153,9 @@ public class DriverFragment extends Fragment {
         return view;
     }
 
-    private void fetchPendingDriverlist(Bundle arguements) {
+    private void fetchPendingDriverlist() {
         Log.d(TAG, "Inside fetchPendingDriverList");
-        if (currentStatus.toString().equals("Pending")) {
+        if (currentStatus.equals("Pending")) {
             driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
         }
     }
