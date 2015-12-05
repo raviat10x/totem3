@@ -2,6 +2,8 @@ package com.move10x.totem.design;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -53,6 +55,7 @@ public class DriverDetailsActivity extends Move10xActivity {
     TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate, txtRemarks;
     ImageButton btnUpdateDriverRemarks;
     AppCompatButton btnViewBookings;
+    AppCompatButton btnViewTrainings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +87,7 @@ public class DriverDetailsActivity extends Move10xActivity {
         txtDutyStatus = (TextView) findViewById(R.id.txtDutyStatus);
         txtRemarks = (TextView) findViewById(R.id.txtRemarks);
         txtRemarksDate = (TextView) findViewById(R.id.txtRemarksDate);
-
+        btnViewTrainings = (AppCompatButton)findViewById(R.id.btnViewTrainings);
         //Read driver details and set driver details in view.
         String uId = getIntent().getStringExtra("driverUid");
         getDriverDetails(uId);
@@ -111,6 +114,20 @@ public class DriverDetailsActivity extends Move10xActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Log.d("driverDetails", "Driver UID: " + driverDetails.getuId());
                 startActivity(intent);
+            }
+        });
+        btnViewTrainings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TrainingFragment fg = new TrainingFragment();
+                android.app.FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.driverDetailsContainer, fg);
+                Log.d(logTag, "Inside driverDetailsContainer" + driverDetailsContainer);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                Log.d(logTag, "Fragment Loaded Successfully.");
+
             }
         });
 

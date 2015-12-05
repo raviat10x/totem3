@@ -151,6 +151,7 @@ public class MainActivity extends Move10xActivity
             //Final
             drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
             drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
+            drawerList.add(new DrawerListItem("Training", R.drawable.icon_person_pin));
         }
         //Crm Profile
         else {
@@ -167,6 +168,7 @@ public class MainActivity extends Move10xActivity
 
     @Override
     public void sendText(String text) {
+        Log.d(TAG, "Inside sendText");
         DriverFragment frag = (DriverFragment)getFragmentManager().findFragmentById(R.id.frameLayoutDriverFragment);
         frag.updateText(text);
     }
@@ -298,7 +300,18 @@ public class MainActivity extends Move10xActivity
                             Log.d("mainActivity", "on Activity Button Click.");
                             Intent intent = new Intent(this, DriversOnMapActivity.class);
                             this.startActivity(intent);*/
-                        } else if (selectedItem.getItemName().toLowerCase().equals("logout")) {
+                        }
+                        else if (selectedItem.getItemName().toLowerCase().equals("training")) {    //Drivers
+                            Log.d("mainActivity", "Changing Fragement to Training Fragement");
+                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
+                            Fragment fg = new TrainingFragment();
+                            android.app.FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
+                            fragmentTransaction.commit();
+                            Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
+                        }
+                        else if (selectedItem.getItemName().toLowerCase().equals("logout")) {
                             Log.d("mainActivity", "on Logout Button Click.");
                             // Clear profile.
                             new CurrentProfileService(getApplicationContext()).ClearProfile();

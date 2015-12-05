@@ -59,11 +59,14 @@ public class HomeFragment extends Fragment {
     TextView txtAvailable;
     private DriverFragment.OnFragmentInteractionListener mListener;
     private TextView txtMonthlyTrips;
-    private LinearLayout layoutPending;
-    private LinearLayout layoutAvailable;
     private String TAG = "HOME FRAGMENT";
     private TextView txtMoveMiles;
     private LinearLayout layoutTotalDrivers;
+    private LinearLayout layoutPending;
+    private LinearLayout layoutAvailable;
+    private LinearLayout layoutOnDuty;
+    private LinearLayout layoutOffDuty;
+    private LinearLayout layoutTerminated;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,6 +102,9 @@ public class HomeFragment extends Fragment {
 
         layoutTotalDrivers = (LinearLayout)view.findViewById(R.id.layoutTotalDrivers);
         layoutPending = (LinearLayout) view.findViewById(R.id.layoutPending);
+        layoutOnDuty = (LinearLayout)view.findViewById(R.id.layoutOnDuty);
+        layoutOffDuty = (LinearLayout)view.findViewById(R.id.layoutOffDuty);
+        layoutTerminated = (LinearLayout)view.findViewById(R.id.layoutTerminated);
 
         getActivity().setTitle("Home");
         Log.d(logTag, "Fetching Current Profile Details");
@@ -165,6 +171,71 @@ public class HomeFragment extends Fragment {
                 DriverFragment fragment = new DriverFragment();
                 fragment.currentStatus = "Pending";
                 Log.d(TAG, "Outside layoutPending");
+                Bundle bundle = new Bundle();
+                bundle.putString("pending", "pending");
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragementHolder, fragment).commit();
+
+            }
+        });
+        layoutOffDuty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside layoutPending");
+                DriverFragment fragment = new DriverFragment();
+                fragment.currentStatus = "OffDuty";
+                Log.d(TAG, "Outside layoutOffDuty");
+                Bundle bundle = new Bundle();
+                bundle.putString("offduty", "offduty");
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragementHolder, fragment).commit();
+
+            }
+        });
+        layoutOnDuty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside layoutOnDuty");
+                DriverFragment fragment = new DriverFragment();
+                fragment.currentStatus = "Pending";
+                Log.d(TAG, "Outside layoutPending");
+                Bundle bundle = new Bundle();
+                bundle.putString("onduty", "onduty");
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragementHolder, fragment).commit();
+
+            }
+        });
+        layoutTerminated.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside layoutTerminated");
+                DriverFragment fragment = new DriverFragment();
+                fragment.currentStatus = "Pending";
+                Log.d(TAG, "Outside layoutTerminated");
+                Bundle bundle = new Bundle();
+                bundle.putString("terminated", "terminated");
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragementHolder, fragment).commit();
+
+            }
+        });
+        layoutAvailable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside layoutAvailable");
+                DriverFragment fragment = new DriverFragment();
+                fragment.currentStatus = "Pending";
+                Log.d(TAG, "Outside layoutAvailable");
+                Bundle bundle = new Bundle();
+                bundle.putString("available", "available");
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragementHolder, fragment).commit();
 
             }
         });
@@ -377,16 +448,35 @@ public class HomeFragment extends Fragment {
     }
 
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+//    @Override
+//    public void onAttach(Fragment fragment) {
+//        super.onAttach(fragment);
+//
+//        // This makes sure that the container activity has implemented
+//        // the callback interface. If not, it throws an exception
+//        try {
+//            mCallback = (TextClicked) fragment;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(fragment.toString()
+//                    + " must implement TextClicked");
+//        }
+//    }
+public void someMethod(){
+    mCallback.sendText("Pending");
+}
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+    @Override
+    public void onDetach() {
+        mCallback = null; // => avoid leaking, thanks @Deepscorn
+        super.onDetach();
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mCallback = (TextClicked) activity;
+            mCallback = (TextClicked) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(context.toString()
                     + " must implement TextClicked");
         }
     }

@@ -8,6 +8,12 @@
     android:fitsSystemWindows="true"
     tools:context="com.move10x.totem.DriverDetailsActivity">
 
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fragmentholder"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
         android:layout_width="match_parent"
@@ -22,15 +28,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/btnCall"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|end"-->
-    <!--android:layout_margin="@dimen/fab_margin"-->
-    <!--android:src="@drawable/icon_call"-->
-    <!--app:backgroundTint="@color/green" />-->
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -345,22 +342,45 @@
             </TableLayout>
 
             <!-- Booking History Button -->
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btnViewBookings"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/colorAccent"
-                android:padding="12dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="5dp"
-                android:text="View Booking History"
-                android:textColor="#ffffff" />
+            <LinearLayout
+                android:weightSum="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
+                <android.support.v7.widget.AppCompatButton
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="0.5"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btnViewBookings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/colorAccent"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Booking History"
+                    android:textColor="#ffffff" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnViewTrainings"
+                    android:layout_weight="0.5"
+                    android:layout_marginLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/colorAccent"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="View Training"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

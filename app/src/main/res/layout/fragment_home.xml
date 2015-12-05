@@ -155,6 +155,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layoutTerminated"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="33"
@@ -206,6 +207,7 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:id="@+id/layoutOnDuty"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="33"
@@ -263,6 +265,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/layoutOffDuty"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="33"

@@ -8,6 +8,7 @@ import android.app.VoiceInteractor;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -61,6 +62,7 @@ public class DriverFragment extends Fragment {
     List<Driver> pendingDriverList;
     List<Driver> terminatedDriverList;
     List<Driver> drivers;
+    List<Driver> allExceptTerminatedDriverList;
 
     ListView driverList;
     ProgressBar progressBar;
@@ -115,6 +117,7 @@ public class DriverFragment extends Fragment {
         allDriverList = new ArrayList<Driver>();
         pendingDriverList = new ArrayList<Driver>();
         terminatedDriverList = new ArrayList<Driver>();
+        allExceptTerminatedDriverList = new ArrayList<Driver>();
 
         floatingActionButton = (FloatingActionButton) view.findViewById(R.id.floatingAddButton);
         if (currentProfile.getUserType().equals("VRM")) {
@@ -130,19 +133,17 @@ public class DriverFragment extends Fragment {
         });
 
         Log.d(TAG, "Inside fetchPendingDriverList");
-//        Bundle arguments = getArguments();
-//        if (arguments  != null && arguments.containsKey("pending")) {
-//            String userId = arguments.getString("pending");
-//            Log.d(TAG, "Getting data from bundle");
+
+        fetchPendingDriverlist(currentStatus);
+
+//        DriverFragment fragment = new DriverFragment();
+//        fragment.currentStatus = "Pending";
+//        if (currentStatus.equals("Pending"))
+//        {
+//            Log.d(TAG, "Inside onCreateView()");
+//
+//            fetchPendingDriverlist(currentStatus);
 //        }
-//        fetchPendingDriverlist(arguments);
-
-        if (currentStatus.contains("Pending"))
-        {
-            Log.d(TAG, "Inside onCreateView()");
-
-            fetchPendingDriverlist();
-        }
 
         //Fetch drivers of customer.
         showProgress(true);
@@ -153,11 +154,11 @@ public class DriverFragment extends Fragment {
         return view;
     }
 
-    private void fetchPendingDriverlist() {
+    private void fetchPendingDriverlist(String currentStatus) {
         Log.d(TAG, "Inside fetchPendingDriverList");
-        if (currentStatus.equals("Pending")) {
+//        if (currentStatus.equals("Pending")) {
             driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
-        }
+//        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -218,6 +219,7 @@ public class DriverFragment extends Fragment {
     }
 
     public void updateText(String text) {
+        Log.d(TAG, "Inside updateText");
         driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
     }
 
@@ -257,6 +259,7 @@ public class DriverFragment extends Fragment {
             case R.id.actionAvailable:
                 Log.d(TAG, "actionAvailable");
                 driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), availableDriverList));
+
                 break;
             case R.id.actionOffDuty:
                 Log.d(TAG, "actionOffDuty");
@@ -279,6 +282,10 @@ public class DriverFragment extends Fragment {
                 Log.d(TAG, "actionAllDrivers");
                 driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), allDriverList));
                 break;
+//            default:
+//                Log.d(TAG, "allExceptTerminatedDriverList");
+//                driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), allExceptTerminatedDriverList));
+//                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -292,6 +299,7 @@ public class DriverFragment extends Fragment {
         Log.d("driverFragment", "Fetch drivers for userId: " + uid);
         RequestParams loginParameters = new RequestParams();
         loginParameters.put("uid", uid);
+        Log.d(TAG, "uid is  : " +uid);
         loginParameters.put("role", currentProfile.getUserType());
         loginParameters.put("tag", "vrm_get_drivers_1");
 
@@ -315,6 +323,7 @@ public class DriverFragment extends Fragment {
                                 Log.d(TAG, "Inside Terminate");
                                 terminatedDriverList.add(temp);
                             }
+
                             else if (temp.getWorkStatus().equals(Driver.DutyStatus_Pending_Verify))
                             {
                                 Log.d(TAG, "Inside Pending");
@@ -333,11 +342,64 @@ public class DriverFragment extends Fragment {
                                     Log.d(TAG, "Inside OffDuty");
                                     offDutyDriverList.add(temp);
                                 }
-                            } else Log.d(TAG, "Inside Outside");
+                            }
+//                                else if ((temp.getDutyStatus().equals(Driver.DutyStatus_Available)) ||
+//                                (temp.getDutyStatus().equals(Driver.DutyStatus_Offduty)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_COMPLETE)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_Outside)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_DROP)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_LOADING)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_TOPICKUP)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_Training)) ||
+//                                        (temp.getDutyStatus().equals(Driver.DutyStatus_UNLOADING)))
+//                                {
+//                                    allExceptTerminatedDriverList.add(temp);
+//                                }
+//                                allExceptTerminatedDriverList.add(temp);
+
+//                            }
+//                            else if(! (temp.getWorkStatus().equals(Driver.WorkStatus_Terminated)))
+//                            {
+//                                allExceptTerminatedDriverList.add(temp);
+//                            }
+                            else Log.d(TAG, "Inside Outside");
+
                             allDriverList.add(temp);
+//                            allExceptTerminatedDriverList.add(temp);
+
                             drivers.add(Driver.decodeJsonForList(jsonDriverList.getJSONObject(i)));
                         }
-                        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), drivers));
+                        Bundle arguments = getArguments();
+                        if (arguments  != null && arguments.containsKey("pending")) {
+                            String userId = arguments.getString("pending");
+                            Log.d(TAG, "Getting data from bundle");
+                            displayPendingDrivers();
+                        }
+                        else if (arguments  != null && arguments.containsKey("offduty")) {
+                            String userId = arguments.getString("offduty");
+                            Log.d(TAG, "Getting data from bundle");
+                            displayOffDutyDrivers();
+                        }
+                        else if (arguments  != null && arguments.containsKey("onduty")) {
+                            String userId = arguments.getString("onduty");
+                            Log.d(TAG, "Getting data from bundle");
+                            displayOnDutyDrivers();
+                        }
+                        else if (arguments  != null && arguments.containsKey("available")) {
+                            String userId = arguments.getString("available");
+                            Log.d(TAG, "Getting data from bundle");
+                            displayAvailableDrivers();
+                        }
+                        else if (arguments  != null && arguments.containsKey("terminated")) {
+                            String userId = arguments.getString("terminated");
+                            Log.d(TAG, "Getting data from bundle");
+                            displayTerminatedDrivers();
+                        }
+                        else
+                        {
+                            driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), drivers));
+                        }
+
                     }
                 } catch (JSONException ex) {
 
@@ -360,6 +422,38 @@ public class DriverFragment extends Fragment {
                 super.onFailure(statusCode, headers, responseString, throwable);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    public void displayPendingDrivers()
+    {
+        Log.i(TAG,"displayPendingDrivers");
+        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), pendingDriverList));
+    }
+    public void displayAvailableDrivers()
+    {
+        Log.i(TAG,"displayAvailableDrivers");
+        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), availableDriverList));
+    }
+    public void displayOnDutyDrivers()
+    {
+        Log.i(TAG,"displayOnDutyDrivers");
+        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), onDutyDriverList));
+    }
+    public void displayOffDutyDrivers()
+    {
+        Log.i(TAG,"displayOffDutyDrivers");
+        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), offDutyDriverList));
+    }
+    public void displayTerminatedDrivers()
+    {
+        Log.i(TAG,"displayTerminatedDrivers");
+        driverList.setAdapter(new DriverListAdapter(getActivity().getApplicationContext(), terminatedDriverList));
     }
 
     /**
