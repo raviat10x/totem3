@@ -24,4 +24,13 @@
         android:layout_marginBottom="40dp"
         android:src="@drawable/icon_refresh_white"
         android:layout_marginRight="20dp" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/icon_close"
+        android:layout_marginRight="20dp" />
 </fragment>

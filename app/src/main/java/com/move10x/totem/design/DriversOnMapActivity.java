@@ -272,13 +272,18 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
     }
 
     private void onFilterChange() {
-
+    Log.d(TAG, "Inside OnFilterChange");
         Iterator<Marker> iterator = driverMarkers.keySet().iterator();
         while(iterator.hasNext()){
             Marker m = iterator.next();
             m.setVisible(false);
             Driver d = driverMarkers.get(m);
+            Log.d(TAG, "print drivers " +d.getWorkStatus());
+            Log.d(TAG, "print drivers " +d.getDutyStatus());
             if (d.getWorkStatus().equals(Driver.WorkStatus_Terminated)) {
+                Log.d(TAG, "Terminated drivers " +d.getWorkStatus());
+                Log.d(TAG, "Terminated drivers " +d.getDutyStatus());
+
                 m.setVisible(true);
             }
             else if (d.getWorkStatus().equals(Driver.DutyStatus_Pending_Verify)){
@@ -305,35 +310,41 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
             case R.id.actionAvailable:
                 Log.d(TAG, "actionAvailable");
                 Iterator<Marker> iterator = driverMarkers.keySet().iterator();
+                Log.d(TAG, "Available drivers : " +iterator);
                 Marker m = iterator.next();
                 m.setVisible(false);
                 break;
             case R.id.actionOffDuty:
                 Log.d(TAG, "actionOffDuty");
                 Iterator<Marker> iterator1 = driverMarkers.keySet().iterator();
+                Log.d(TAG, "OffDuty drivers : " +iterator1);
                 Marker m1 = iterator1.next();
                 m1.setVisible(false);
                 break;
             case R.id.actionOnDuty:
                 Log.d(TAG, "actionOnDuty");
                 Iterator<Marker> iterator2 = driverMarkers.keySet().iterator();
+                Log.d(TAG, "OnDuty drivers : " +iterator2);
                 Marker m2 = iterator2.next();
                 m2.setVisible(false);
                 break;
             case R.id.actionPending:
                 Log.d(TAG, "actionPending");
                 Iterator<Marker> iterator3 = driverMarkers.keySet().iterator();
+                Log.d(TAG, "Pending drivers : " +iterator3);
                 Marker m3 = iterator3.next();
                 m3.setVisible(false);
                 break;
             case R.id.actionTerminated:
                 Log.d(TAG, "actionTerminate");
                 Iterator<Marker> iterator4 = driverMarkers.keySet().iterator();
+                Log.d(TAG, "Terminated drivers : " +iterator4);
                 Marker m4 = iterator4.next();
                 m4.setVisible(false);
                 break;
             case android.R.id.home:
                 finish();
+                break;
             default:
             case R.id.actionAllDrivers:
                 Log.d(TAG, "actionAllDrivers");
