@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -52,7 +53,7 @@ public class DriverDetailsActivity extends Move10xActivity {
     ImageView imgDriverImage;
     TextView txtDriverName, txtAuthority, txtMobileNumber, txtRegion, txtBaseStation;
     TextView txtVehicleBrand, txtRegestrationNo, txtDevice, txtAppVersion;
-    TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate, txtRemarks;
+    TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate, txtRemarks,moreRemarksbutton;
     ImageButton btnUpdateDriverRemarks;
     AppCompatButton btnViewBookings;
 //    AppCompatButton btnViewTrainings;
@@ -87,10 +88,14 @@ public class DriverDetailsActivity extends Move10xActivity {
         txtDutyStatus = (TextView) findViewById(R.id.txtDutyStatus);
         txtRemarks = (TextView) findViewById(R.id.txtRemarks);
         txtRemarksDate = (TextView) findViewById(R.id.txtRemarksDate);
+        moreRemarksbutton =(TextView)findViewById(R.id.moreRemarks);
 //        btnViewTrainings = (AppCompatButton)findViewById(R.id.btnViewTrainings);
         //Read driver details and set driver details in view.
         String uId = getIntent().getStringExtra("driverUid");
         getDriverDetails(uId);
+
+        //setting the underline of the getMoreRemarks Button
+        moreRemarksbutton.setPaintFlags(moreRemarksbutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         //Floating call button.
         ImageButton fab = (ImageButton) findViewById(R.id.btnCall);
@@ -114,6 +119,15 @@ public class DriverDetailsActivity extends Move10xActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Log.d("driverDetails", "Driver UID: " + driverDetails.getuId());
                 startActivity(intent);
+            }
+        });
+
+        moreRemarksbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent moreRemarksIntent= new Intent(getApplicationContext(),RemarksActivity.class);
+                moreRemarksIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(moreRemarksIntent);
             }
         });
 //        btnViewTrainings.setOnClickListener(new View.OnClickListener() {

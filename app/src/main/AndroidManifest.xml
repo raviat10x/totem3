@@ -119,6 +119,11 @@
             android:label="@string/title_activity_add_training"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".design.RemarksActivity"
+            android:label="@string/title_activity_remarks"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
