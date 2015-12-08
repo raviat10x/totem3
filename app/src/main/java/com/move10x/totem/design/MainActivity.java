@@ -151,7 +151,7 @@ public class MainActivity extends Move10xActivity
             //Final
             drawerList.add(new DrawerListItem("DriversOnMap", R.drawable.icon_person_pin));
             drawerList.add(new DrawerListItem("Logout", R.drawable.icon_power_settings));
-            drawerList.add(new DrawerListItem("Training", R.drawable.icon_person_pin));
+//            drawerList.add(new DrawerListItem("Training", R.drawable.icon_person_pin));
         }
         //Crm Profile
         else {
@@ -261,16 +261,16 @@ public class MainActivity extends Move10xActivity
                             Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
                         }
 
-                        else if (selectedItem.getItemName().toLowerCase().equals("customers")) {    //Drivers
-                            Log.d("mainActivity", "Changing Fragement to Customers Fragement");
-                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
-                            Fragment fg = new CustomerFragment();
-                            android.app.FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
-                            fragmentTransaction.commit();
-                            Log.d("mainActivity", "Finished Changing Fragment to Lead Fragment.");
-                        }
+//                        else if (selectedItem.getItemName().toLowerCase().equals("customers")) {    //Drivers
+//                            Log.d("mainActivity", "Changing Fragement to Customers Fragement");
+//                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
+//                            Fragment fg = new CustomerFragment();
+//                            android.app.FragmentManager fragmentManager = getFragmentManager();
+//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
+//                            fragmentTransaction.commit();
+//                            Log.d("mainActivity", "Finished Changing Fragment to Lead Fragment.");
+//                        }
 
                         else if (selectedItem.getItemName().toLowerCase().equals("leads")) {    //Drivers
                             Log.d("mainActivity", "Changing Fragement to leads Fragement");
@@ -301,16 +301,16 @@ public class MainActivity extends Move10xActivity
                             Intent intent = new Intent(this, DriversOnMapActivity.class);
                             this.startActivity(intent);*/
                         }
-                        else if (selectedItem.getItemName().toLowerCase().equals("training")) {    //Drivers
-                            Log.d("mainActivity", "Changing Fragement to Training Fragement");
-                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
-                            Fragment fg = new TrainingFragment();
-                            android.app.FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
-                            fragmentTransaction.commit();
-                            Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
-                        }
+//                        else if (selectedItem.getItemName().toLowerCase().equals("training")) {    //Drivers
+//                            Log.d("mainActivity", "Changing Fragement to Training Fragement");
+//                            fragementHolder = (FrameLayout) findViewById(R.id.fragementHolder);
+//                            Fragment fg = new TrainingFragment();
+//                            android.app.FragmentManager fragmentManager = getFragmentManager();
+//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                            fragmentTransaction.replace(R.id.fragementHolder, fg).addToBackStack(null);
+//                            fragmentTransaction.commit();
+//                            Log.d("mainActivity", "Finished Changing Fragement to Drivers Fragement.");
+//                        }
                         else if (selectedItem.getItemName().toLowerCase().equals("logout")) {
                             Log.d("mainActivity", "on Logout Button Click.");
                             // Clear profile.

@@ -57,6 +57,10 @@ public class LeadDetailsActivity extends Move10xActivity {
     private TextView txtLandline1;
 //    private TextView txtCustomerCurrentLocation;
     private AppCompatButton btnViewBookings;
+    private TextView txtBusinessType;
+    private TextView txtGoodsType;
+    private TextView txtWeekRequirement;
+    private TextView txtAvgCost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +92,10 @@ public class LeadDetailsActivity extends Move10xActivity {
         txtBillingPref = (TextView)findViewById(R.id.txtBillingPref);
         txtCustomerEmail = (TextView)findViewById(R.id.txtCustomerEmail);
         txtLandline1 = (TextView)findViewById(R.id.txtLandline1);
+        txtBusinessType = (TextView)findViewById(R.id.txtBusinessType);
+        txtGoodsType = (TextView)findViewById(R.id.txtGoodsType);
+        txtWeekRequirement = (TextView)findViewById(R.id.txtWeekRequirement);
+        txtAvgCost = (TextView)findViewById(R.id.txtAvgCost);
 //        txtCustomerCurrentLocation = (TextView)findViewById(R.id.txtCustomerCurrentLocation);
 
 
@@ -194,6 +202,10 @@ public class LeadDetailsActivity extends Move10xActivity {
                         txtBillingPref.setText(customerDetails.getBillName());
                         txtCustomerEmail.setText(customerDetails.getEmail());
                         txtLandline1.setText(customerDetails.getlandline());
+                        txtBusinessType.setText(customerDetails.getBusinessType());
+                        txtGoodsType.setText(customerDetails.getGoodsType());
+                        txtWeekRequirement.setText(customerDetails.getWeeklyRequirement());
+                        txtAvgCost.setText(customerDetails.getAvgCostOfTrip());
 //                        txtCustomerCurrentLocation.setText(customerDetails.getCustomerLocation().toString());
 
 

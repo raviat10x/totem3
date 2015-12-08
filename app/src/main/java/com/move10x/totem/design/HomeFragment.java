@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout layoutOnDuty;
     private LinearLayout layoutOffDuty;
     private LinearLayout layoutTerminated;
+    private LinearLayout layoutActive;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -105,6 +106,7 @@ public class HomeFragment extends Fragment {
         layoutOnDuty = (LinearLayout)view.findViewById(R.id.layoutOnDuty);
         layoutOffDuty = (LinearLayout)view.findViewById(R.id.layoutOffDuty);
         layoutTerminated = (LinearLayout)view.findViewById(R.id.layoutTerminated);
+        layoutActive = (LinearLayout) view.findViewById(R.id.layoutActive);
 
         getActivity().setTitle("Home");
         Log.d(logTag, "Fetching Current Profile Details");
@@ -134,14 +136,15 @@ public class HomeFragment extends Fragment {
 
         } else if (profile.getUserType().equals("CRM")) {
 
-            driverDetails.setText("Completed Booking");
-            txtDailyTrips.setText("Today");
+            driverDetails.setText("COMPLETED BOOKING");
+            txtDailyTrips.setText("TODAY");
             txtDailyTrips.setTextColor(getResources().getColor(R.color.green));
-            txtWeeklyTrips.setText("This Week");
-            txtMonthlyTrips.setText("This Month");
+            txtWeeklyTrips.setText("THIS WEEK");
+            txtMonthlyTrips.setText("THIS MONTH");
             txtMonthlyTrips.setTextColor(getResources().getColor(R.color.colorAccent));
             layoutPending.setVisibility(View.GONE);
             layoutAvailable.setVisibility(View.GONE);
+            layoutActive.setVisibility(View.GONE);
             txTerminatedDrivers.setTextColor(getResources().getColor(R.color.green));
             txtDriversOffduty.setTextColor(getResources().getColor(R.color.colorAccent));
             txtMoveMiles.setVisibility(View.VISIBLE);

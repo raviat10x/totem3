@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -100,16 +101,6 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
         return true;
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -278,24 +269,33 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
             Marker m = iterator.next();
             m.setVisible(false);
             Driver d = driverMarkers.get(m);
+
             Log.d(TAG, "print drivers " +d.getWorkStatus());
-            Log.d(TAG, "print drivers " +d.getDutyStatus());
-            if (d.getWorkStatus().equals(Driver.WorkStatus_Terminated)) {
+            Log.d(TAG, "print drivers " + d.getDutyStatus());
+
+            if (d.getWorkStatus().equals(Driver.WorkStatus_Terminated))
+            {
                 Log.d(TAG, "Terminated drivers " +d.getWorkStatus());
                 Log.d(TAG, "Terminated drivers " +d.getDutyStatus());
-
                 m.setVisible(true);
             }
-            else if (d.getWorkStatus().equals(Driver.DutyStatus_Pending_Verify)){
+            else if (d.getWorkStatus().equals(Driver.DutyStatus_Pending_Verify))
+            {
                 m.setVisible(true);
-            }  else if (d.getWorkStatus().equals(Driver.WorkStatus_Active)) {
-                if (d.getDutyStatus().equals(Driver.DutyStatus_Available)) {
+            }
+            else if (d.getWorkStatus().equals(Driver.WorkStatus_Active))
+            {
+                if (d.getDutyStatus().equals(Driver.DutyStatus_Available))
+                {
                     Log.d(TAG, "Inside Available");
                     m.setVisible(true);
-                } else if (d.getDutyStatus().equals(Driver.DutyStatus_COMPLETE) || d.getDutyStatus().equals(Driver.DutyStatus_Outside) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_DROP) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_LOADING) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_TOPICKUP) || d.getDutyStatus().equals(Driver.DutyStatus_Training) || d.getDutyStatus().equals(Driver.DutyStatus_UNLOADING)) {
+                }
+                else if (d.getDutyStatus().equals(Driver.DutyStatus_COMPLETE) || d.getDutyStatus().equals(Driver.DutyStatus_Outside) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_DROP) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_LOADING) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_TOPICKUP) || d.getDutyStatus().equals(Driver.DutyStatus_Training) || d.getDutyStatus().equals(Driver.DutyStatus_UNLOADING)) {
                     Log.d(TAG, "Inside All");
                     m.setVisible(true);
-                } else if (d.getDutyStatus().equals(Driver.DutyStatus_Offduty)) {
+                }
+                else if (d.getDutyStatus().equals(Driver.DutyStatus_Offduty))
+                {
                     Log.d(TAG, "Inside OffDuty");
                     m.setVisible(true);
                 }
@@ -309,44 +309,34 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
         switch (item.getItemId()) {
             case R.id.actionAvailable:
                 Log.d(TAG, "actionAvailable");
-                Iterator<Marker> iterator = driverMarkers.keySet().iterator();
-                Log.d(TAG, "Available drivers : " +iterator);
-                Marker m = iterator.next();
-                m.setVisible(false);
+                onFilterChange();
                 break;
             case R.id.actionOffDuty:
+                onFilterChange();
                 Log.d(TAG, "actionOffDuty");
-                Iterator<Marker> iterator1 = driverMarkers.keySet().iterator();
-                Log.d(TAG, "OffDuty drivers : " +iterator1);
-                Marker m1 = iterator1.next();
-                m1.setVisible(false);
+
                 break;
             case R.id.actionOnDuty:
                 Log.d(TAG, "actionOnDuty");
-                Iterator<Marker> iterator2 = driverMarkers.keySet().iterator();
-                Log.d(TAG, "OnDuty drivers : " +iterator2);
-                Marker m2 = iterator2.next();
-                m2.setVisible(false);
+                onFilterChange();
+
                 break;
             case R.id.actionPending:
                 Log.d(TAG, "actionPending");
-                Iterator<Marker> iterator3 = driverMarkers.keySet().iterator();
-                Log.d(TAG, "Pending drivers : " +iterator3);
-                Marker m3 = iterator3.next();
-                m3.setVisible(false);
+                onFilterChange();
+
                 break;
             case R.id.actionTerminated:
+                onFilterChange();
                 Log.d(TAG, "actionTerminate");
-                Iterator<Marker> iterator4 = driverMarkers.keySet().iterator();
-                Log.d(TAG, "Terminated drivers : " +iterator4);
-                Marker m4 = iterator4.next();
-                m4.setVisible(false);
+
                 break;
             case android.R.id.home:
                 finish();
                 break;
             default:
             case R.id.actionAllDrivers:
+                onFilterChange();
                 Log.d(TAG, "actionAllDrivers");
                 driverList.setAdapter(new DriverListAdapter(DriversOnMapActivity.this, allDriverList));
                 break;

@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:stretchColumns="1"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/card_view"
@@ -94,6 +94,16 @@
                             android:textColor="@color/black"
                             android:textSize="18dp" />
 
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.7dp"
+                            android:layout_margin="3dp"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="#d3d3d3" />
+
                         <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -104,7 +114,7 @@
                                 android:id="@+id/layoutTotalDrivers"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="33"
+                                android:layout_weight="22"
                                 android:orientation="vertical"
                                 android:padding="6dp">
 
@@ -112,8 +122,8 @@
                                     style="@style/HomeDriverInfoLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Total"
-                                    android:textSize="15dp" />
+                                    android:text="TOTAL"
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txtTotalDrivers"
@@ -130,7 +140,7 @@
                                 android:id="@+id/layoutPending"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="33"
+                                android:layout_weight="22"
                                 android:orientation="vertical"
                                 android:padding="6dp">
 
@@ -138,9 +148,9 @@
                                     style="@style/HomeDriverInfoLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Pending"
+                                    android:text="PENDING"
                                     android:textColor="#FFC40C"
-                                    android:textSize="15dp" />
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txtPendingDrivers"
@@ -158,7 +168,7 @@
                                 android:id="@+id/layoutTerminated"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="33"
+                                android:layout_weight="34"
                                 android:orientation="vertical"
                                 android:padding="6dp">
 
@@ -168,9 +178,9 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="Terminated"
+                                    android:text="TERMINATED"
                                     android:textColor="#b30000"
-                                    android:textSize="15dp" />
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txTerminatedDrivers"
@@ -183,6 +193,45 @@
                                     android:textColor="#ff4d4d" />
 
                             </LinearLayout>
+
+
+
+
+
+                            <LinearLayout
+                                android:id="@+id/layoutActive"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="22"
+                                android:orientation="vertical"
+                                android:padding="6dp">
+
+                                <TextView
+                                    style="@style/HomeDriverInfoLabel"
+                                    android:id="@+id/activeDrivers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:text="ACTIVE"
+                                    android:textColor="#b30000"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txtActiveDrivers"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:paddingTop="5dp"
+                                    android:text="3"
+                                    android:textColor="#ff4d4d" />
+
+                            </LinearLayout>
+
+
+
+
+
 
                         </TableRow>
 
@@ -219,9 +268,9 @@
                                     android:id="@+id/txtWeeklyTrips"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="OnDuty"
+                                    android:text="ONDUTY"
                                     android:textColor="#0000ff"
-                                    android:textSize="15dp" />
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txtDriverOnTrip"
@@ -250,7 +299,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="AVAILABLE"
                                     android:textColor="#008000"
-                                    android:textSize="15dp" />
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txtDriversAvailable"
@@ -279,7 +328,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="OFFDUTY"
                                     android:textColor="#b30000"
-                                    android:textSize="15dp" />
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txtDriversOffduty"
@@ -305,7 +354,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp" />
+                android:layout_marginTop="12dp" />
 
         </LinearLayout>
 

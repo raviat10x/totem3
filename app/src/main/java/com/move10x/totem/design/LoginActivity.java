@@ -3,6 +3,7 @@ package com.move10x.totem.design;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.support.multidex.MultiDexApplication;
+import android.support.multidex.MultiDex;
 
 import android.support.v7.app.AppCompatActivity;
 
@@ -182,6 +185,12 @@ public class LoginActivity extends Move10xActivity {
                 }*/
             });
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)

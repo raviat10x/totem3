@@ -34,12 +34,16 @@ public class Customer extends ArrayList<Customer> {
     private String uniqueId;
     private String customerLocation;
     private String companyName;
+    private String avgCostOfTrip;
+    private String goodsType;
+    private String weeklyRequirement;
+    private String businessType;
 
     public Customer() {
     }
 
 
-    public Customer(String customerUid, String uid, String firstName, String lastName, String mobile, String email, String crm, String landline, String address, String dob, String annivarsary, String fvrtVehicle, String area, String city, String pin, String billName, String vCardImage, String uniqueId, String customerLocation, String companyName) {
+    public Customer(String customerUid, String uid, String firstName, String lastName, String mobile, String email, String crm, String landline, String address, String dob, String annivarsary, String fvrtVehicle, String area, String city, String pin, String billName, String vCardImage, String uniqueId, String customerLocation, String companyName, String avgCostOfTrip, String goodsType,  String weeklyRequirement, String businessType) {
         this.customerUid = customerUid;
         this.uid = uid;
         this.firstName = firstName;
@@ -60,6 +64,42 @@ public class Customer extends ArrayList<Customer> {
         this.uniqueId = uniqueId;
         this.customerLocation = customerLocation;
         this.companyName = companyName;
+        this.goodsType = goodsType;
+        this.businessType = businessType;
+        this.weeklyRequirement = weeklyRequirement;
+        this.avgCostOfTrip = avgCostOfTrip;
+    }
+
+    public String getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
+    }
+
+    public String getWeeklyRequirement() {
+        return weeklyRequirement;
+    }
+
+    public void setWeeklyRequirement(String weeklyRequirement) {
+        this.weeklyRequirement = weeklyRequirement;
+    }
+
+    public String getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(String goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public String getAvgCostOfTrip() {
+        return avgCostOfTrip;
+    }
+
+    public void setAvgCostOfTrip(String avgCostOfTrip) {
+        this.avgCostOfTrip = avgCostOfTrip;
     }
 
     public String getUniqueId() {
@@ -222,6 +262,32 @@ public class Customer extends ArrayList<Customer> {
         this.companyName = companyName;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Customer{" +
+//                "customerUid='" + customerUid + '\'' +
+//                ", uid='" + uid + '\'' +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", mobile='" + mobile + '\'' +
+//                ", email='" + email + '\'' +
+//                ", crm='" + crm + '\'' +
+//                ", landline='" + landline + '\'' +
+//                ", address='" + address + '\'' +
+//                ", dob='" + dob + '\'' +
+//                ", annivarsary='" + annivarsary + '\'' +
+//                ", fvrtVehicle='" + fvrtVehicle + '\'' +
+//                ", area='" + area + '\'' +
+//                ", city='" + city + '\'' +
+//                ", pin='" + pin + '\'' +
+//                ", billName='" + billName + '\'' +
+//                ", vCardImage='" + vCardImage + '\'' +
+//                ", uniqueId='" + uniqueId + '\'' +
+//                ", customerLocation='" + customerLocation + '\'' +
+//                ", companyName='" + companyName + '\'' +
+//                '}';
+//    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -245,6 +311,10 @@ public class Customer extends ArrayList<Customer> {
                 ", uniqueId='" + uniqueId + '\'' +
                 ", customerLocation='" + customerLocation + '\'' +
                 ", companyName='" + companyName + '\'' +
+                ", avgCostOfTrip='" + avgCostOfTrip + '\'' +
+                ", goodsType='" + goodsType + '\'' +
+                ", weeklyRequirement='" + weeklyRequirement + '\'' +
+                ", businessType='" + businessType + '\'' +
                 '}';
     }
 
@@ -269,9 +339,13 @@ public class Customer extends ArrayList<Customer> {
             customer.uniqueId = jsonObject.getString("unique_id");
 //            customer.customerLocation = jsonObject.getString("currentLocation");
             customer.companyName = jsonObject.getString("business");
+            customer.avgCostOfTrip  = jsonObject.getString("avg_trip_cost");
+            customer.weeklyRequirement = jsonObject.getString("weekly_requirement");
+            customer.goodsType = jsonObject.getString("goods_type");
+            customer.businessType = jsonObject.getString("business_type");
 
 
-            Log.i(TAG,"-----------------------------------------------"+customer.landline+" \n "+customer.email);
+            Log.i(TAG,"----------------------------------------------- Check Values"+customer.avgCostOfTrip+" \n "+customer.weeklyRequirement+" \n "+customer.goodsType+" \n "+customer.businessType);
 
             return customer;
         } catch (JSONException ex) {
@@ -307,8 +381,11 @@ public class Customer extends ArrayList<Customer> {
 //            customer.customerLocation = jsonObject.getString("currentLocation");
             customer.vCardImage = jsonObject.getString("vCardImg");
             customer.companyName = jsonObject.getString("business");
-
-//            Log.i(TAG,"-----------------------------------------------"+customer.dob+" \n "+customer.fvrtVehicle);
+            customer.avgCostOfTrip = jsonObject.getString("avg_trip_cost");
+            customer.weeklyRequirement = jsonObject.getString("weekly_requirement");
+            customer.goodsType = jsonObject.getString("goods_type");
+            customer.businessType = jsonObject.getString("business_type");
+            Log.i(TAG,"-----------------------------------------------Check Details"+customer.goodsType+" \n "+customer.businessType);
             return customer;
         } catch (JSONException ex) {
             //throw ex;

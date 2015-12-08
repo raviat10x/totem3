@@ -62,7 +62,7 @@
 
     <string name="duty_status_available">AVAILABLE</string>
     <string name="duty_status_offduty">OFFDUTY</string>
-    <string name="title_activity_drivers_on_map">Drivrers On Map</string>
+    <string name="title_activity_drivers_on_map">Map Your Driver</string>
     <string name="title_activity_google_map_info_window">GoogleMapInfoWindowActivity</string>
     <string name="title_activity_driver_details">DriverDetailsActivity</string>
     <string name="title_activity_booking_list">BookingListActivity</string>
@@ -99,6 +99,8 @@
     <string name="title_activity_customer_booking_list">CustomerBookingList</string>
     <string name="title_activity_customer_booking_details">CustomerBookingDetailsActivity</string>
     <string name="title_activity_add_training">AddTrainingActivity</string>
+    <string name="title_activity_remarks">RemarksActivity</string>
 
+    <string name="SENDER_ID">667096357908</string>
 
 </resources>

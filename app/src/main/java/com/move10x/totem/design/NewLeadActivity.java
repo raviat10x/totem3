@@ -92,6 +92,10 @@ public class NewLeadActivity extends AppCompatActivity {
     private EditText companyName;
     boolean uploadbuttonclicked;
     private AppCompatButton buttonCustomerLocation;
+    private EditText txtBusinessType;
+    private EditText txtGoodsType;
+    private EditText txtWeeklyRequirement;
+    private EditText txtAvgCostOfTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +123,7 @@ public class NewLeadActivity extends AppCompatActivity {
 //        }
 
 //        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)‌​;
+
         txtMobileNumber = (EditText) findViewById(R.id.txtMobileNumber);
         txtVCard = (TextView) findViewById(R.id.txtVCard);
         txtAddress = (EditText) findViewById(R.id.txtAddress);
@@ -145,6 +150,10 @@ public class NewLeadActivity extends AppCompatActivity {
         txtPin = (EditText) findViewById(R.id.txtPin);
         txtLandline = (EditText) findViewById(R.id.txtLandline);
         companyName = (EditText) findViewById(R.id.companyName);
+        txtBusinessType = (EditText)findViewById(R.id.txtBusinessType);
+        txtGoodsType = (EditText)findViewById(R.id.txtGoodsType);
+        txtWeeklyRequirement = (EditText)findViewById(R.id.txtWeeklyRequirement);
+        txtAvgCostOfTrip = (EditText)findViewById(R.id.txtAvgCostOfTrip);
 //        buttonCustomerLocation = (AppCompatButton)findViewById(R.id.buttonCustomerLocation);
 
 
@@ -370,6 +379,11 @@ public class NewLeadActivity extends AppCompatActivity {
             newCustomer.setBillName(txtBillingInfo.getSelectedItem().toString());
             newCustomer.setFvrtVehicle(txtfvrtVehicle.getSelectedItem().toString());
             newCustomer.setCompanyName(companyName.getText().toString().trim());
+            newCustomer.setGoodsType(txtGoodsType.getText().toString().trim());
+            newCustomer.setBusinessType(txtBusinessType.getText().toString().trim());
+            newCustomer.setWeeklyRequirement(txtWeeklyRequirement.getText().toString().trim());
+            newCustomer.setAvgCostOfTrip(txtAvgCostOfTrip.getText().toString().trim());
+
 //            newCustomer.setCustomerLocation(txtCustomerCurrentLocation.getText().toString().trim());
 
 //            showProgress(false);
@@ -394,6 +408,11 @@ public class NewLeadActivity extends AppCompatActivity {
 //            requestParams.put("currentLocation", txtCustomerCurrentLocation.getText().toString());
             requestParams.put("landline", txtLandline.getText().toString().trim());
             requestParams.put("business", companyName.getText().toString().trim());
+
+            requestParams.put("avg_trip_cost", txtAvgCostOfTrip.getText().toString().trim());
+            requestParams.put("weekly_requirement", txtWeeklyRequirement.getText().toString().trim());
+            requestParams.put("goods_type", txtGoodsType.getText().toString().trim());
+            requestParams.put("business_type", txtBusinessType.getText().toString().trim());
 
             CurrentProfile profile = new CurrentProfileService(this).getCurrentProfile();
             requestParams.put("crmId", profile.getUserId());
