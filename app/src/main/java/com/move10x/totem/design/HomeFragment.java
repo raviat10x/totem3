@@ -3,6 +3,7 @@ package com.move10x.totem.design;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -68,6 +69,13 @@ public class HomeFragment extends Fragment {
     private LinearLayout layoutOffDuty;
     private LinearLayout layoutTerminated;
     private LinearLayout layoutActive;
+    private LinearLayout layoutBookingDetails;
+    private TableLayout tblDriverInfo1;
+    private TextView txtTotalBooking;
+    private TextView txtTodayBooking;
+    private TextView txtWeekBooking;
+    private TextView txtMonthBooking;
+    private TextView txtActiveDrivers;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -86,7 +94,7 @@ public class HomeFragment extends Fragment {
         txtUserName = (TextView) view.findViewById(R.id.txtUserName);
         txtUserType = (TextView) view.findViewById(R.id.txtUserType);
         tblDriverInfo = (TableLayout) view.findViewById(R.id.tblDriverInfo);
-        progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);
+//        progressBar = (ProgressBar) view.findViewById(R.id.driversProgress);
         txtTotalDrivers = (TextView) view.findViewById(R.id.txtTotalDrivers);
         txtDriverOnTrip = (TextView) view.findViewById(R.id.txtDriverOnTrip);
         txtDriversAvailable = (TextView) view.findViewById(R.id.txtDriversAvailable);
@@ -101,12 +109,20 @@ public class HomeFragment extends Fragment {
         txtMoveMiles = (TextView) view.findViewById(R.id.txtMoveMiles);
         layoutAvailable = (LinearLayout) view.findViewById(R.id.layoutAvailable);
 
-        layoutTotalDrivers = (LinearLayout)view.findViewById(R.id.layoutTotalDrivers);
+        layoutTotalDrivers = (LinearLayout) view.findViewById(R.id.layoutTotalDrivers);
         layoutPending = (LinearLayout) view.findViewById(R.id.layoutPending);
-        layoutOnDuty = (LinearLayout)view.findViewById(R.id.layoutOnDuty);
-        layoutOffDuty = (LinearLayout)view.findViewById(R.id.layoutOffDuty);
-        layoutTerminated = (LinearLayout)view.findViewById(R.id.layoutTerminated);
+        layoutOnDuty = (LinearLayout) view.findViewById(R.id.layoutOnDuty);
+        layoutOffDuty = (LinearLayout) view.findViewById(R.id.layoutOffDuty);
+        layoutTerminated = (LinearLayout) view.findViewById(R.id.layoutTerminated);
         layoutActive = (LinearLayout) view.findViewById(R.id.layoutActive);
+        layoutBookingDetails = (LinearLayout) view.findViewById(R.id.layoutBookingDetails);
+        tblDriverInfo1 = (TableLayout) view.findViewById(R.id.tblDriverInfo1);
+        txtActiveDrivers = (TextView) view.findViewById(R.id.txtActiveDrivers);
+
+        txtTotalBooking = (TextView) view.findViewById(R.id.txtTotalBooking);
+        txtTodayBooking = (TextView) view.findViewById(R.id.txtTodayBooking);
+        txtWeekBooking = (TextView) view.findViewById(R.id.txtWeekBooking);
+        txtMonthBooking = (TextView) view.findViewById(R.id.txtMonthBooking);
 
         getActivity().setTitle("Home");
         Log.d(logTag, "Fetching Current Profile Details");
@@ -116,16 +132,17 @@ public class HomeFragment extends Fragment {
         txtUserType.setText(profile.getUserType().toUpperCase());
         Log.d(logTag, "Finished current fetching Profile Details." + profile.toString());
 
-
         txtTotalDrivers.setText("");
         txTerminatedDrivers.setText("");
         txtDriverOnTrip.setText("");
         txtDriversAvailable.setText("");
         txtDriversOffduty.setText("");
         txtPendingDrivers.setText("");
+        txtActiveDrivers.setText("");
+
 
         //Fetch profile driver details.
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
 
 
         //Remove it........................
@@ -148,6 +165,7 @@ public class HomeFragment extends Fragment {
             txTerminatedDrivers.setTextColor(getResources().getColor(R.color.green));
             txtDriversOffduty.setTextColor(getResources().getColor(R.color.colorAccent));
             txtMoveMiles.setVisibility(View.VISIBLE);
+            tblDriverInfo1.setVisibility(View.VISIBLE);
             fetchCustomerInfo();
         }
 
@@ -242,11 +260,26 @@ public class HomeFragment extends Fragment {
 
             }
         });
+        layoutActive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Inside layoutAvailable");
+                DriverFragment fragment = new DriverFragment();
+                fragment.currentStatus = "Active";
+                Log.d(TAG, "Outside layoutActive");
+                Bundle bundle = new Bundle();
+                bundle.putString("active", "active");
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragementHolder, fragment).commit();
+
+            }
+        });
     }
 
     TextClicked mCallback;
 
-    public interface TextClicked{
+    public interface TextClicked {
         public void sendText(String text);
     }
 
@@ -279,11 +312,21 @@ public class HomeFragment extends Fragment {
 
                                 int moveMiles = todayskm + monthlykm + weeklykm;
 
-                                txtTotalDrivers.setText(String.valueOf(todaysCnt));
-                                txTerminatedDrivers.setText(String.valueOf(todaysCnt));
-                                txtDriverOnTrip.setText(String.valueOf(weeklyCnt));
-                                txtDriversOffduty.setText(String.valueOf(monthlyCnt));
+//                                txtTotalDrivers.setText(String.valueOf(todaysCnt));
+//                                txTerminatedDrivers.setText(String.valueOf(todaysCnt));
+//                                txtDriverOnTrip.setText(String.valueOf(weeklyCnt));
+//                                txtDriversOffduty.setText(String.valueOf(monthlyCnt));
+//                                txtMoveMiles.setText("Move Miles : " + String.valueOf(moveMiles));
+                                txtTotalDrivers.setText(String.valueOf(todayskm));
+                                txTerminatedDrivers.setText(String.valueOf(todayskm));
+                                txtDriverOnTrip.setText(String.valueOf(weeklykm));
+                                txtDriversOffduty.setText(String.valueOf(monthlykm));
                                 txtMoveMiles.setText("Move Miles : " + String.valueOf(moveMiles));
+
+                                txtTotalBooking.setText(String.valueOf(todaysCnt));
+                                txtTodayBooking.setText(String.valueOf(todaysCnt));
+                                txtWeekBooking.setText(String.valueOf(weeklyCnt));
+                                txtMonthBooking.setText(String.valueOf(monthlyCnt));
 
                             }
                         } catch (JSONException ex) {
@@ -349,7 +392,8 @@ public class HomeFragment extends Fragment {
                                 JSONArray jsonDriverList = response.getJSONArray("drivers");
                                 List<Driver> drivers = new ArrayList<Driver>();
 
-                                int totalDrivers = 0, terminatedDrivers = 0, onTripDrivers = 0, availableDrivers = 0, offdutyDrivers = 0, pendingDrivers = 0;
+                                int totalDrivers = 0, terminatedDrivers = 0, onTripDrivers = 0,
+                                        availableDrivers = 0, offdutyDrivers = 0, pendingDrivers = 0, activeDrivers = 0;
                                 for (int i = 0; i < jsonDriverList.length(); i++) {
 
                                     //Read driver
@@ -366,14 +410,24 @@ public class HomeFragment extends Fragment {
                                     } else if (currentDriver.getWorkStatus().contains("PENDING")) {
                                         pendingDrivers++;
                                     } else if (currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
+                                        {
+                                            activeDrivers++;
 
-                                        //If work status is active, check for duty status.
-                                        if (currentDriver.getDutyStatus().equals(Driver.DutyStatus_Available))
-                                            availableDrivers++;
-                                        else if (currentDriver.getDutyStatus().equals(Driver.DutyStatus_Offduty))
-                                            offdutyDrivers++;
-                                        else
-                                            onTripDrivers++;
+                                            //If work status is active, check for duty status.
+                                            if (currentDriver.getDutyStatus().equals(Driver.DutyStatus_Available)) {
+                                                availableDrivers++;
+//                                                activeDrivers++;
+                                            }
+                                            //Add to Active Drivers
+                                            else if (currentDriver.getDutyStatus().equals(Driver.DutyStatus_Offduty)) {
+                                                offdutyDrivers++;
+//                                                activeDrivers++;
+                                            } else {
+                                                onTripDrivers++;
+//                                                activeDrivers++;
+                                            }
+                                        }
+//                                        activeDrivers++;
                                     }
                                 }
 
@@ -384,6 +438,7 @@ public class HomeFragment extends Fragment {
                                 txtDriversAvailable.setText(Integer.toString(availableDrivers));
                                 txtDriversOffduty.setText(Integer.toString(offdutyDrivers));
                                 txtPendingDrivers.setText(Integer.toString(pendingDrivers));
+                                txtActiveDrivers.setText(Integer.toString(activeDrivers));
 
                             }
                         } catch (JSONException ex) {
@@ -434,24 +489,25 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressBar.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
+//            progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+//            progressBar.animate().setDuration(shortAnimTime).alpha(
+//                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+//                }
+//            });
+        }
+        else {
             // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
+          //   and hide the relevant UI components.
             progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
             tblDriverInfo.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
     }
 
+}
 
-//    @Override
+    //    @Override
 //    public void onAttach(Fragment fragment) {
 //        super.onAttach(fragment);
 //
@@ -464,15 +520,16 @@ public class HomeFragment extends Fragment {
 //                    + " must implement TextClicked");
 //        }
 //    }
-public void someMethod(){
-    mCallback.sendText("Pending");
-}
+    public void someMethod() {
+        mCallback.sendText("Pending");
+    }
 
     @Override
     public void onDetach() {
         mCallback = null; // => avoid leaking, thanks @Deepscorn
         super.onDetach();
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -87,6 +87,13 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
                 loadDriverMarkers();
             }
         });
+        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.floatingBackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         mapFragment.getMapAsync(this);
@@ -140,15 +147,13 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
         }
     }
 
-    public void loadDriverMarkers(){
+    public void loadDriverMarkers() {
 
         //Clear current markers.
-        for (Marker marker: driverMarkers.keySet()) {
+        for (Marker marker : driverMarkers.keySet()) {
             marker.remove();
         }
 
-        //Async Driverlist fetch.
-        //Request Parameters.
         CurrentProfile currentProfile = new CurrentProfileService(getApplicationContext()).getCurrentProfile();
         Log.d("driverFragment", "Fetch drivers for user: " + currentProfile.toString());
         String uid = currentProfile.getUserId();
@@ -229,7 +234,6 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
                                     TextView txtDriverStatus = (TextView) v.findViewById(R.id.driverStatus);
                                     txtDriverStatus.setText(driver.getWorkStatus() + " " + driver.getDutyStatus());
 
-
                                     return v;
                                 }
                             });
@@ -249,11 +253,9 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
                             });
                         }
                     }
-                }
-                catch (JSONException ex) {
+                } catch (JSONException ex) {
                     Toast.makeText(getBaseContext(), "Failed to load drivers.", Toast.LENGTH_LONG);
                 }
-                onFilterChange();
 
                 showProgress(false);
             }
@@ -263,39 +265,30 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
     }
 
     private void onFilterChange() {
-    Log.d(TAG, "Inside OnFilterChange");
+        Log.d(TAG, "Inside OnFilterChange");
         Iterator<Marker> iterator = driverMarkers.keySet().iterator();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             Marker m = iterator.next();
             m.setVisible(false);
             Driver d = driverMarkers.get(m);
+            Log.d(TAG, "work " + d.getWorkStatus());
+            Log.d(TAG, "duty " + d.getDutyStatus());
 
-            Log.d(TAG, "print drivers " +d.getWorkStatus());
-            Log.d(TAG, "print drivers " + d.getDutyStatus());
+            if (d.getWorkStatus().contains("TERMINATED")) {
+                Log.d(TAG, "Terminate drivers " + d.getWorkStatus());
+                m.setVisible(true);
 
-            if (d.getWorkStatus().equals(Driver.WorkStatus_Terminated))
-            {
-                Log.d(TAG, "Terminated drivers " +d.getWorkStatus());
-                Log.d(TAG, "Terminated drivers " +d.getDutyStatus());
+            } else if (d.getWorkStatus().contains("PENDING")) {
+                Log.d(TAG, "Pending drivers " + d.getWorkStatus());
                 m.setVisible(true);
-            }
-            else if (d.getWorkStatus().equals(Driver.DutyStatus_Pending_Verify))
-            {
-                m.setVisible(true);
-            }
-            else if (d.getWorkStatus().equals(Driver.WorkStatus_Active))
-            {
-                if (d.getDutyStatus().equals(Driver.DutyStatus_Available))
-                {
+            } else if (d.getWorkStatus().equals(Driver.WorkStatus_Active)) {
+                if (d.getDutyStatus().equals(Driver.DutyStatus_Available)) {
                     Log.d(TAG, "Inside Available");
                     m.setVisible(true);
-                }
-                else if (d.getDutyStatus().equals(Driver.DutyStatus_COMPLETE) || d.getDutyStatus().equals(Driver.DutyStatus_Outside) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_DROP) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_LOADING) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_TOPICKUP) || d.getDutyStatus().equals(Driver.DutyStatus_Training) || d.getDutyStatus().equals(Driver.DutyStatus_UNLOADING)) {
+                } else if (d.getDutyStatus().equals(Driver.DutyStatus_COMPLETE) || d.getDutyStatus().equals(Driver.DutyStatus_Outside) || d.getDutyStatus().equals(Driver.DutyStatus_Outside) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_DROP) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_LOADING) || d.getDutyStatus().equals(Driver.DutyStatus_TOWARDS_TOPICKUP) || d.getDutyStatus().equals(Driver.DutyStatus_Training) || d.getDutyStatus().equals(Driver.DutyStatus_UNLOADING)) {
                     Log.d(TAG, "Inside All");
                     m.setVisible(true);
-                }
-                else if (d.getDutyStatus().equals(Driver.DutyStatus_Offduty))
-                {
+                } else if (d.getDutyStatus().equals(Driver.DutyStatus_Offduty)) {
                     Log.d(TAG, "Inside OffDuty");
                     m.setVisible(true);
                 }
@@ -344,100 +337,100 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
         return super.onOptionsItemSelected(item);
     }
 
-public class DriverListAdapter extends BaseAdapter {
+    public class DriverListAdapter extends BaseAdapter {
 
-    private List<Driver> driverList;
-    private LayoutInflater inflater = null;
+        private List<Driver> driverList;
+        private LayoutInflater inflater = null;
 
-    public DriverListAdapter(Context context, List<Driver> driverList) {
-        // TODO Auto-generated constructor stub
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.driverList = driverList;
-    }
-
-    @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return driverList.size();
-    }
-
-    @Override
-    public Driver getItem(int position) {
-        // TODO Auto-generated method stub
-        return driverList.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
-
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        final Driver currentDriver = this.driverList.get(position);
-        View rowView = inflater.inflate(R.layout.driverlist, null);
-
-        TextView txtDriverName = (TextView) rowView.findViewById(R.id.driverName);
-        txtDriverName.setText(currentDriver.getFirstName() + " " + currentDriver.getLastName());
-        Log.d("driverList", currentDriver.getFirstName() + " " + currentDriver.getLastName());
-
-        TextView txtDriverPhoneNumber = ((TextView) rowView.findViewById(R.id.driverPhoneNumber));
-        txtDriverPhoneNumber.setText(currentDriver.getMobileNo());
-        Log.d("driverList", currentDriver.getMobileNo());
-
-        TextView txtWorkStatus = ((TextView) rowView.findViewById(R.id.txtWorkStatus));
-        TextView txtDutyStatus = ((TextView) rowView.findViewById(R.id.txtDutyStatus));
-        txtWorkStatus.setText(currentDriver.getWorkStatus());
-        txtDutyStatus.setText(currentDriver.getDutyStatus());
-        txtDutyStatus.setVisibility(View.VISIBLE);
-
-        Log.d("driverFragment", "Comparing driver Status: " + currentDriver.getWorkStatus().toUpperCase() + ", " + Driver.WorkStatus_Active);
-        if (!currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
-            //IF driver not active, set color red for work and hide duty status.
-            txtWorkStatus.setTextColor(getResources().getColor(R.color.red));
-            txtDutyStatus.setVisibility(View.GONE);
-        } else {
-            //IF driver active, set work status green.
-            txtWorkStatus.setVisibility(View.GONE);
-            if (currentDriver.getDutyStatus().toUpperCase().equals(Driver.DutyStatus_Available)) {
-                //IF driver active and avilable, set color to green.
-                txtDutyStatus.setTextColor(getResources().getColor(R.color.green));
-            } else if (currentDriver.getDutyStatus().toUpperCase().equals(Driver.DutyStatus_Offduty)) {
-                //IF driver active and offduty, set color to red.
-                txtDutyStatus.setTextColor(getResources().getColor(R.color.red));
-            } else {
-                txtDutyStatus.setTextColor(getResources().getColor(R.color.blue));
-            }
+        public DriverListAdapter(Context context, List<Driver> driverList) {
+            // TODO Auto-generated constructor stub
+            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.driverList = driverList;
         }
 
-        //Set image circular
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.imgDriverPhoto);
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return driverList.size();
+        }
+
+        @Override
+        public Driver getItem(int position) {
+            // TODO Auto-generated method stub
+            return driverList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final Driver currentDriver = this.driverList.get(position);
+            View rowView = inflater.inflate(R.layout.driverlist, null);
+
+            TextView txtDriverName = (TextView) rowView.findViewById(R.id.driverName);
+            txtDriverName.setText(currentDriver.getFirstName() + " " + currentDriver.getLastName());
+            Log.d("driverList", currentDriver.getFirstName() + " " + currentDriver.getLastName());
+
+            TextView txtDriverPhoneNumber = ((TextView) rowView.findViewById(R.id.driverPhoneNumber));
+            txtDriverPhoneNumber.setText(currentDriver.getMobileNo());
+            Log.d("driverList", currentDriver.getMobileNo());
+
+            TextView txtWorkStatus = ((TextView) rowView.findViewById(R.id.txtWorkStatus));
+            TextView txtDutyStatus = ((TextView) rowView.findViewById(R.id.txtDutyStatus));
+            txtWorkStatus.setText(currentDriver.getWorkStatus());
+            txtDutyStatus.setText(currentDriver.getDutyStatus());
+            txtDutyStatus.setVisibility(View.VISIBLE);
+
+            Log.d("driverFragment", "Comparing driver Status: " + currentDriver.getWorkStatus().toUpperCase() + ", " + Driver.WorkStatus_Active);
+            if (!currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
+                //IF driver not active, set color red for work and hide duty status.
+                txtWorkStatus.setTextColor(getResources().getColor(R.color.red));
+                txtDutyStatus.setVisibility(View.GONE);
+            } else {
+                //IF driver active, set work status green.
+                txtWorkStatus.setVisibility(View.GONE);
+                if (currentDriver.getDutyStatus().toUpperCase().equals(Driver.DutyStatus_Available)) {
+                    //IF driver active and avilable, set color to green.
+                    txtDutyStatus.setTextColor(getResources().getColor(R.color.green));
+                } else if (currentDriver.getDutyStatus().toUpperCase().equals(Driver.DutyStatus_Offduty)) {
+                    //IF driver active and offduty, set color to red.
+                    txtDutyStatus.setTextColor(getResources().getColor(R.color.red));
+                } else {
+                    txtDutyStatus.setTextColor(getResources().getColor(R.color.blue));
+                }
+            }
+
+            //Set image circular
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.imgDriverPhoto);
             /*Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim);
             imageView.startAnimation(fadeInAnimation);*/
-        AsyncImageLoaderService task = new AsyncImageLoaderService(imageView, currentDriver.getImagePath());
-        task.execute();
+            AsyncImageLoaderService task = new AsyncImageLoaderService(imageView, currentDriver.getImagePath());
+            task.execute();
 
-        rowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
 
 
-        LinearLayout driverDetailsContainer = (LinearLayout) rowView.findViewById(R.id.driverDetailsContainer);
-        driverDetailsContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("driverFragment", "On Driver container click.");
-                Intent intent = new Intent(DriversOnMapActivity.this, DriverDetailsActivity.class);
-                intent.putExtra("driverUid", currentDriver.getuId());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Log.d("driverOnMap", "Driver UID: " + currentDriver.getuId());
-                startActivity(intent);
-            }
-        });
-        return rowView;
+            LinearLayout driverDetailsContainer = (LinearLayout) rowView.findViewById(R.id.driverDetailsContainer);
+            driverDetailsContainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("driverFragment", "On Driver container click.");
+                    Intent intent = new Intent(DriversOnMapActivity.this, DriverDetailsActivity.class);
+                    intent.putExtra("driverUid", currentDriver.getuId());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Log.d("driverOnMap", "Driver UID: " + currentDriver.getuId());
+                    startActivity(intent);
+                }
+            });
+            return rowView;
+        }
     }
-}
 }

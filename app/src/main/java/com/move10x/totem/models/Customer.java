@@ -34,7 +34,7 @@ public class Customer extends ArrayList<Customer> {
     private String uniqueId;
     private String customerLocation;
     private String companyName;
-    private String avgCostOfTrip;
+    private String avgTripCost;
     private String goodsType;
     private String weeklyRequirement;
     private String businessType;
@@ -43,7 +43,7 @@ public class Customer extends ArrayList<Customer> {
     }
 
 
-    public Customer(String customerUid, String uid, String firstName, String lastName, String mobile, String email, String crm, String landline, String address, String dob, String annivarsary, String fvrtVehicle, String area, String city, String pin, String billName, String vCardImage, String uniqueId, String customerLocation, String companyName, String avgCostOfTrip, String goodsType,  String weeklyRequirement, String businessType) {
+    public Customer(String customerUid, String uid, String firstName, String lastName, String mobile, String email, String crm, String landline, String address, String dob, String annivarsary, String fvrtVehicle, String area, String city, String pin, String billName, String vCardImage, String uniqueId, String customerLocation, String companyName, String avgTripCost, String goodsType,  String weeklyRequirement, String businessType) {
         this.customerUid = customerUid;
         this.uid = uid;
         this.firstName = firstName;
@@ -67,7 +67,7 @@ public class Customer extends ArrayList<Customer> {
         this.goodsType = goodsType;
         this.businessType = businessType;
         this.weeklyRequirement = weeklyRequirement;
-        this.avgCostOfTrip = avgCostOfTrip;
+        this.avgTripCost = avgTripCost;
     }
 
     public String getBusinessType() {
@@ -94,12 +94,12 @@ public class Customer extends ArrayList<Customer> {
         this.goodsType = goodsType;
     }
 
-    public String getAvgCostOfTrip() {
-        return avgCostOfTrip;
+    public String getAvgTripCost() {
+        return avgTripCost;
     }
 
-    public void setAvgCostOfTrip(String avgCostOfTrip) {
-        this.avgCostOfTrip = avgCostOfTrip;
+    public void setAvgTripCost(String avgTripCost) {
+        this.avgTripCost = avgTripCost;
     }
 
     public String getUniqueId() {
@@ -262,31 +262,6 @@ public class Customer extends ArrayList<Customer> {
         this.companyName = companyName;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Customer{" +
-//                "customerUid='" + customerUid + '\'' +
-//                ", uid='" + uid + '\'' +
-//                ", firstName='" + firstName + '\'' +
-//                ", lastName='" + lastName + '\'' +
-//                ", mobile='" + mobile + '\'' +
-//                ", email='" + email + '\'' +
-//                ", crm='" + crm + '\'' +
-//                ", landline='" + landline + '\'' +
-//                ", address='" + address + '\'' +
-//                ", dob='" + dob + '\'' +
-//                ", annivarsary='" + annivarsary + '\'' +
-//                ", fvrtVehicle='" + fvrtVehicle + '\'' +
-//                ", area='" + area + '\'' +
-//                ", city='" + city + '\'' +
-//                ", pin='" + pin + '\'' +
-//                ", billName='" + billName + '\'' +
-//                ", vCardImage='" + vCardImage + '\'' +
-//                ", uniqueId='" + uniqueId + '\'' +
-//                ", customerLocation='" + customerLocation + '\'' +
-//                ", companyName='" + companyName + '\'' +
-//                '}';
-//    }
 
     @Override
     public String toString() {
@@ -311,20 +286,23 @@ public class Customer extends ArrayList<Customer> {
                 ", uniqueId='" + uniqueId + '\'' +
                 ", customerLocation='" + customerLocation + '\'' +
                 ", companyName='" + companyName + '\'' +
-                ", avgCostOfTrip='" + avgCostOfTrip + '\'' +
-                ", goodsType='" + goodsType + '\'' +
-                ", weeklyRequirement='" + weeklyRequirement + '\'' +
-                ", businessType='" + businessType + '\'' +
+                ", avg_trip_cost='" + avgTripCost + '\'' +
+                ", goods_type='" + goodsType + '\'' +
+                ", weekly_requirement='" + weeklyRequirement + '\'' +
+                ", business_type='" + businessType + '\'' +
                 '}';
     }
 
     public static Customer decodeJsonForList(JSONObject jsonObject) {
         try {
-            Log.d(TAG, "decodingCustomerlist");
+            Log.i("Before Decoding", "-----------------------" + jsonObject);
+
+            Log.d(TAG, "decodingCustomerlist" );
             Customer customer = new Customer();
             customer.uid = jsonObject.getString("uid");
             customer.firstName = jsonObject.getString("firstname");
             customer.lastName = jsonObject.getString("lastname");
+            Log.d(TAG, "First and Last Name : " + customer.firstName);
             customer.mobile = jsonObject.getString("username");
             customer.email = jsonObject.getString("email");
             customer.dob = jsonObject.getString("dob");
@@ -339,18 +317,17 @@ public class Customer extends ArrayList<Customer> {
             customer.uniqueId = jsonObject.getString("unique_id");
 //            customer.customerLocation = jsonObject.getString("currentLocation");
             customer.companyName = jsonObject.getString("business");
-            customer.avgCostOfTrip  = jsonObject.getString("avg_trip_cost");
+            customer.avgTripCost  = jsonObject.getString("avg_trip_cost");
             customer.weeklyRequirement = jsonObject.getString("weekly_requirement");
             customer.goodsType = jsonObject.getString("goods_type");
             customer.businessType = jsonObject.getString("business_type");
 
 
-            Log.i(TAG,"----------------------------------------------- Check Values"+customer.avgCostOfTrip+" \n "+customer.weeklyRequirement+" \n "+customer.goodsType+" \n "+customer.businessType);
-
+            Log.i(TAG,"----------------------------------------------- Check Values"+customer.avgTripCost+" \n "+customer.weeklyRequirement+" \n "+customer.goodsType+" \n "+customer.businessType);
             return customer;
         } catch (JSONException ex) {
             //throw ex;
-//            Log.e("userModel", "Failed to decode json. " + ex.getMessage());
+            Log.e("userModel", "Failed to decode json. " + ex.getMessage());
             return null;
         }
     }
@@ -381,15 +358,15 @@ public class Customer extends ArrayList<Customer> {
 //            customer.customerLocation = jsonObject.getString("currentLocation");
             customer.vCardImage = jsonObject.getString("vCardImg");
             customer.companyName = jsonObject.getString("business");
-            customer.avgCostOfTrip = jsonObject.getString("avg_trip_cost");
+            customer.avgTripCost = jsonObject.getString("avg_trip_cost");
             customer.weeklyRequirement = jsonObject.getString("weekly_requirement");
             customer.goodsType = jsonObject.getString("goods_type");
             customer.businessType = jsonObject.getString("business_type");
-            Log.i(TAG,"-----------------------------------------------Check Details"+customer.goodsType+" \n "+customer.businessType);
+            Log.i(TAG,"-----------------------------------------------Check Details"+customer.avgTripCost+" \n "+customer.businessType);
             return customer;
         } catch (JSONException ex) {
             //throw ex;
-//            Log.e("userModel", "Failed to decode json. " + ex.getMessage());
+            Log.e("userModel", "Failed to decode json. " + ex.getMessage());
             return null;
         }
     }

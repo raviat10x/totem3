@@ -70,13 +70,14 @@ public class Driver{
     private String remarksTimeStamp;
     private double lattitude;
     private double longitude;
+    private  String onLineTime;
 
     public Driver(){
 
     }
 
     public Driver(String uId, String firstName, String lastName, String mobileNo, String dutyStatus, String workStatus,
-                  double lattitude, double longitude, String category, String vehicleMake, String vehicleModel, String plan) {
+                  double lattitude, double longitude, String category, String vehicleMake, String vehicleModel, String plan, String onLineTime) {
         this.uId = uId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -89,6 +90,15 @@ public class Driver{
         this.tempoMake = vehicleMake;
         this.tempoModel = vehicleModel;
         this.plan = plan;
+        this.onLineTime = onLineTime;
+    }
+
+    public String getOnLineTime() {
+        return onLineTime;
+    }
+
+    public void setOnLineTime(String onLineTime) {
+        this.onLineTime = onLineTime;
     }
 
     public String getMobileNo() {
@@ -421,6 +431,9 @@ public class Driver{
         intent.putExtra("SourcedBy", driver.getSourcedBy());
         intent.putExtra("lattitude", driver.getLattitude());
         intent.putExtra("longitude",driver.getLongitude());
+
+        intent.putExtra("onLineTime", driver.getOnLineTime());
+
         return intent;
     }
 
@@ -499,7 +512,7 @@ public class Driver{
             driver.gcmRegId = jsonObject.getString("gcm_regid");
             driver.currentBookingReference = jsonObject.getString("current_booking_ref");
             driver.plan = jsonObject.getString("plan");
-
+            driver.onLineTime = jsonObject.getString("onLineTime");
 
             return driver;
         } catch (JSONException ex) {
@@ -545,6 +558,7 @@ public class Driver{
             driver.remarks = jsonObject.getString("remarks");
             driver.remarksTimeStamp = jsonObject.getString("remarksTimestamp");
             driver.SourcedBy = jsonObject.getString("sourced_by");
+            driver.onLineTime = jsonObject.getString("onLineTime");
             return driver;
         } catch (JSONException ex) {
             //throw ex;
@@ -636,6 +650,8 @@ public class Driver{
         str += "lattitude: " + ( this.lattitude);
         str += ", ";
         str += "longitude: " + (this.longitude);
+        str += ", ";
+        str += "onLineTime: " + (this.onLineTime);
         return str;
     }
 }

@@ -177,7 +177,7 @@
                         android:id="@+id/txtAvgCostOfTrip"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Avg. Expense (PER TRIP)"
+                        android:hint="Avg. Expense (Per Trip)"
                         android:inputType="textCapWords" />
 
                 </android.support.design.widget.TextInputLayout>

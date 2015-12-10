@@ -29,6 +29,7 @@
 
     <string name="profile_menu_avlbl">Available</string>
     <string name="profile_menu_onduty">OnDuty</string>
+    <string name="profile_menu_active">Active</string>
     <string name="profile_menu_offduty">OffDuty</string>
     <string name="profile_menu_allDrivers">All Drivers</string>
     <string name="profile_menu_pending">Pending</string>
@@ -100,7 +101,6 @@
     <string name="title_activity_customer_booking_details">CustomerBookingDetailsActivity</string>
     <string name="title_activity_add_training">AddTrainingActivity</string>
     <string name="title_activity_remarks">RemarksActivity</string>
-
-    <string name="SENDER_ID">667096357908</string>
+    <string name="SENDER_ID">838413698936</string>
 
 </resources>

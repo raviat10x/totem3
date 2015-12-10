@@ -76,6 +76,7 @@ public class CustomerBookingDetailsActivity extends AppCompatActivity {
     private TextView txtDriverFareShare;
     private TextView txtPaidToCompany;
     private TextView txtDriverRating;
+    private TextView txtTotalDistance;
 
 
     @Override
@@ -102,6 +103,7 @@ public class CustomerBookingDetailsActivity extends AppCompatActivity {
         txtDiscount = (TextView) findViewById(R.id.txtDiscount);
         txtTotalJourneyTime = (TextView)findViewById(R.id.txtTotalJourneyTime);
         txtTotalWaitingTime = (TextView)findViewById(R.id.txtTotalWaitingTime);
+        txtTotalDistance = (TextView)findViewById(R.id.txtTotalDistance);
         txtChargableDistance = (TextView)findViewById(R.id.txtChargableDistance);
         txtDriverFareShare = (TextView)findViewById(R.id.txtDriverFareShare);
         txtPaidToCompany = (TextView)findViewById(R.id.txtPaidToCompany);
@@ -164,34 +166,28 @@ public class CustomerBookingDetailsActivity extends AppCompatActivity {
                         txtCustomerName.setText(jsonCustomerBookingDetails.getString("user_id"));
                         txtBookingDate.setText(jsonCustomerBookingDetails.getString("booking_date"));
                         txtBookingTime.setText(jsonCustomerBookingDetails.getString("booking_time"));
-                        txtPickLocation.setText(jsonCustomerBookingDetails.getString("pickup_lat"));
-                        txtDropLocation.setText(jsonCustomerBookingDetails.getString("dest_long"));
+//                        txtPickLocation.setText(jsonCustomerBookingDetails.getString("pickup_lat"));
+                        txtPickLocation.setText(jsonCustomerBookingDetails.getString("pickup_address"));
+                        txtDropLocation.setText(jsonCustomerBookingDetails.getString("dest_address"));
                         txtReferenceId.setText(jsonCustomerBookingDetails.getString("booking_ref"));
                         txtDriverName.setText(jsonCustomerBookingDetails.getString("completed_name"));
 //                        txtDriverMobile.setText(jsonCustomerBookingDetails.getString(""));
                         txtTempoType.setText(jsonCustomerBookingDetails.getString("tempo_type"));
-                        txtTotalJourneyTime.setText(jsonCustomerBookingDetails.getString("total_journey_time"));
-                        txtTotalWaitingTime.setText(jsonCustomerBookingDetails.getString("total_waiting_time"));
-                        txtChargableDistance.setText(jsonCustomerBookingDetails.getString("chargeable_distance_km"));
-                        txtTotalFare.setText(jsonCustomerBookingDetails.getString("total_fare"));
-                        txtDiscount.setText(jsonCustomerBookingDetails.getString("total_discount"));
-//                        txtDriverFareShare.setText(jsonCustomerBookingDetails.getString("driver_fare_share"));
-//                        txtPaidToCompany.setText(jsonCustomerBookingDetails.getString("paid_to_company"));
+                        txtTotalJourneyTime.setText(jsonCustomerBookingDetails.getString("total_journey_time") + " Min");
+                        txtTotalWaitingTime.setText(jsonCustomerBookingDetails.getString("total_waiting_time") + " Min");
+                        txtTotalDistance.setText(jsonCustomerBookingDetails.getString("total_distance_km") + " Kms");
+                        txtChargableDistance.setText(jsonCustomerBookingDetails.getString("chargeable_distance_km") + " Kms");
+                        txtTotalFare.setText(jsonCustomerBookingDetails.getString("total_fare") + " ₹");
+                        txtDiscount.setText(jsonCustomerBookingDetails.getString("total_discount") + " ₹");
+                        txtDriverFareShare.setText(jsonCustomerBookingDetails.getString("driver_fare_share"));
+                        txtPaidToCompany.setText(jsonCustomerBookingDetails.getString("paid_to_company"));
                         txtDriverRating.setText(jsonCustomerBookingDetails.getString("driver_rating"));
-//                        txtCustomerName = (TextView) findViewById(R.id.txtCustomerName);
-//                        txtBookingDate  = (TextView) findViewById(R.id.txtBookingDate);
-//                        txtPickLocation = (TextView) findViewById(R.id.txtPickLocation);
-//                        txtDropLocation = (TextView) findViewById(R.id.txtDropLocation);
-//                        txtReferenceId = (TextView) findViewById(R.id.txtReferenceId);
-//                        txtDriverName = (TextView) findViewById(R.id.txtDriverName);
-//                        txtDriverMobile = (TextView) findViewById(R.id.txtDriverMobile);
-//                        txtTempoType = (TextView) findViewById(R.id.txtTempoType);
-//                        txtTotalFare = (TextView) findViewById(R.id.txtTotalFare);
-//                        txtDiscount = (TextView) findViewById(R.id.txtDiscount);
+                        Log.d(TAG, "Driver Rating is : " +txtDriverRating.getText().toString());
 
                     }
                 } catch (JSONException ex)
                 {
+                    Log.e("TAG", "Driver Rating :  " + ex.getMessage());
                 }
                 catch (Exception e) {
                     e.printStackTrace();

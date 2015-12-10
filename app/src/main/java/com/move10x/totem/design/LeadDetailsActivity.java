@@ -205,7 +205,7 @@ public class LeadDetailsActivity extends Move10xActivity {
                         txtBusinessType.setText(customerDetails.getBusinessType());
                         txtGoodsType.setText(customerDetails.getGoodsType());
                         txtWeekRequirement.setText(customerDetails.getWeeklyRequirement());
-                        txtAvgCost.setText(customerDetails.getAvgCostOfTrip());
+                        txtAvgCost.setText(customerDetails.getAvgTripCost());
 //                        txtCustomerCurrentLocation.setText(customerDetails.getCustomerLocation().toString());
 
 

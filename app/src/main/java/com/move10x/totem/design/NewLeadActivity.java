@@ -29,7 +29,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.loopj.android.http.RequestParams;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
@@ -382,7 +381,7 @@ public class NewLeadActivity extends AppCompatActivity {
             newCustomer.setGoodsType(txtGoodsType.getText().toString().trim());
             newCustomer.setBusinessType(txtBusinessType.getText().toString().trim());
             newCustomer.setWeeklyRequirement(txtWeeklyRequirement.getText().toString().trim());
-            newCustomer.setAvgCostOfTrip(txtAvgCostOfTrip.getText().toString().trim());
+            newCustomer.setAvgTripCost(txtAvgCostOfTrip.getText().toString().trim());
 
 //            newCustomer.setCustomerLocation(txtCustomerCurrentLocation.getText().toString().trim());
 
@@ -413,6 +412,11 @@ public class NewLeadActivity extends AppCompatActivity {
             requestParams.put("weekly_requirement", txtWeeklyRequirement.getText().toString().trim());
             requestParams.put("goods_type", txtGoodsType.getText().toString().trim());
             requestParams.put("business_type", txtBusinessType.getText().toString().trim());
+
+            requestParams.put("avgTripCost", txtAvgCostOfTrip.getText().toString().trim());
+            requestParams.put("weeklyRequirement", txtWeeklyRequirement.getText().toString().trim());
+            requestParams.put("goodsType", txtGoodsType.getText().toString().trim());
+            requestParams.put("businessType", txtBusinessType.getText().toString().trim());
 
             CurrentProfile profile = new CurrentProfileService(this).getCurrentProfile();
             requestParams.put("crmId", profile.getUserId());
@@ -615,17 +619,13 @@ public class NewLeadActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int selectedRadioButtonID = group.getCheckedRadioButtonId();
-//                Log.d(TAG, "check change. Selected button id: " + selectedRadioButtonID);
                 String imageSource = ((RadioButton) group.findViewById(selectedRadioButtonID)).getText().toString().toLowerCase();
                 if (selectedRadioButtonID == R.id.inputUseCamera) {
-                    //Use Camera
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(takePictureIntent, INTENT_REQUEST_CAMERA_CUSTOMER_VCARD);
                     }
                 } else {
-                    //Use Gallery
-//                    Log.d(TAG, "check change. Open gallery");
                     Intent intent = new Intent();
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);//
@@ -640,7 +640,6 @@ public class NewLeadActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        Log.d("customerDetails", "onmenuitem click. " + item.getItemId() + "," + R.id.home);
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();

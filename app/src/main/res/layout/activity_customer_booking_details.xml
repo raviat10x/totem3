@@ -324,7 +324,7 @@
                         style="@style/BookingDetailsLabel"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:text="Chargable Distance"
+                        android:text="Chargeable Distance"
                         android:textColor="@color/colorAccent" />
 
                     <TextView
@@ -434,6 +434,19 @@
                     android:layout_marginBottom="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
+
+                    <TextView
+                        style="@style/BookingDetailsLabel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:text="Rating" />
+
+                    <View
+                        android:layout_width="50sp"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:background="#000000" />
 
                     <TextView
                         style="@style/BookingDetailsLabel"

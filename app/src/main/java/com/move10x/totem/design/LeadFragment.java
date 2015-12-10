@@ -221,8 +221,9 @@ public class LeadFragment extends Fragment {
             View rowView = inflater.inflate(R.layout.leadlist, null);
 
             TextView txtCustomerName = (TextView) rowView.findViewById(R.id.customerName);
+            Log.d(TAG, "Getting Cusotmers Name" +txtCustomerName);
             txtCustomerName.setText(currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
-            Log.d(TAG, currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
+            Log.d(TAG, "Getting Cusotmers Name" +currentCustomer.getFirstName() + " " + currentCustomer.getLastName());
 
             TextView txtCustomerPhoneNumber = ((TextView) rowView.findViewById(R.id.customerPhoneNumber));
             txtCustomerPhoneNumber.setText(currentCustomer.getMobile());

@@ -227,7 +227,7 @@ public class CustomerBookingListActivity extends Move10xActivity {
             } else {
                 txtBookingStatus.setTextColor(Color.parseColor("#1974D2"));
             }
-            txtBookingStatus.setText("Status : " + currentBooking.getStatus());
+            txtBookingStatus.setText(currentBooking.getStatus());
             Log.d(TAG, currentBooking.getStatus());
 
             rowView.setOnClickListener(new View.OnClickListener() {

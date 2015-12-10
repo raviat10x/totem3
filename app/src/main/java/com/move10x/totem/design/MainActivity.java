@@ -1,10 +1,13 @@
 package com.move10x.totem.design;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -26,9 +29,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.move10x.totem.R;
 import com.move10x.totem.models.CurrentProfile;
+import com.move10x.totem.models.QuickstartPreferences;
 import com.move10x.totem.services.CurrentProfileService;
+import com.move10x.totem.services.RegistrationIntentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +52,11 @@ public class MainActivity extends Move10xActivity
     ListView drawerListView;
     ArrayList<DrawerListItem> drawerList;
     private ActionBarDrawerToggle mDrawerToggle;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private BroadcastReceiver mGcmRegistrationBroadcastReceiver;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +81,23 @@ public class MainActivity extends Move10xActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
+
+        setupGcmBroadcastReceiver();
+
+        mGcmRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive( Context context, Intent intent) {
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    Log.i(TAG, "GCM Updated on server. Now accepting GCM Messages!");
+                } else {
+                    Log.d(TAG, "Inside else of sending token");
+                }
+            }
+        };
 
         //Load Profile
         Log.d("mainActivity", "Loading Home Fragement");
@@ -173,6 +202,45 @@ public class MainActivity extends Move10xActivity
         frag.updateText(text);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupGcmBroadcastReceiver();
+    }
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                //finish();
+            }
+            return false;
+        }
+
+        return true;
+    }
+
+    private void setupGcmBroadcastReceiver(){
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Log.d(TAG, "Inside setupGcmBroadcastReceiver");
+
+            CurrentProfile cp = (new CurrentProfileService(getApplicationContext())).getCurrentProfile();
+            cp.getUserId();
+
+            String driverUid = cp.getUserId();
+
+            Log.d(TAG, "Current Driver Uid is : " + driverUid);
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
     public class DrawerAdapter extends ArrayAdapter<DrawerListItem> {
 
         DrawerLayout drawer;

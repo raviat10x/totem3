@@ -66,6 +66,14 @@
                     android:textColor="#484848"
                     android:layout_marginRight="10dp" />
 
+                <TextView
+                    android:id="@+id/txtPing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textColor="#484848"
+                    android:layout_marginRight="10dp" />
+
             </LinearLayout>
         </TableRow>
     </TableLayout>
