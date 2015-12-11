@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.move10x.totem.BookingDetailsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp">
+
+        <LinearLayout
+            android:id="@+id/bookingDetailsContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <!--Reference-->
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_horizontal"
+                android:text="Customer Details" />
+            <View
+                android:layout_width="130sp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="#000000" />
+
+            <TextView
+                android:text="Customer Name"
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:layout_column="1" />
+            <TextView
+                android:textColor="#333333"
+                android:id="@+id/txtCustomerName"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+            <!--Reference-->
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="PickUp Date" />
+            <TextView
+                android:id="@+id/txtPickUpDate"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtPickUpTime"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_column="1" />-->
+
+
+            <!-- Tempo Type -->
+
+
+            <!--<TextView-->
+                <!--style="@style/BookingDetailsLabel"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:text="Booking From" />-->
+            <!--<TextView-->
+                <!--style="@style/BookingDetailsLabel"-->
+                <!--android:id="@+id/txtBookingFrom"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent" />-->
+
+            <!--<TextView-->
+                <!--android:text="Booking UpTo"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_column="1" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/txtBookingUpTo"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_column="1" />-->
+
+            <!-- Booking Status -->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Status" />
+
+            <TextView
+                android:id="@+id/txtBookingStatus"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!--Pickup Address-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Pickup Address" />
+
+            <TextView
+                android:id="@+id/txtPickupLocation"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!--Drop Address-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Drop Address" />
+
+            <TextView
+                android:id="@+id/txtDropLocation"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1" />
+
+
+            <!--Booking Time-->
+
+
+            <!--<TextView-->
+                <!--style="@style/BookingDetailsLabel"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:textColor="@color/colorAccent"-->
+                <!--android:text="Booking Time" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/txtBookingTime"-->
+                <!--android:textColor="#333333"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_column="1"-->
+                <!--android:text="" />-->
+
+
+            <!--Total Journey Time-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Total Journey Time" />
+
+            <TextView
+                android:id="@+id/txtTotalJourneyTime"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Waiting Time-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Total Waiting Time" />
+
+            <TextView
+                android:id="@+id/txtTotalWaitingTime"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Distance-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Total Distance" />
+
+            <TextView
+                android:id="@+id/txtTotalDistance"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Chargable Distance-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Chargable Distance" />
+
+            <TextView
+                android:id="@+id/txtChargableDistance"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Total Fare-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Total Fare" />
+
+            <TextView
+                android:id="@+id/txtTotalFare"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Discount-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Discount" />
+
+            <TextView
+                android:id="@+id/txtDiscount"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Driver Fare Share-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Driver Fare Share" />
+
+            <TextView
+                android:id="@+id/txtDriverFareShare"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Paid To Company-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Paid To Company" />
+
+            <TextView
+                android:id="@+id/txtPaidToCompany"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Driver Rating-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Driver Rating" />
+
+            <TextView
+                android:id="@+id/txtDriverRating"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Customer Rating-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Customer Rating" />
+
+            <TextView
+                android:id="@+id/txtCustomerRating"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+
+            <!--Booking Created At-->
+
+
+            <TextView
+                style="@style/BookingDetailsLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/colorAccent"
+                android:text="Booking Created At" />
+
+            <TextView
+                android:id="@+id/txtBookingCreatedAt"
+                android:textColor="#333333"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_column="1"
+                android:text="" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/bookingDetailsProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</android.support.design.widget.CoordinatorLayout>

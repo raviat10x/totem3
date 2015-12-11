@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:theme="@style/NewDriverPageTheme"
+    tools:context="com.move10x.totem.design.AddTrainingActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/newTrainingContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_horizontal"
+                    android:text="Training Session"
+                    android:textSize="30dp" />
+
+                <!-- Authority -->
+
+                <!-- Region -->
+
+                <!--  First Name -->
+
+                <!-- Last Name -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/inputName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Driver Name"
+                        android:inputType="textCapWords" />
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- Mobile Number -->
+
+                <!-- Email Label -->
+
+                <!-- Personal Address -->
+
+                <!-- Base Station -->
+
+                <!-- Driver Remarks -->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <EditText
+                        android:id="@+id/inputTrainingRemarks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Training Remarks (Optional)"
+                        android:inputType="text" />
+                </android.support.design.widget.TextInputLayout>
+
+                <!--Text Vehicle Details-->
+
+                <!--Tempo Category Mini Max Mega-->
+
+                <!--Vehicle Length-->
+
+                <!-- Vehicle Make -->
+
+                <!-- Tempo Model -->
+
+                <!-- Regestration Number -->
+
+                <!-- Regestration Number -->
+
+                <!-- Joining Date -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtTrainingDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="Training Date" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/btnTrainingDate"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="Select Joining Date" />
+                </LinearLayout>
+
+                <!-- Scheme Freelance/SemiFixed/Fixed-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Model" />
+
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/inputPlan"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/inputFreelancer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:checked="true"
+                        android:text="FREELANCE" />
+
+                    <RadioButton
+                        android:id="@+id/inputSemiFixed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:checked="false"
+                        android:text="SEMI-FIXED" />
+
+                    <RadioButton
+                        android:id="@+id/inputFixed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:checked="false"
+                        android:text="FIXED" />
+                </RadioGroup>
+
+                <!--Text upload documents-->
+                <!--<TextView-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="15dp"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:text="Upload Documents"-->
+                    <!--android:textSize="30dp" />-->
+
+                <!--&lt;!&ndash;Text document upload error message&ndash;&gt;-->
+                <!--<TextView-->
+                    <!--android:id="@+id/txtUploadDocumentsError"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:layout_marginTop="15dp"-->
+                    <!--android:gravity="center_horizontal"-->
+                    <!--android:text="Please upload all the documents"-->
+                    <!--android:textColor="@color/red"-->
+                    <!--android:visibility="gone" />-->
+
+
+                <!--Driver Photo, Driving License & Vehicle Insurence-->
+
+                <!-- Vehicle Images -->
+
+                <!-- Signup Button -->
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnSaveTraining"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/colorAccent"
+                    android:padding="12dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Submit Training"
+                    android:textColor="#ffffff" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/newTrainingProgress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -1,3 +1,106 @@
 <resources>
-    <string name="app_name">totem</string>
+
+    <string name="app_name">Totem</string>
+    <string name="action_settings">Settings</string>
+
+    <!--login activity strings -->
+    <string name="invalid_userId">User id is invalid</string>
+    <string name="invalid_password">Password is too short</string>
+    <string name="incorrect_password">Password is incorrect</string>
+    <string name="field_required">This field is required</string>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Closed</string>
+
+    <string name="user_data_file_name">udt</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_left_menu">LeftMenuActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="profile_menu_home">Home</string>
+    <string name="profile_menu_drivers">Drivers</string>
+    <string name="profile_menu_drivers_on_map">Drivers On Map</string>
+    <string name="profile_menu_logout">Logout</string>
+    <!--<string name="profile_menu_Activity">Activity</string>-->
+
+    <string name="profile_menu_avlbl">Available</string>
+    <string name="profile_menu_onduty">OnDuty</string>
+    <string name="profile_menu_active">Active</string>
+    <string name="profile_menu_offduty">OffDuty</string>
+    <string name="profile_menu_allDrivers">All Drivers</string>
+    <string name="profile_menu_pending">Pending</string>
+    <string name="profile_menu_terminated">Terminated</string>
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_driver">DriverActivity</string>
+
+    <string-array name="schemes">
+        <item>Freelancer</item>
+        <item>Semi-Fixed</item>
+        <item>Fixed</item>
+    </string-array>
+    <string-array name="filter">
+        <item>Available</item>
+        <item>OffDuty</item>
+        <item>OnDuty</item>
+    </string-array>
+
+
+    <string-array name="drawerMenu">
+        <item>Home</item>
+        <item>Drivers</item>
+        <item>Drivers On Map</item>
+    </string-array>
+
+
+    <string name="duty_status_available">AVAILABLE</string>
+    <string name="duty_status_offduty">OFFDUTY</string>
+    <string name="title_activity_drivers_on_map">Map Your Driver</string>
+    <string name="title_activity_google_map_info_window">GoogleMapInfoWindowActivity</string>
+    <string name="title_activity_driver_details">DriverDetailsActivity</string>
+    <string name="title_activity_booking_list">BookingListActivity</string>
+    <string name="title_activity_driver_bookings">DriverBookingsActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_booking_details">Booking Details</string>
+
+    <string-array name="authority_list">
+        <item>Driver</item>
+        <item>Owner</item>
+    </string-array>
+
+    <string-array name="vehicle_list">
+        <item>MAX</item>
+        <item>MINI</item>
+        <item>MAX+</item>
+        <item>MEGA</item>
+    </string-array>
+
+    <string-array name="billing_info">
+        <item>COMPANY</item>
+        <item>CUSTOMER</item>
+    </string-array>
+    <string-array name="city_array">
+        <item>MUMBAI</item>
+        <item>PUNE</item>
+    </string-array>
+
+    <string name="title_activity_no_internet">NoInternetActivity</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="title_activity_new_customer">NewCustomerActivity</string>
+    <string name="title_activity_customer_details">CustomerDetailsActivity</string>
+    <string name="title_activity_customer_booking_list">CustomerBookingList</string>
+    <string name="title_activity_customer_booking_details">CustomerBookingDetailsActivity</string>
+    <string name="title_activity_add_training">AddTrainingActivity</string>
+    <string name="title_activity_remarks">RemarksActivity</string>
+    <string name="SENDER_ID">838413698936</string>
+
 </resources>

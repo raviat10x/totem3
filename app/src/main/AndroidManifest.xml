@@ -1,8 +1,169 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.move10x.totem">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.move10x.totem">
 
-    <application android:allowBackup="true" android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher" android:supportsRtl="true"
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
+    <!--<permission-->
+    <!--android:name="your.package.name.permission.C2D_MESSAGE"-->
+    <!--android:protectionLevel="signature" />-->
+
+    <!--<uses-permission android:name="your.package.name.permission.C2D_MESSAGE" />-->
+
+    <!-- Permission to access camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!--<permission-->
+    <!--android:name="com.example.gcm.permission.C2D_MESSAGE"-->
+    <!--android:protectionLevel="signature" />-->
+
+    <!--<uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />-->
+
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon_logo"
+        android:label="Totem"
+        android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--android:name="android.support.multidex.MultiDexApplication">-->
+
+        <!-- <receiver -->
+        <!-- android:name=".receivers.NetworkChangeReceiver" -->
+        <!-- android:label="NetworkChangeReceiver" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE" /> -->
+        <!-- <action android:name="android.net.wifi.WIFI_STATE_CHANGED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+
+
+        <!-- Google MAP API key -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyC_khGmBpIKMiNC-rEcHupBBqQZkwHZtow" />
+
+        <activity
+            android:name=".design.LoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".design.MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".design.NewDriverActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".design.DriversOnMapActivity"
+            android:label="@string/title_activity_drivers_on_map"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".design.DriverDetailsActivity"
+            android:label="@string/title_activity_driver_details"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".design.DriverBookingList"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.UI_OPTIONS"
+                android:value="splitActionBarWhenNarrow" />
+        </activity>
+        <activity
+            android:name=".design.BookingDetailsActivity"
+            android:label="@string/title_activity_booking_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".design.NoInternetActivity"
+            android:label="@string/title_activity_no_internet"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".design.NewLeadActivity"
+            android:label="@string/title_activity_new_customer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".design.LeadDetailsActivity"
+            android:label="@string/title_activity_customer_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".design.CustomerBookingListActivity"
+            android:label="@string/title_activity_customer_booking_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".design.CustomerBookingDetailsActivity"
+            android:label="@string/title_activity_customer_booking_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <!--<activity-->
+        <!--android:name=".design.AddTrainingActivity"-->
+        <!--android:label="@string/title_activity_add_training"-->
+        <!--android:theme="@style/AppTheme.NoActionBar" >-->
+        <!--</activity>-->
+        <activity
+            android:name=".design.RemarksActivity"
+            android:label="@string/title_activity_remarks"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <service
+            android:name=".services.MyGcmListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".services.MyInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+        <!-- [END instanceId_listener] -->
+        <service
+            android:name=".services.RegistrationIntentService"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.move10x.totem" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

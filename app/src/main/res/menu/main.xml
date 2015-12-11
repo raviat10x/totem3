@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+   <!-- <item android:id="@+id/action_home"
+        android:title="@string/profile_menu_home"
+        android:orderInCategory="100"
+        android:onClick="onHomeBtnClick"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_drivers"
+        android:title="@string/profile_menu_drivers"
+        android:onClick="onDriversBtnClick"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/profile_menu_drivers_on_map"
+        android:title="@string/profile_menu_drivers_on_map"
+        android:onClick="onDriversOnMapBtnClick"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/profile_menu_activity"
+        android:title="@string/profile_menu_Activity"
+        android:onClick="onActivityBtnClick"
+        android:orderInCategory="100" app:showAsAction="never" />
+
+    <item android:id="@+id/profile_menu_logout"
+        android:title="@string/profile_menu_logout"
+        android:onClick="onLogoutBtnClick"
+        android:orderInCategory="100" app:showAsAction="never" />-->
+</menu>

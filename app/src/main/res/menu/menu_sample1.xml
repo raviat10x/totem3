@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/actionAllDrivers"
+        android:title="@string/profile_menu_allDrivers"
+        android:icon="@drawable/icon_black"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionAvailable"
+        android:title="@string/profile_menu_avlbl"
+        android:icon="@drawable/icon_dark_green"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionActive"
+        android:title="@string/profile_menu_active"
+        android:icon="@drawable/icon_light_green"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionOnDuty"
+        android:title="@string/profile_menu_onduty"
+        android:icon="@drawable/icon_purple"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionOffDuty"
+        android:title="@string/profile_menu_offduty"
+        android:icon="@drawable/icon_brown"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionPending"
+        android:icon="@drawable/icon_grey"
+        android:title="@string/profile_menu_pending"
+        android:orderInCategory="100"  />
+
+    <item android:id="@+id/actionTerminated"
+        android:title="@string/profile_menu_terminated"
+        android:icon="@drawable/icon_red"
+        android:orderInCategory="100"  />
+
+
+</menu>
