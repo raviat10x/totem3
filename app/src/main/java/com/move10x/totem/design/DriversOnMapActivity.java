@@ -75,6 +75,10 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drivers_on_map);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Map Your Driver");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -87,13 +91,13 @@ public class DriversOnMapActivity extends Move10xActivity implements OnMapReadyC
                 loadDriverMarkers();
             }
         });
-        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.floatingBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+//        FloatingActionButton backButton = (FloatingActionButton) findViewById(R.id.floatingBackButton);
+//        backButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
 
 
         mapFragment.getMapAsync(this);

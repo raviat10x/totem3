@@ -135,7 +135,7 @@
                         android:id="@+id/txtBusinessType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Business Type"
+                        android:hint="Business Type (Optional)"
                         android:inputType="textCapWords" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -149,7 +149,7 @@
                         android:id="@+id/txtGoodsType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Goods Type"
+                        android:hint="Goods Type (Optional)"
                         android:inputType="textCapWords" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -163,7 +163,7 @@
                         android:id="@+id/txtWeeklyRequirement"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Weekly Requirement"
+                        android:hint="Weekly Requirement(Optional)"
                         android:inputType="textCapWords" />
 
                 </android.support.design.widget.TextInputLayout>

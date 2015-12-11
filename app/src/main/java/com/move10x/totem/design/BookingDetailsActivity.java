@@ -33,9 +33,16 @@ public class BookingDetailsActivity extends Move10xActivity {
     ProgressBar progressBar;
     Booking bookingDetails;
     TextView txtReferenceId, txtTempoType, txtBookingStatus, txtPickupLocation, txtDropLocation, txtCustomerDetails;
-    TextView txtBookingTime, txtTotalJourneyTime, txtTotalWaitingTime, txtTotalDistance, txtChargableDistance;
+    TextView txtTotalJourneyTime, txtTotalWaitingTime, txtChargableDistance;
     TextView txtTotalFare, txtDiscount, txtDriverFareShare, txtPaidToCompany, txtDriverRating, txtCustomerRating;
     TextView txtBookingCreatedAt;
+
+    private TextView txtCustomerName;
+    private TextView txtPickUpDate;
+    private TextView txtTotalDistance;
+    private TextView txtPickUpTime;
+    private TextView txtBookingFrom;
+    private TextView txtBookingUpTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +57,14 @@ public class BookingDetailsActivity extends Move10xActivity {
         bookingDetailsContainer = (LinearLayout) findViewById(R.id.bookingDetailsContainer);
         progressBar = (ProgressBar) findViewById(R.id.bookingDetailsProgress);
 
-        txtReferenceId = (TextView) findViewById(R.id.txtReferenceId);
-        txtTempoType = (TextView) findViewById(R.id.txtTempoType);
+//        txtReferenceId = (TextView) findViewById(R.id.txtReferenceId);
+        txtCustomerName = (TextView)findViewById(R.id.txtCustomerName);
+        txtPickUpDate = (TextView)findViewById(R.id.txtPickUpDate);
+
         txtBookingStatus = (TextView) findViewById(R.id.txtBookingStatus);
         txtPickupLocation = (TextView) findViewById(R.id.txtPickupLocation);
         txtDropLocation = (TextView) findViewById(R.id.txtDropLocation);
-        txtBookingTime = (TextView) findViewById(R.id.txtBookingTime);
+//        txtBookingTime = (TextView) findViewById(R.id.txtBookingTime);
         txtTotalJourneyTime = (TextView) findViewById(R.id.txtTotalJourneyTime);
         txtTotalWaitingTime = (TextView) findViewById(R.id.txtTotalWaitingTime);
         txtTotalDistance = (TextView) findViewById(R.id.txtTotalDistance);
@@ -138,18 +147,21 @@ public class BookingDetailsActivity extends Move10xActivity {
                 try {
                     Log.d(logTag, response.toString());
                     if (response.getString("success") != null && response.getString("success").equals("1")) {
+//                        JSONObject jsonDriverDetails = response.getJSONObject("bookingDetails");
                         JSONObject jsonDriverDetails = response.getJSONObject("bookingDetails");
+
                         bookingDetails = Booking.decodeBookingDetailsResponseJson(jsonDriverDetails);
-                        Log.d(logTag,"Customer Details: " + bookingDetails.getCustomer().toString());
-                        txtReferenceId.setText(bookingDetails.getReference());
-                        txtTempoType.setText(bookingDetails.getVehicleCategory());
+                        Log.d(logTag, "Customer Details: " + bookingDetails.getCustomer().toString());
+//                        txtReferenceId.setText(bookingDetails.getReference());
+                        txtCustomerName.setText(bookingDetails.getCustomer().getFirstName() + "" + bookingDetails.getCustomer().getLastName());
+                        txtPickUpDate.setText(bookingDetails.getDate() + " " + bookingDetails.getTime());
                         txtBookingStatus.setText(bookingDetails.getStatus());
                         txtPickupLocation.setText(bookingDetails.getPickup());
                         txtDropLocation.setText(bookingDetails.getDrop());
-                        txtBookingTime.setText(bookingDetails.getTime());
+//                        txtBookingTime.setText(bookingDetails.getBookingCreatedAt());
                         txtTotalJourneyTime.setText(bookingDetails.getTotalJourneyTime());
                         txtTotalWaitingTime.setText(bookingDetails.getTotalWaitingTime());
-                        txtTotalDistance.setText(bookingDetails.getTotalWaitingTime());
+                        txtTotalDistance.setText(bookingDetails.getTotalDistance());
                         txtChargableDistance.setText(bookingDetails.getChargeableDistance());
                         txtTotalFare.setText(bookingDetails.getTotalFare());
                         txtDiscount.setText(bookingDetails.getDiscount());

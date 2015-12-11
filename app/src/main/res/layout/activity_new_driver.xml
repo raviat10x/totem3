@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:theme="@style/NewDriverPageTheme"
-    tools:context="com.move10x.totem.NewDriverActivity">
+    android:layout_gravity="center"
+    android:fitsSystemWindows="true"
+    tools:context="com.move10x.totem.design.NewDriverActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.AppBarOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/newDriverContainer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginTop="55dp"
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -237,9 +252,9 @@
                     android:id="@+id/inputVehicleLength"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="3"
                     android:hint="Vehicle Legth In Feet"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="5" />
             </android.support.design.widget.TextInputLayout>
 
             <!-- Vehicle Make -->
@@ -336,7 +351,7 @@
                 android:id="@+id/inputPlan"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/inputFreelancer"
@@ -360,7 +375,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:checked="false"
-                    android:text="FIXED" />
+                    android:text="FIXED-PLUS" />
             </RadioGroup>
 
             <!--Text upload documents-->
@@ -380,10 +395,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/red"
                 android:gravity="center_horizontal"
                 android:text="Please upload all the documents"
-                android:visibility="gone"/>
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
 
             <!--Driver Photo, Driving License & Vehicle Insurence-->
@@ -700,4 +715,4 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

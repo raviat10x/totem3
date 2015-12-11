@@ -14,8 +14,10 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -115,7 +117,9 @@ public class NewDriverActivity extends Move10xActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_driver);
-
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("New Driver");
 
         //Read elements
@@ -165,6 +169,17 @@ public class NewDriverActivity extends Move10xActivity {
 
         //Fetch details required to add new driver.
         fetchRequiredInfo();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(logTag, "onmenuitem click. " + item.getItemId() + "," + R.id.home);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -559,12 +574,15 @@ public class NewDriverActivity extends Move10xActivity {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     super.onFailure(statusCode, headers, throwable, errorResponse);
-                    Toast.makeText(getBaseContext(), "Failed to reach server. Status: " + statusCode + ", json: " + errorResponse, Toast.LENGTH_LONG);
+                    //updated toast to show message if mobile number exists
+//                    Toast.makeText(getBaseContext(), "Failed to reach server. Status: " + statusCode + ", json: " + errorResponse, Toast.LENGTH_LONG);
+                    Toast.makeText(getBaseContext(), "Mobile Number already exists ", Toast.LENGTH_LONG);
                     Log.d(logTag, "Failed to create driver. Status: " + statusCode + ", Server Response: " + errorResponse);
                 }
 
             });
         }
+
     }
 
     private void RegisterButtonClickEvents() {
@@ -753,6 +771,7 @@ public class NewDriverActivity extends Move10xActivity {
             return false;
         }
 
+
         //Validate Mobile Number
         inputMobileNo.setError(null);
         String mobileNo = inputMobileNo.getText().toString().trim();
@@ -806,7 +825,13 @@ public class NewDriverActivity extends Move10xActivity {
         if (vehicleLength.length() > 5) {
             inputVehicleLenth.setError("Invalid vehicle length.(Valid Pattern: 00.00 )");
             return false;
-        } else {
+        }
+        else if (Integer.parseInt(vehicleLength) > 10)
+        {
+            inputVehicleLenth.setError("Invalid vehicle length.(Length should not exceed 10feet )");
+            return false;
+        }
+        else {
 
             String regexDecimal = "^\\d\\.\\d$";
             String regexInteger = "^\\d$";

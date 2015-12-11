@@ -82,22 +82,22 @@ public class MainActivity extends Move10xActivity
         getSupportActionBar().setHomeButtonEnabled(true);
         mDrawerToggle.syncState();
 
-        setupGcmBroadcastReceiver();
+//        setupGcmBroadcastReceiver();
 
-        mGcmRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive( Context context, Intent intent) {
-                SharedPreferences sharedPreferences =
-                        PreferenceManager.getDefaultSharedPreferences(context);
-                boolean sentToken = sharedPreferences
-                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
-                if (sentToken) {
-                    Log.i(TAG, "GCM Updated on server. Now accepting GCM Messages!");
-                } else {
-                    Log.d(TAG, "Inside else of sending token");
-                }
-            }
-        };
+//        mGcmRegistrationBroadcastReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive( Context context, Intent intent) {
+//                SharedPreferences sharedPreferences =
+//                        PreferenceManager.getDefaultSharedPreferences(context);
+//                boolean sentToken = sharedPreferences
+//                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+//                if (sentToken) {
+//                    Log.i(TAG, "GCM Updated on server. Now accepting GCM Messages!");
+//                } else {
+//                    Log.d(TAG, "Inside else of sending token");
+//                }
+//            }
+//        };
 
         //Load Profile
         Log.d("mainActivity", "Loading Home Fragement");
@@ -205,7 +205,7 @@ public class MainActivity extends Move10xActivity
     @Override
     protected void onResume() {
         super.onResume();
-        setupGcmBroadcastReceiver();
+//        setupGcmBroadcastReceiver();
     }
 
     private boolean checkPlayServices() {
@@ -225,22 +225,22 @@ public class MainActivity extends Move10xActivity
         return true;
     }
 
-    private void setupGcmBroadcastReceiver(){
-
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Log.d(TAG, "Inside setupGcmBroadcastReceiver");
-
-            CurrentProfile cp = (new CurrentProfileService(getApplicationContext())).getCurrentProfile();
-            cp.getUserId();
-
-            String driverUid = cp.getUserId();
-
-            Log.d(TAG, "Current Driver Uid is : " + driverUid);
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
-    }
+//    private void setupGcmBroadcastReceiver(){
+//
+//        if (checkPlayServices()) {
+//            // Start IntentService to register this application with GCM.
+//            Log.d(TAG, "Inside setupGcmBroadcastReceiver");
+//
+//            CurrentProfile cp = (new CurrentProfileService(getApplicationContext())).getCurrentProfile();
+//            cp.getUserId();
+//
+//            String driverUid = cp.getUserId();
+//
+//            Log.d(TAG, "Current Driver Uid is : " + driverUid);
+//            Intent intent = new Intent(this, RegistrationIntentService.class);
+//            startService(intent);
+//        }
+//    }
     public class DrawerAdapter extends ArrayAdapter<DrawerListItem> {
 
         DrawerLayout drawer;

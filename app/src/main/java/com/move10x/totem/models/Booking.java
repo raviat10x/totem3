@@ -244,24 +244,27 @@ public class Booking {
         Booking booking = new Booking();
         booking.setBookedBy(jsonObject.has("booking_by") ? jsonObject.getString("booking_by") : null);
         booking.setReference(jsonObject.has("booking_ref") ? jsonObject.getString("booking_ref") : null);
-        booking.setSource(jsonObject.has("booking_source")?jsonObject.getString("booking_source" ) : null);
-        booking.setStatus(jsonObject.has("booking_status")?jsonObject.getString("booking_status" ) : null);
-        booking.setDate(jsonObject.has("booking_date")?jsonObject.getString("booking_date" ) : null);
-        booking.setTime(jsonObject.has("booking_time")?jsonObject.getString("booking_time" ) : null);
-        booking.setPickup(jsonObject.has("pickup_address")?jsonObject.getString("pickup_address" ) : null);
-        booking.setDrop(jsonObject.has("dest_address")?jsonObject.getString("dest_address" ) : null);
-        booking.setVehicleCategory(jsonObject.has("tempo_type")?jsonObject.getString("tempo_type" ) : null);
-        booking.setTotalJourneyTime(jsonObject.has("total_journey_time")?jsonObject.getString("total_journey_time" ) : null);
-        booking.setTotalWaitingTime(jsonObject.has("")?jsonObject.getString("total_waiting_time" ) : null);
-        booking.setTotalDistance(jsonObject.has("total_waiting_time")?jsonObject.getString("total_distance_km" ) : null);
-        booking.setTotalFare(jsonObject.has("total_fare")?jsonObject.getString("total_fare" ) : null);
-        booking.setDiscount(jsonObject.has("total_discount")?jsonObject.getString("total_discount" ) : null);
-        booking.setDriverFareShare(jsonObject.has("driver_fare_share")?jsonObject.getString("driver_fare_share" ) : null);
-        booking.setPaidToDriver(jsonObject.has("paid_to_driver")?jsonObject.getString("paid_to_driver" ) : null);
-        booking.setPaidToCompany(jsonObject.has("paid_to_company")?jsonObject.getString("paid_to_company" ) : null);
-        booking.setDriverRating(jsonObject.has("driver_rating")?jsonObject.getString("driver_rating" ) : null);
-        booking.setCustomerRating(jsonObject.has("customer_rating")?jsonObject.getString("customer_rating" ) : null);
-        booking.setBookingCreatedAt(jsonObject.has("created_at")?jsonObject.getString("created_at" ) : null);
+        booking.setSource(jsonObject.has("booking_source") ? jsonObject.getString("booking_source") : null);
+        booking.setStatus(jsonObject.has("booking_status") ? jsonObject.getString("booking_status") : null);
+        booking.setDate(jsonObject.has("booking_date") ? jsonObject.getString("booking_date") : null);
+        booking.setTime(jsonObject.has("booking_time") ? jsonObject.getString("booking_time") : null);
+        booking.setPickup(jsonObject.has("pickup_address") ? jsonObject.getString("pickup_address") : null);
+        booking.setDrop(jsonObject.has("dest_address") ? jsonObject.getString("dest_address") : null);
+        booking.setVehicleCategory(jsonObject.has("tempo_type") ? jsonObject.getString("tempo_type") : null);
+        booking.setTotalJourneyTime(jsonObject.has("total_journey_time") ? jsonObject.getString("total_journey_time") : null);
+        booking.setTotalWaitingTime(jsonObject.has("total_waiting_time") ? jsonObject.getString("total_waiting_time") : null);
+        booking.setTotalDistance(jsonObject.has("total_distance_km") ? jsonObject.getString("total_distance_km") : null);
+        booking.setTotalFare(jsonObject.has("total_fare") ? jsonObject.getString("total_fare") : null);
+        booking.setDiscount(jsonObject.has("total_discount") ? jsonObject.getString("total_discount") : null);
+        booking.setDriverFareShare(jsonObject.has("driver_fare_share") ? jsonObject.getString("driver_fare_share") : null);
+        booking.setPaidToDriver(jsonObject.has("paid_to_driver") ? jsonObject.getString("paid_to_driver") : null);
+        booking.setPaidToCompany(jsonObject.has("paid_to_company") ? jsonObject.getString("paid_to_company") : null);
+        booking.setDriverRating(jsonObject.has("driver_rating") ? jsonObject.getString("driver_rating") : null);
+        booking.setCustomerRating(jsonObject.has("customer_rating") ? jsonObject.getString("customer_rating") : null);
+        booking.setBookingCreatedAt(jsonObject.has("created_at") ? jsonObject.getString("created_at") : null);
+        booking.setChargeableDistance(jsonObject.has("chargeable_distance_km") ? jsonObject.getString("chargeable_distance_km" ) : null);
+        booking.setBookingCreatedAt((jsonObject.getString("booking_date")) + "  " + jsonObject.getString("booking_time"));
+
 
         //Set customer.
         Customer cust = new Customer();
@@ -304,8 +307,9 @@ public class Booking {
             Booking booking = new Booking();
 //            booking.time = jsonObject.getString("booking_time");
             booking.bookedBy = jsonObject.getString("booking_by");
+            booking.driverRating = jsonObject.getString("driver_rating");
 
-            Log.i(TAG,"-----------------------------------------------"+booking.bookedBy+" \n ");
+            Log.i(TAG,"-----------------------------------------------"+booking.driverRating+" \n ");
 
             return booking;
         }

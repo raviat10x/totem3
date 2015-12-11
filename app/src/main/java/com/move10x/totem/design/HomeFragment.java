@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment {
         layoutBookingDetails = (LinearLayout) view.findViewById(R.id.layoutBookingDetails);
         tblDriverInfo1 = (TableLayout) view.findViewById(R.id.tblDriverInfo1);
         txtActiveDrivers = (TextView) view.findViewById(R.id.txtActiveDrivers);
-
         txtTotalBooking = (TextView) view.findViewById(R.id.txtTotalBooking);
         txtTodayBooking = (TextView) view.findViewById(R.id.txtTodayBooking);
         txtWeekBooking = (TextView) view.findViewById(R.id.txtWeekBooking);
@@ -140,20 +139,15 @@ public class HomeFragment extends Fragment {
         txtPendingDrivers.setText("");
         txtActiveDrivers.setText("");
 
-
-        //Fetch profile driver details.
-//        progressBar.setVisibility(View.VISIBLE);
-
-
-        //Remove it........................
         ((CardView) view.findViewById(R.id.card_view)).setVisibility(View.VISIBLE);
 
         if (profile.getUserType().equals("VRM")) {
             fetchDriverInfo();
+            setOnClickListener();
 
         } else if (profile.getUserType().equals("CRM")) {
 
-            driverDetails.setText("COMPLETED BOOKING");
+            driverDetails.setText("DISTANCE COUNT");
             txtDailyTrips.setText("TODAY");
             txtDailyTrips.setTextColor(getResources().getColor(R.color.green));
             txtWeeklyTrips.setText("THIS WEEK");
@@ -169,7 +163,6 @@ public class HomeFragment extends Fragment {
             fetchCustomerInfo();
         }
 
-        setOnClickListener();
         return view;
     }
 
@@ -307,23 +300,23 @@ public class HomeFragment extends Fragment {
                             if (response.getString("success") != null && response.getString("success").equals("1")) {
                                 JSONObject jsonTripList = response.getJSONObject("msg");
                                 Log.d(TAG, "Below Parsing List");
-                                int todaysCnt = 0, weeklyCnt = 0, monthlyCnt = 0, totalTrips = 0;
-                                int todayskm = 0, monthlykm = 0, weeklykm = 0;
+                                int todaysCnt = 0, weeklyCnt = 0, monthlyCnt = 0, allCnt = 0,totalTrips = 0;
+                                int todayskm = 0, monthlykm = 0, weeklykm = 0, allkm =0;
 
-                                int moveMiles = todayskm + monthlykm + weeklykm;
+//                                int moveMiles = todayskm + monthlykm + weeklykm;
 
 //                                txtTotalDrivers.setText(String.valueOf(todaysCnt));
 //                                txTerminatedDrivers.setText(String.valueOf(todaysCnt));
 //                                txtDriverOnTrip.setText(String.valueOf(weeklyCnt));
 //                                txtDriversOffduty.setText(String.valueOf(monthlyCnt));
 //                                txtMoveMiles.setText("Move Miles : " + String.valueOf(moveMiles));
-                                txtTotalDrivers.setText(String.valueOf(todayskm));
+                                txtTotalDrivers.setText(String.valueOf(allkm));
                                 txTerminatedDrivers.setText(String.valueOf(todayskm));
                                 txtDriverOnTrip.setText(String.valueOf(weeklykm));
                                 txtDriversOffduty.setText(String.valueOf(monthlykm));
-                                txtMoveMiles.setText("Move Miles : " + String.valueOf(moveMiles));
+                                txtMoveMiles.setText("Move Miles : " + String.valueOf(allkm));
 
-                                txtTotalBooking.setText(String.valueOf(todaysCnt));
+                                txtTotalBooking.setText(String.valueOf(allCnt));
                                 txtTodayBooking.setText(String.valueOf(todaysCnt));
                                 txtWeekBooking.setText(String.valueOf(weeklyCnt));
                                 txtMonthBooking.setText(String.valueOf(monthlyCnt));
@@ -403,7 +396,6 @@ public class HomeFragment extends Fragment {
                                     //Calculate category wise count.
                                     totalDrivers++;
                                     if (currentDriver.getWorkStatus().equals(Driver.WorkStatus_Terminated)) {
-
                                         //If driver not active, set color red for work and hide duty status.
                                         terminatedDrivers++;
 

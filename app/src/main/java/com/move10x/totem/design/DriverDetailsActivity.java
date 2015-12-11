@@ -53,7 +53,7 @@ public class DriverDetailsActivity extends Move10xActivity {
     ImageView imgDriverImage;
     TextView txtDriverName, txtAuthority, txtMobileNumber, txtRegion, txtBaseStation;
     TextView txtVehicleBrand, txtRegestrationNo, txtDevice, txtAppVersion;
-    TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate, txtRemarks,moreRemarksbutton;
+    TextView txtDutyStatus, txtVehicleCategory, txtPlan, txtRemarksDate, txtRemarks,moreRemarksbutton, txtLastOnline;
     ImageButton btnUpdateDriverRemarks;
     AppCompatButton btnViewBookings;
 //    AppCompatButton btnViewTrainings;
@@ -87,14 +87,15 @@ public class DriverDetailsActivity extends Move10xActivity {
         txtDutyStatus = (TextView) findViewById(R.id.txtDutyStatus);
         txtRemarks = (TextView) findViewById(R.id.txtRemarks);
         txtRemarksDate = (TextView) findViewById(R.id.txtRemarksDate);
-        moreRemarksbutton =(TextView)findViewById(R.id.moreRemarks);
+//        moreRemarksbutton =(TextView)findViewById(R.id.moreRemarks);
+        txtLastOnline = (TextView)findViewById(R.id.txtLastOnline);
 //        btnViewTrainings = (AppCompatButton)findViewById(R.id.btnViewTrainings);
         //Read driver details and set driver details in view.
         String uId = getIntent().getStringExtra("driverUid");
         getDriverDetails(uId);
 
         //setting the underline of the getMoreRemarks Button
-        moreRemarksbutton.setPaintFlags(moreRemarksbutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        moreRemarksbutton.setPaintFlags(moreRemarksbutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         //Floating call button.
         ImageButton fab = (ImageButton) findViewById(R.id.btnCall);
@@ -121,14 +122,14 @@ public class DriverDetailsActivity extends Move10xActivity {
             }
         });
 
-        moreRemarksbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent moreRemarksIntent= new Intent(getApplicationContext(),RemarksActivity.class);
-                moreRemarksIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(moreRemarksIntent);
-            }
-        });
+//        moreRemarksbutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent moreRemarksIntent= new Intent(getApplicationContext(),RemarksActivity.class);
+//                moreRemarksIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(moreRemarksIntent);
+//            }
+//        });
 //        btnViewTrainings.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -190,7 +191,7 @@ public class DriverDetailsActivity extends Move10xActivity {
                         txtPlan.setText(driverDetails.getPlan());
                         txtDutyStatus.setText(driverDetails.getDutyStatus());
                         txtVehicleCategory.setText(driverDetails.getCategory());
-                        txtDriverName.setText(driverDetails.getFirstName() + " " + driverDetails.getLastName());
+                        txtDriverName.setText(driverDetails.getFirstName().toUpperCase() + "  " + driverDetails.getLastName());
                         txtAuthority.setText(driverDetails.getAuthority());
                         txtMobileNumber.setText(driverDetails.getMobileNo());
                         txtRegion.setText(driverDetails.getRegion());
@@ -199,6 +200,7 @@ public class DriverDetailsActivity extends Move10xActivity {
                         txtVehicleBrand.setText(driverDetails.getTempoMake() + " " + driverDetails.getTempoModel());
                         txtDevice.setText(driverDetails.getAssignedMobile());
                         txtAppVersion.setText(driverDetails.getAppVersion());
+                        txtLastOnline.setText(driverDetails.getOnLineTime());
 
                         if (!driverDetails.getRemarks().toString().trim().equals("")) {
                             txtRemarks.setText(driverDetails.getRemarks());

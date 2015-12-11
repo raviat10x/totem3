@@ -512,14 +512,26 @@ public class Driver{
             driver.gcmRegId = jsonObject.getString("gcm_regid");
             driver.currentBookingReference = jsonObject.getString("current_booking_ref");
             driver.plan = jsonObject.getString("plan");
-            driver.onLineTime = jsonObject.getString("onLineTime");
-
+            driver.onLineTime = jsonObject.getString("last_ping");
             return driver;
         } catch (JSONException ex) {
             //throw ex;
             Log.e("userModel", "Failed to decode json. " + ex.getMessage());
             return null;
         }
+    }
+    public String getTimeString(Driver driver) {
+        Log.d("Driver Model", "google time: " + driver.getOnLineTime() + ", Seconds: " + driver.getOnLineTime());
+        int days = Integer.parseInt(driver.getOnLineTime()) / (3600 * 24);
+        int hours = Integer.parseInt(driver.getOnLineTime()) / 3600;
+        int minutes = Integer.parseInt(driver.getOnLineTime()) % 3600 / 60;
+        int seconds = Integer.parseInt(driver.getOnLineTime()) % 60;
+        String response = "";
+        if (hours >= 1) {
+            response += hours + " hr ";
+        }
+        response += (minutes + 5) + " min";
+        return response;
     }
 
     public static Driver decodeJsonForDetails(JSONObject jsonObject){
@@ -558,7 +570,7 @@ public class Driver{
             driver.remarks = jsonObject.getString("remarks");
             driver.remarksTimeStamp = jsonObject.getString("remarksTimestamp");
             driver.SourcedBy = jsonObject.getString("sourced_by");
-            driver.onLineTime = jsonObject.getString("onLineTime");
+            driver.onLineTime = jsonObject.getString("last_ping");
             return driver;
         } catch (JSONException ex) {
             //throw ex;

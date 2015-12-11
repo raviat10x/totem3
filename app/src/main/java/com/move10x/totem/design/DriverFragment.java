@@ -43,8 +43,14 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.net.URISyntaxException;
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -160,6 +166,45 @@ public class DriverFragment extends Fragment {
         }
     }
 
+    public String getTimeString(Driver driver) {
+        Log.d(TAG, "google time: " + driver.getOnLineTime() + ", Seconds: " + driver.getOnLineTime());
+
+        //Parse driver time.
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+
+        Date driverDate = new Date();
+        try {
+            driverDate = dateFormat.parse(driver.getOnLineTime());
+            Log.d(TAG, "driverDate : " + dateFormat.format(driverDate));
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+//Get current time
+
+        Date dt = Calendar.getInstance().getTime();
+        Log.d(TAG, "dt value : " +dt.getTime());
+        Log.d(TAG, "driverDate value : " +driverDate.getTime());
+
+        long millSeconds =  (dt.getTime() - driverDate.getTime());
+        Log.d(TAG, "MilliSeconds : " +millSeconds);
+        long seconds =  millSeconds/1000;
+        Log.d(TAG, "Seconds : " +seconds);
+        long minutes = seconds / 60;
+        Log.d(TAG, "Minutes : " +minutes);
+        long hours = minutes / 60;
+        Log.d(TAG, "Hours : " +hours);
+        long days = hours / 24;
+        Log.d(TAG, "Days : " +days);
+        String response = "";
+        if (hours >= 1) {
+            response += hours + " hr ";
+        }
+        response += (minutes + 5) + " min";
+        return response;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -232,7 +277,7 @@ public class DriverFragment extends Fragment {
 
 
     public void onDriverAddClick() {
-        Log.d("driverFragment", "on Add driver click.");
+        Log.d(TAG, "on Add driver click.");
         Intent intent = new Intent(getActivity().getApplicationContext(), NewDriverActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
@@ -240,7 +285,7 @@ public class DriverFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        Log.d("Inside Driver Fragment", "onCreateOptionsMenu");
+        Log.d(TAG, "onCreateOptionsMenu");
         inflater.inflate(R.menu.menu_sample, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -290,9 +335,9 @@ public class DriverFragment extends Fragment {
     private void getDriverList() {
         //Request Parameters.
         CurrentProfile currentProfile = new CurrentProfileService(getActivity().getApplicationContext()).getCurrentProfile();
-        Log.d("driverFragment", "Fetch drivers for user: " + currentProfile.toString());
+        Log.d(TAG, "Fetch drivers for user: " + currentProfile.toString());
         String uid = currentProfile.getUserId();
-        Log.d("driverFragment", "Fetch drivers for userId: " + uid);
+        Log.d(TAG, "Fetch drivers for userId: " + uid);
         RequestParams loginParameters = new RequestParams();
         loginParameters.put("uid", uid);
         Log.d(TAG, "uid is  : " + uid);
@@ -314,6 +359,7 @@ public class DriverFragment extends Fragment {
                         for (int i = 0; i < jsonDriverList.length(); i++) {
                             Driver temp = Driver.decodeJsonForList(jsonDriverList.getJSONObject(i));
                             Log.d(TAG, "Temp");
+
 
                             if (temp.getWorkStatus().equals(Driver.WorkStatus_Terminated)) {
                                 Log.d(TAG, "Inside Terminate");
@@ -479,15 +525,16 @@ public class DriverFragment extends Fragment {
 
             TextView txtDriverName = (TextView) rowView.findViewById(R.id.driverName);
             txtDriverName.setText(currentDriver.getFirstName() + " " + currentDriver.getLastName());
-            Log.d("driverList", currentDriver.getFirstName() + " " + currentDriver.getLastName());
+            Log.d(TAG, currentDriver.getFirstName() + " " + currentDriver.getLastName());
 
             TextView txtDriverPhoneNumber = ((TextView) rowView.findViewById(R.id.driverPhoneNumber));
             txtDriverPhoneNumber.setText(currentDriver.getMobileNo());
-            Log.d("driverList", currentDriver.getMobileNo());
+            Log.d(TAG, currentDriver.getMobileNo());
 
             TextView txtOnlineTime = ((TextView) rowView.findViewById(R.id.txtPing));
-            txtOnlineTime.setText(currentDriver.getOnLineTime());
-            Log.d("driverList", currentDriver.getOnLineTime());
+            Log.d(TAG, getTimeString(currentDriver));
+            txtOnlineTime.setText(getTimeString(currentDriver));
+            Log.d(TAG, getTimeString(currentDriver));
 
             TextView txtWorkStatus = ((TextView) rowView.findViewById(R.id.txtWorkStatus));
             TextView txtDutyStatus = ((TextView) rowView.findViewById(R.id.txtDutyStatus));
@@ -495,7 +542,7 @@ public class DriverFragment extends Fragment {
             txtDutyStatus.setText(currentDriver.getDutyStatus());
             txtDutyStatus.setVisibility(View.VISIBLE);
 
-            Log.d("driverFragment", "Comparing driver Status: " + currentDriver.getWorkStatus().toUpperCase() + ", " + Driver.WorkStatus_Active);
+            Log.d(TAG, "Comparing driver Status: " + currentDriver.getWorkStatus().toUpperCase() + ", " + Driver.WorkStatus_Active);
             if (!currentDriver.getWorkStatus().equals(Driver.WorkStatus_Active)) {
                 //IF driver not active, set color red for work and hide duty status.
                 txtWorkStatus.setTextColor(getResources().getColor(R.color.red));
@@ -532,11 +579,11 @@ public class DriverFragment extends Fragment {
             driverDetailsContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("driverFragment", "On Driver container click.");
+                    Log.d(TAG, "On Driver container click.");
                     Intent intent = new Intent(getActivity().getApplicationContext(), DriverDetailsActivity.class);
                     intent.putExtra("driverUid", currentDriver.getuId());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Log.d("driverOnMap", "Driver UID: " + currentDriver.getuId());
+                    Log.d(TAG, "Driver UID: " + currentDriver.getuId());
                     startActivity(intent);
                 }
             });
