@@ -170,7 +170,7 @@ public class DriverFragment extends Fragment {
         Log.d(TAG, "google time: " + driver.getOnLineTime() + ", Seconds: " + driver.getOnLineTime());
 
         //Parse driver time.
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         Date driverDate = new Date();
         try {
